@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { usePrefix } from '../../hooks/SKUPrefixProvider'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 export const useGeneralFunctions = () => {
 
@@ -12,6 +13,22 @@ export const useGeneralFunctions = () => {
     const fileInputRef = useRef(null);
     const [selectedFileName, setSelectedFileName] = useState('');
     const [fileSizeError, setFileSizeError] = useState(false);
+    const [orgInfo, setOrgInfo] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        website: '',
+        logo: selectedFileName ? selectedFileName : '',
+    })
+
+    const handleOrgInfoChange = (event) => {
+        const { name, value } = event.target;
+        setOrgInfo((prevOrgInfo) => ({
+            ...prevOrgInfo,
+            [name]: value
+        }));
+    }
 
     const handleFileChange = () => {
       const file = fileInputRef.current.files[0]
@@ -57,8 +74,41 @@ export const useGeneralFunctions = () => {
             setServerResponse(error.message);
         }
     }
+
+    const fetchOrganizationDetails = async () => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/get/organization`);
+
+            if (response.data.status === 200) {
+                setOrgInfo({
+                    name: response.data.data.name,
+                    email: response.data.data.email,
+                    phone: response.data.data.phone,
+                    address: response.data.data.address,
+                    website: response.data.data.website,
+                    logo: response.data.data.logo,
+                })
+                console.log(response.data.data);
+            } else {
+                toast.error('You need to set your organization details', {
+                    position: "bottom-right",
+                    autoClose: 6000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                });
+                console.log(response.data.message);
+            }
+        } catch (error) {
+            console.log('Error fetching organization details', error);
+            setServerResponse(error.message);
+        }
+    }
     
     useEffect(() => {
+        fetchOrganizationDetails()
         fetchCurrencies()
     }, [])
 
@@ -70,6 +120,8 @@ export const useGeneralFunctions = () => {
         fileInputRef,
         selectedFileName,
         fileSizeError,
+        orgInfo,
+        handleOrgInfoChange,
         handleFileChange,
         handleFileClick,
         handlePrefixChange,

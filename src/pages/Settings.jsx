@@ -5,6 +5,7 @@ import { useCurrency } from '../hooks/CurrencyProvider'
 import { useExportData } from '../hooks/ExportDataProvider'
 import { usePrefix } from '../hooks/SKUPrefixProvider'
 import { useGeneralFunctions } from '../util/settings/useGeneralFunctions'
+import { useNotificationThreshold } from '../hooks/NotificationThresholdProvider'
 import { Link } from 'react-router-dom'
 import { MdOutlineToggleOff, MdOutlineToggleOn, MdOutlineUpload, MdRefresh } from 'react-icons/md'
 
@@ -20,8 +21,9 @@ function General() {
 
     const { theme, toggleTheme } = useTheme()
     const { currency, toggleCurrency } = useCurrency()
-    const { exportData, toggleExportData } = useExportData()
+    const { exportData, importData, toggleExportData, toggleImportData } = useExportData()
     const { togglePrefix } = usePrefix()
+    const { notificationThreshold, toggleNotificationThreshold, thresholds } = useNotificationThreshold()
     
     const {
         prefix,
@@ -31,6 +33,8 @@ function General() {
         fileInputRef,
         selectedFileName,
         fileSizeError,
+        orgInfo,
+        handleOrgInfoChange,
         handleFileChange,
         handleFileClick,
         handlePrefixChange
@@ -61,6 +65,11 @@ function General() {
                                 Categories
                             </Link>
                         </li>
+                        <li>
+                            <Link to="/settings/tax" className="link">
+                                Tax
+                            </Link>
+                        </li>
                     </div>
                     
                     <div className="setting-container">
@@ -71,27 +80,58 @@ function General() {
                                     <Form onSubmit={() => {}}>
                                         <div className="form-group">
                                             <label htmlFor="name">Organization Name</label>
-                                            <input type="text" name="name" id="name" />
+                                            <input 
+                                                type="text" 
+                                                name="name" 
+                                                id="name" 
+                                                value={orgInfo.name}
+                                                placeholder={orgInfo.name === '' ? 'E.g. My Company' : ''}
+                                                onChange={handleOrgInfoChange} 
+                                            />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="email">Email</label>
-                                            <input type="email" name="email" id="email" />
+                                            <input 
+                                                type="email" 
+                                                name="email" 
+                                                id="email"
+                                                value={orgInfo.email}
+                                                placeholder={orgInfo.email === '' ? 'E.g. mycompany@example.com' : ''}
+                                                onChange={handleOrgInfoChange} 
+                                            />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="phone">Phone</label>
-                                            <input type="text" name="phone" id="phone" />
+                                            <input 
+                                                type="text" 
+                                                name="phone" 
+                                                id="phone" 
+                                                value={orgInfo.phone}
+                                                placeholder={orgInfo.phone === '' ? 'E.g. +92123456789' : ''}
+                                                onChange={handleOrgInfoChange}
+                                            />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="address">Address</label>
-                                            <input type="text" name="address" id="address" />
+                                            <input 
+                                                type="text" 
+                                                name="address" 
+                                                id="address"
+                                                value={orgInfo.address}
+                                                placeholder={orgInfo.address === '' ? 'E.g. 123 Main St, Anytown, Country' : ''} 
+                                                onChange={handleOrgInfoChange}
+                                            />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="website">Website</label>
-                                            <input type="text" name="website" id="website" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="tax">Tax Number</label>
-                                            <input type="text" name="tax" id="tax" />
+                                            <input 
+                                                type="text"
+                                                name="website" 
+                                                id="website" 
+                                                value={orgInfo.website}
+                                                placeholder={orgInfo.website === '' ? 'E.g. mycompany.com' : ''}
+                                                onChange={handleOrgInfoChange}
+                                            />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="tax">Logo</label>
@@ -120,6 +160,7 @@ function General() {
                                         </div>
                                         <button type="submit">Update and Save</button>
                                     </Form>
+                                    {serverResponse && <h6 className="text-red">{serverResponse}</h6>}
                                 </Card>
                             </div>
                             <div className="inner-box-2">
@@ -138,17 +179,30 @@ function General() {
                                 </Card>
 
                                 <Card title="Notifications" classes="card card-small">
-                                    <h4>Default count for low stock: 5</h4>
+                                    <h4>
+                                        {
+                                            notificationThreshold === 5 ? (
+                                                'Default count for low stock: 5'
+                                            ) : (
+                                                'Current count for low stock: ' + notificationThreshold
+                                            )
+                                        }
+                                    </h4>
                                     <form>
                                         <div className="form-group">
-                                            <label htmlFor="stock">Low Stock Threshold</label>
-                                            <select name="stock" id="stock">
-                                                <option value="5" selected>5</option>
-                                                <option value="10">10</option>
-                                                <option value="15">15</option>
-                                                <option value="20">20</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
+                                            <label htmlFor="stock">Set Low Stock Threshold</label>
+                                            <select name="stock" id="stock" onChange={(e) => toggleNotificationThreshold(e.target.value)}>
+                                                {
+                                                    thresholds.map((threshold, index) => (
+                                                        <option 
+                                                            key={index} 
+                                                            value={threshold} 
+                                                            selected={threshold === notificationThreshold}
+                                                        >
+                                                            {threshold}
+                                                        </option>
+                                                    ))
+                                                }
                                             </select>
                                         </div>
                                     </form>
@@ -168,7 +222,6 @@ function General() {
                                                     ))}
                                                 </select>
                                             </div>
-                                            {serverResponse ? <span>{serverResponse}</span> : null}
                                         </form>
                                     ) : (
                                         <p>Loading currencies...</p>
@@ -183,6 +236,21 @@ function General() {
                                             <a id="export" className="link" onClick={toggleExportData}>
                                                 {
                                                     exportData === false ? <MdOutlineToggleOff size={28} className="text-red" /> 
+                                                    : <MdOutlineToggleOn size={28} className="text-green" />
+                                                }
+                                            </a>
+                                        </div>
+                                    </Form>
+                                </Card>
+
+                                <Card title="Import Data" classes="card card-small">
+                                    <h4>Import data option: {importData === false ? 'Off' : 'On'}</h4>
+                                    <Form>
+                                        <div className="form-group">
+                                            <label htmlFor="import">Click to {importData === false ? 'Enable' : 'Disable'} Import Data</label>
+                                            <a id="import" className="link" onClick={toggleImportData}>
+                                                {
+                                                    importData === false ? <MdOutlineToggleOff size={28} className="text-red" /> 
                                                     : <MdOutlineToggleOn size={28} className="text-green" />
                                                 }
                                             </a>
@@ -208,7 +276,6 @@ function General() {
                                                 placeholder="According to your organisation" 
                                             />
                                         </div>
-                                        {serverResponse && <h6 className="text-red">{serverResponse}</h6>}
                                         {
                                             prefix === skuPrefix ? (
                                                 <button 

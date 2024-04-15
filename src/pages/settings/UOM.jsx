@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useTheme } from '../../hooks/ThemeProvider'
 import { Link } from 'react-router-dom'
 import { useUOMFunctions } from '../../util/settings/useUOMFunctions'
-import { usePagination } from '../../helpers/Pagination'
+import { usePagination } from '../../helpers/Pagination.js'
 import { FaTrashAlt } from 'react-icons/fa'
 import { MdOutlineToggleOff, MdOutlineToggleOn, MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
 
@@ -15,6 +15,8 @@ import Main from '../../partials/Main'
 import Footer from '../../partials/Footer'
 import Card from '../../components/Card'
 import Form from '../../components/Form'
+import PrePagination from '../../components/pagination/PrePagination'
+import Pagination from '../../components/pagination/Pagination'
 
 function UOM() {
 
@@ -84,9 +86,14 @@ function UOM() {
                                 Categories
                             </Link>
                         </li>
+                        <li>
+                            <Link to="/settings/tax" className="link">
+                                Tax
+                            </Link>
+                        </li>
                     </div>
                     <div className="setting-container">
-                        <h2>Unit Settings and Management</h2>
+                        <h2>Unit Settings</h2>
                         <div className="box">
                             <div className="inner-box-1">
                                 <Card title="Add unit" classes="card card-xx-large">
@@ -117,29 +124,19 @@ function UOM() {
                             <div className="inner-box-2">
                                 <Card title="All available units" classes="card card-xx-large">
                                     {   
-                                        !uoms || uoms.length === 0 ? ( 
-                                        <h5>No units available</h5>
+                                        !uoms ? (
+                                            <h5>Loading...</h5>
+                                        ) : uoms.length === 0 ? ( 
+                                            <h5>No units available</h5>
                                         ) : (
                                         <>
-                                            <div className="pre-pagination">
-                                                <span>Total pages: {totalPages}</span>
-                                                <input type="text" onChange={handleSearchTerm} placeholder="Search..." />
-                                                {
-                                                    selectedItems.length > 1 && (
-                                                        <button className="bg-danger" onClick={handleDeleteMultiple}>
-                                                            <FaTrashAlt /> Delete selection ({selectedItems.length})
-                                                        </button>
-                                                    )
-                                                }
-                                                <div>
-                                                <span>Showing</span> <select name="items-per-page" id="items-per-page" onChange={handleItemsPerPage}>
-                                                        <option value="10">10</option>
-                                                        <option value="25">25</option>
-                                                        <option value="50">50</option>
-                                                        <option value="100">100</option>
-                                                    </select> <span>rows</span>
-                                                </div>
-                                            </div>
+                                            <PrePagination 
+                                                totalPages={totalPages}
+                                                handleItemsPerPage={handleItemsPerPage}
+                                                handleSearchTerm={handleSearchTerm}
+                                                selectedItems={selectedItems}
+                                                handleDeleteMultiple={handleDeleteMultiple}
+                                            />
 
                                             <table>
                                                 <thead>
@@ -283,63 +280,17 @@ function UOM() {
                                                     )
                                                 }
                                             </table>
-
-                                            <div className="pagination">
-                                                <span>Total rows: {uoms.length}</span>
-                                                <div>
-                                                    {currentPage > 1 && (
-                                                        <button onClick={firstPage}>
-                                                            {'First'}
-                                                        </button>
-                                                    )}
-
-                                                    <button 
-                                                        onClick={previousPage}
-                                                        disabled={currentPage === 1}
-                                                    >
-                                                        {'Prev'}
-                                                    </button>
-
-                                                    {currentPage > 3 && totalPages > 5 && (
-                                                        <button onClick={() => handleCurrentPage(currentPage - 2)}>
-                                                            ...
-                                                        </button>
-                                                    )}
-
-                                                    {currentPage > 1 && (
-                                                        <button onClick={() => handleCurrentPage(currentPage - 1)}>
-                                                            {currentPage - 1}
-                                                        </button>
-                                                    )}
-
-                                                    <button className="active">{currentPage}</button>
-
-                                                    {currentPage < totalPages && (
-                                                        <button onClick={() => handleCurrentPage(currentPage + 1)}>
-                                                            {currentPage + 1}
-                                                        </button>
-                                                    )}
-
-                                                    {currentPage < totalPages - 1 && (
-                                                        <button onClick={() => handleCurrentPage(currentPage + 2)}>
-                                                            ...
-                                                        </button>
-                                                    )}
-
-                                                    <button 
-                                                        onClick={nextPage}
-                                                        disabled={currentPage === totalPages}
-                                                    >
-                                                        {'Next'}
-                                                    </button>
-
-                                                    {currentPage < totalPages && (
-                                                        <button onClick={lastPage}>
-                                                            {'Last'}
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </div>
+                                            
+                                            <Pagination 
+                                                data={uoms}
+                                                handleCurrentPage={handleCurrentPage}
+                                                currentPage={currentPage}
+                                                totalPages={totalPages}
+                                                firstPage={firstPage}
+                                                previousPage={previousPage}
+                                                nextPage={nextPage}
+                                                lastPage={lastPage}
+                                            />
                                         </>
                                         )
                                     }
