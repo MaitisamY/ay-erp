@@ -1,0 +1,13 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 10px 0 10px 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 14px;
+}
