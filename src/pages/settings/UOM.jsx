@@ -1,6 +1,7 @@
 import '../../styles/settings.css'
 
 import { useEffect } from 'react'
+import { useOrganizationCredential } from '../../hooks/OrganizationCredentialProvider'
 import { useTheme } from '../../hooks/ThemeProvider'
 import { Link } from 'react-router-dom'
 import { useUOMFunctions } from '../../util/settings/useUOMFunctions'
@@ -20,6 +21,7 @@ import Pagination from '../../components/pagination/Pagination'
 
 function UOM() {
 
+    const { organizationCredential } = useOrganizationCredential()
     const { theme } = useTheme()
 
     const { 
@@ -62,7 +64,7 @@ function UOM() {
         }
     }, [currentPage, totalPages]);
 
-    document.title = 'Organization Name | UOM'
+    document.title = organizationCredential !== null ? organizationCredential.name + ' | UOM' : 'Organization Name | UOM'
 
     return (
         <>

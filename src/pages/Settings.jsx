@@ -1,5 +1,6 @@
 import '../styles/settings.css'
 
+import { useOrganizationCredential } from '../hooks/OrganizationCredentialProvider'
 import { useTheme } from '../hooks/ThemeProvider'
 import { useCurrency } from '../hooks/CurrencyProvider'
 import { useExportData } from '../hooks/ExportDataProvider'
@@ -7,7 +8,7 @@ import { usePrefix } from '../hooks/SKUPrefixProvider'
 import { useGeneralFunctions } from '../util/settings/useGeneralFunctions'
 import { useNotificationThreshold } from '../hooks/NotificationThresholdProvider'
 import { Link } from 'react-router-dom'
-import { MdOutlineToggleOff, MdOutlineToggleOn, MdOutlineUpload, MdRefresh } from 'react-icons/md'
+import { MdOutlineToggleOff, MdOutlineToggleOn } from 'react-icons/md'
 
 import Sidebar from '../components/Sidebar'
 import Content from '../components/Content'
@@ -19,6 +20,7 @@ import Form from '../components/Form'
 
 function General() {
 
+    const { organizationCredential } = useOrganizationCredential()
     const { theme, toggleTheme } = useTheme()
     const { currency, toggleCurrency } = useCurrency()
     const { exportData, importData, toggleExportData, toggleImportData } = useExportData()
@@ -30,17 +32,14 @@ function General() {
         skuPrefix,
         currencies,
         serverResponse,
-        fileInputRef,
-        selectedFileName,
-        fileSizeError,
         orgInfo,
+        isFormDirty,
         handleOrgInfoChange,
-        handleFileChange,
-        handleFileClick,
-        handlePrefixChange
+        handlePrefixChange,
+        handleFormSubmit
     } = useGeneralFunctions()
 
-    document.title = 'Organization Name | General Settings'
+    document.title = organizationCredential !== null ? organizationCredential.name + ' | General Settings' : 'Organization Name | General Settings'
 
     return (
         <>
@@ -77,7 +76,7 @@ function General() {
                         <div className="box">
                             <div className="inner-box-1">
                                 <Card title="Organization Details" classes="card card-xx-large">
-                                    <Form onSubmit={() => {}}>
+                                    <Form onSubmit={handleFormSubmit}>
                                         <div className="form-group">
                                             <label htmlFor="name">Organization Name</label>
                                             <input 
@@ -85,7 +84,7 @@ function General() {
                                                 name="name" 
                                                 id="name" 
                                                 value={orgInfo.name}
-                                                placeholder={orgInfo.name === '' ? 'E.g. My Company' : ''}
+                                                placeholder={!orgInfo.name ? 'E.g. My Company' : ''}
                                                 onChange={handleOrgInfoChange} 
                                             />
                                         </div>
@@ -96,7 +95,7 @@ function General() {
                                                 name="email" 
                                                 id="email"
                                                 value={orgInfo.email}
-                                                placeholder={orgInfo.email === '' ? 'E.g. mycompany@example.com' : ''}
+                                                placeholder={!orgInfo.email ? 'E.g. mycompany@example.com' : ''}
                                                 onChange={handleOrgInfoChange} 
                                             />
                                         </div>
@@ -107,7 +106,7 @@ function General() {
                                                 name="phone" 
                                                 id="phone" 
                                                 value={orgInfo.phone}
-                                                placeholder={orgInfo.phone === '' ? 'E.g. +92123456789' : ''}
+                                                placeholder={!orgInfo.phone ? 'E.g. +92123456789' : ''}
                                                 onChange={handleOrgInfoChange}
                                             />
                                         </div>
@@ -118,7 +117,7 @@ function General() {
                                                 name="address" 
                                                 id="address"
                                                 value={orgInfo.address}
-                                                placeholder={orgInfo.address === '' ? 'E.g. 123 Main St, Anytown, Country' : ''} 
+                                                placeholder={!orgInfo.address ? 'E.g. 123 Main St, Anytown, Country' : ''} 
                                                 onChange={handleOrgInfoChange}
                                             />
                                         </div>
@@ -129,12 +128,12 @@ function General() {
                                                 name="website" 
                                                 id="website" 
                                                 value={orgInfo.website}
-                                                placeholder={orgInfo.website === '' ? 'E.g. mycompany.com' : ''}
+                                                placeholder={!orgInfo.website ? 'E.g. mycompany.com' : ''}
                                                 onChange={handleOrgInfoChange}
                                             />
                                         </div>
-                                        <div className="form-group">
-                                            <label htmlFor="tax">Logo</label>
+                                        {/* <div className="form-group">
+                                            <label htmlFor="tax">Logo {orgInfo.logo && '(' + orgInfo.logo.name + ')' }</label>
                                             <div className="file-input-container">
                                                 <input
                                                     type="file"
@@ -145,7 +144,11 @@ function General() {
                                                 />
                                                 <h5 onClick={handleFileClick}>
                                                     {
-                                                        selectedFileName ? 
+                                                        orgInfo.logo ? 
+                                                        <>
+                                                            <MdRefresh size={20} /> <i>Change</i> <i>({orgInfo.logo.name})</i>
+                                                        </>
+                                                        : selectedFileName ? 
                                                         <>
                                                             <MdRefresh size={20} /> <i>Change</i> <i>({selectedFileName})</i> 
                                                         </>
@@ -157,8 +160,14 @@ function General() {
                                                 </h5>
                                             </div>
                                             {fileSizeError && <span className="error">{fileSizeError}</span>}
-                                        </div>
-                                        <button type="submit">Update and Save</button>
+                                        </div> */}
+                                        <button 
+                                            type="submit" 
+                                            disabled={!isFormDirty}
+                                            title={isFormDirty ? 'Update and Save' : 'No changes detected'}
+                                        >
+                                            Update and Save
+                                        </button>
                                     </Form>
                                     {serverResponse && <h6 className="text-red">{serverResponse}</h6>}
                                 </Card>

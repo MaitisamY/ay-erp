@@ -1,5 +1,6 @@
 import '../../styles/settings.css'
 
+import { useOrganizationCredential } from '../../hooks/OrganizationCredentialProvider'
 import { useTheme } from '../../hooks/ThemeProvider'
 import { useCurrency } from '../../hooks/CurrencyProvider'
 import { useExportData } from '../../hooks/ExportDataProvider'
@@ -19,6 +20,7 @@ import Form from '../../components/Form'
 
 function Tax() {
 
+    const { organizationCredential } = useOrganizationCredential()
     const { theme, toggleTheme } = useTheme()
     const { currency, toggleCurrency } = useCurrency()
     const { exportData, importData, toggleExportData, toggleImportData } = useExportData()
@@ -38,7 +40,7 @@ function Tax() {
         handlePrefixChange
     } = useGeneralFunctions()
 
-    document.title = 'Organization Name | Tax Settings'
+    document.title = organizationCredential !== null ? organizationCredential.name + ' | Tax Settings' : 'Organization Name | Tax Settings'
 
     return (
         <>

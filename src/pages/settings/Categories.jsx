@@ -1,6 +1,7 @@
 import '../../styles/settings.css'
 
 import { useEffect } from 'react'
+import { useOrganizationCredential } from '../../hooks/OrganizationCredentialProvider'
 import { useTheme } from '../../hooks/ThemeProvider'
 import { Link } from 'react-router-dom'
 import { useCategoryFunctions } from '../../util/settings/useCategoryFunctions'
@@ -20,6 +21,7 @@ import Pagination from '../../components/pagination/Pagination'
 
 function Categories() {
 
+    const { organizationCredential } = useOrganizationCredential()
     const { theme } = useTheme()
 
     const {
@@ -62,7 +64,7 @@ function Categories() {
         }
     }, [currentPage, totalPages]);
 
-    document.title = 'Organization Name | Categories'
+    document.title = organizationCredential !== null ? organizationCredential.name + ' | Category Settings' : 'Organization Name | Category Settings'
 
     return (
         <>

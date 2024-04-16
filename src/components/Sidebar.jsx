@@ -2,12 +2,15 @@ import '../styles/sidebar.css'
 import Logo from '../assets/images/logo-2.png'
 
 import { useMenuPreference } from '../hooks/MenuPreferenceProvider'
+import { useOrganizationCredential } from '../hooks/OrganizationCredentialProvider'
 import { BsArrowBarLeft, BsArrowBarRight, BsSpeedometer2, BsGift, BsPeople, BsPersonCheck } from 'react-icons/bs'
 import { FaRegMoneyBillAlt } from 'react-icons/fa'
 import { MdOutlinePayments, MdPeopleOutline, MdOutlineFileCopy, MdOutlineSettings, MdMoneyOff } from 'react-icons/md'
 import { Link, useLocation } from 'react-router-dom'
 
 function Sidebar() {
+
+    const { organizationCredential } = useOrganizationCredential()
 
     const { isCollapsed, onSidebarToggle } = useMenuPreference()
     const { pathname } = useLocation()
@@ -17,7 +20,11 @@ function Sidebar() {
 
             <div className="brand">
                 <img src={Logo} alt="logo" />
-                <span style={{ display: isCollapsed ? 'none' : 'block' }}>Organization Name</span>
+                <span style={{ display: isCollapsed ? 'none' : 'block' }}>
+                    {
+                        organizationCredential !== null ? organizationCredential.name : 'Organization Name'
+                    }
+                </span>
             </div>
 
             <ul>

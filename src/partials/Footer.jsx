@@ -1,9 +1,14 @@
 import '../styles/footer.css'
 
+import { useOrganizationCredential } from '../hooks/OrganizationCredentialProvider'
+
 function Footer() {
+
+    const { organizationCredential } = useOrganizationCredential()
+
     return (
         <footer>
-            <p>Copyright © {new Date().getFullYear()}. Organization Name.</p>
+            <p>Copyright © {new Date().getFullYear()}. {organizationCredential !== null ? organizationCredential.name : 'Organization Name'}.</p>
         </footer>
     )
 }

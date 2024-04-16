@@ -1,6 +1,7 @@
 import './styles/app.css'
 import 'react-toastify/dist/ReactToastify.css';
 
+import { OrganizationCredentialProvider } from './hooks/OrganizationCredentialProvider'
 import { useTheme } from './hooks/ThemeProvider'
 import { MenuPreferenceProvider } from './hooks/MenuPreferenceProvider'
 import { CurrencyProvider } from './hooks/CurrencyProvider'
@@ -32,34 +33,36 @@ function App() {
     return (
         <div id="app" className={theme === 'light' ? '' : 'dark'}>
             <Router>
-                <CurrencyProvider>
-                    <ExportDataProvider>
-                        <MenuPreferenceProvider>
-                            <SKUPrefixProvider>
-                                <NotificationThresholdProvider>
-                                    <ToastContainer />
-                                    <Routes>
-                                        <Route path="*" element={<NotDefined />} />
-                                        <Route path="/" element={<Dashboard />} />
-                                        <Route path="/dashboard" element={<Dashboard />} />
-                                        <Route path="/products" element={<Products />} />
-                                        <Route path="/sales" element={<Sales />} />
-                                        <Route path="/purchases" element={<Purchases />} />
-                                        <Route path="/expenses" element={<Expenses />} />
-                                        <Route path="/users" element={<Users />} />
-                                        <Route path="/customers" element={<Customers />} />
-                                        <Route path="/reports" element={<Reports />} />
-                                        <Route path="/vendors" element={<Vendors />} />
-                                        <Route path="/settings" element={<General />} />
-                                        <Route path="/settings/categories" element={<Categories />} />
-                                        <Route path="/settings/uom" element={<UOM />} />
-                                        <Route path="/settings/tax" element={<Tax />} />
-                                    </Routes>
-                                </NotificationThresholdProvider>
-                            </SKUPrefixProvider>
-                        </MenuPreferenceProvider>
-                    </ExportDataProvider>
-                </CurrencyProvider>
+                <OrganizationCredentialProvider>
+                    <CurrencyProvider>
+                        <ExportDataProvider>
+                            <MenuPreferenceProvider>
+                                <SKUPrefixProvider>
+                                    <NotificationThresholdProvider>
+                                        <ToastContainer />
+                                        <Routes>
+                                            <Route path="*" element={<NotDefined />} />
+                                            <Route path="/" element={<Dashboard />} />
+                                            <Route path="/dashboard" element={<Dashboard />} />
+                                            <Route path="/products" element={<Products />} />
+                                            <Route path="/sales" element={<Sales />} />
+                                            <Route path="/purchases" element={<Purchases />} />
+                                            <Route path="/expenses" element={<Expenses />} />
+                                            <Route path="/users" element={<Users />} />
+                                            <Route path="/customers" element={<Customers />} />
+                                            <Route path="/reports" element={<Reports />} />
+                                            <Route path="/vendors" element={<Vendors />} />
+                                            <Route path="/settings" element={<General />} />
+                                            <Route path="/settings/categories" element={<Categories />} />
+                                            <Route path="/settings/uom" element={<UOM />} />
+                                            <Route path="/settings/tax" element={<Tax />} />
+                                        </Routes>
+                                    </NotificationThresholdProvider>
+                                </SKUPrefixProvider>
+                            </MenuPreferenceProvider>
+                        </ExportDataProvider>
+                    </CurrencyProvider>
+                </OrganizationCredentialProvider>
             </Router>
         </div>
     )
