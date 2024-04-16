@@ -21,7 +21,7 @@ router.get('/get/organization', async (req, res) => {
     try {
         const result = await db.query('SELECT * FROM org_info');
 
-        if (!result) {
+        if (result.rows.length === 0) {
             res.json({ status: 404, message: 'No data found' });
         } else {
             res.json({ status: 200, data: result.rows });

@@ -6,22 +6,24 @@ import { useLocation } from 'react-router-dom'
 function Header() {
 
     const { pathname } = useLocation()
-    const titlePrefix = 'Organization Name | '
 
     useEffect(() => {
-        pathname === '/' ? document.title = `${titlePrefix} Dashboard` 
-        : pathname === '/products' ? document.title = `${titlePrefix} Products`
-        : pathname === '/sales' ? document.title = `${titlePrefix} Sales`
-        : pathname === '/customers' ? document.title = `${titlePrefix} Customers`
-        : pathname === '/purchases' ? document.title = `${titlePrefix} Purchases`
-        : pathname === '/expenses' ? document.title = `${titlePrefix} Expenses`
-        : pathname === '/users' ? document.title = `${titlePrefix} Users`
-        : pathname === '/customers' ? document.title = `${titlePrefix} Customers`
-        : pathname === '/vendors' ? document.title = `${titlePrefix} Vendors`
-        : pathname === '/settings' ? document.title = `${titlePrefix} Settings`
-        : document.title = `
-            ${titlePrefix} ${pathname.slice(1).replace(/-/, ' ').charAt(0).toUpperCase() 
-                            + pathname.slice(1).replace(/-/, ' ').slice(1)}`
+        pathname === '/404' ? document.title = '404 - Page Not Found'
+        : pathname === '/' ? document.title = 'Dashboard' 
+        : pathname === '/products' ? document.title = 'Products' 
+        : pathname === '/sales' ? document.title = 'Sales' 
+        : pathname === '/customers' ? document.title = 'Customers'
+        : pathname === '/purchases' ? document.title = 'Purchases' 
+        : pathname === '/expenses' ? document.title = 'Expenses'
+        : pathname === '/users' ? document.title = 'Users'
+        : pathname === '/customers' ? document.title = 'Customers'
+        : pathname === '/reports' ? document.title = 'Reports'
+        : pathname === '/vendors' ? document.title = 'Vendors'
+        : pathname === '/settings' ? document.title = 'General Settings'
+        : pathname === '/settings/categories' ? document.title = 'Category Settings'
+        : pathname === '/settings/uom' ? document.title = 'UOM Settings'
+        : pathname === '/settings/tax' ? document.title = 'Tax Settings'
+        : document.title = `${pathname.slice(1).replace(/-/, ' ').charAt(0).toUpperCase() + pathname.slice(1).replace(/-/, ' ').slice(1)}`
     }, [pathname])
 
     return (
@@ -29,9 +31,10 @@ function Header() {
             <h1>
                 {
                     pathname === '/' ? 'Dashboard' 
-                    : pathname === '/settings/profile' || pathname === '/settings/uom' || pathname === '/settings/categories' ? 'Settings'
-                    : pathname.slice(1).replace(/-/, ' ').charAt(0).toUpperCase() 
-                    + pathname.slice(1).replace(/-/, ' ').slice(1)
+                    : pathname === '/settings/tax' 
+                    || pathname === '/settings/uom' 
+                    || pathname === '/settings/categories' ? 'Settings'
+                    : pathname.slice(1).replace(/-/, ' ').charAt(0).toUpperCase() + pathname.slice(1).replace(/-/, ' ').slice(1)
                 }
             </h1>
         </header>

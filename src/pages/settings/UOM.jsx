@@ -64,8 +64,6 @@ function UOM() {
         }
     }, [currentPage, totalPages]);
 
-    document.title = organizationCredential !== null ? organizationCredential.name + ' | UOM' : 'Organization Name | UOM'
-
     return (
         <>
             <Sidebar />

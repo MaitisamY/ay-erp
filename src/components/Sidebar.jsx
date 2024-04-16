@@ -22,7 +22,7 @@ function Sidebar() {
                 <img src={Logo} alt="logo" />
                 <span style={{ display: isCollapsed ? 'none' : 'block' }}>
                     {
-                        organizationCredential !== null ? organizationCredential.name : 'Organization Name'
+                        organizationCredential === null || !organizationCredential.name ? 'Organization Name' : organizationCredential.name
                     }
                 </span>
             </div>

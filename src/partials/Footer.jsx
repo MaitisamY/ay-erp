@@ -8,7 +8,8 @@ function Footer() {
 
     return (
         <footer>
-            <p>Copyright © {new Date().getFullYear()}. {organizationCredential !== null ? organizationCredential.name : 'Organization Name'}.</p>
+            <p>Copyright © {new Date().getFullYear()}. {organizationCredential === null || !organizationCredential.name 
+            ? 'Organization Name' : organizationCredential.name}.</p>
         </footer>
     )
 }

@@ -64,8 +64,6 @@ function Categories() {
         }
     }, [currentPage, totalPages]);
 
-    document.title = organizationCredential !== null ? organizationCredential.name + ' | Category Settings' : 'Organization Name | Category Settings'
-
     return (
         <>
             <Sidebar />

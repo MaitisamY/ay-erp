@@ -22,6 +22,14 @@ export const useGeneralFunctions = () => {
         website: '',
     })
 
+    const [copyOfOrgInfo, setCopyOfOrgInfo] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        website: '',
+    })
+
     const [isFormDirty, setIsFormDirty] = useState(false);
 
     const handleOrgInfoChange = (event) => {
@@ -30,7 +38,6 @@ export const useGeneralFunctions = () => {
             ...prevOrgInfo,
             [name]: value
         }));
-        setIsFormDirty(true);
     }
 
     // const handleFileChange = () => {
@@ -113,7 +120,6 @@ export const useGeneralFunctions = () => {
             console.log(error);
             setServerResponse(error.message);
         }
-        setIsFormDirty(false);
 
         // Reset the form
         setTimeout(() => {
@@ -155,16 +161,15 @@ export const useGeneralFunctions = () => {
                     address: response.data.data[0].address,
                     website: response.data.data[0].website,
                 }))
+
+                setCopyOfOrgInfo({
+                    name: response.data.data[0].name,
+                    email: response.data.data[0].email,
+                    phone: response.data.data[0].phone,
+                    address: response.data.data[0].address,
+                    website: response.data.data[0].website,
+                })
             } else {
-                toast.error('You need to set your organization details', {
-                    position: "bottom-right",
-                    autoClose: 6000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: false,
-                    progress: undefined,
-                });
                 console.log(response.data.message);
             }
         } catch (error) {
@@ -191,7 +196,7 @@ export const useGeneralFunctions = () => {
         currencies,
         serverResponse,
         orgInfo,
-        isFormDirty,
+        copyOfOrgInfo,
         handleOrgInfoChange,
         handlePrefixChange,
         handleFormSubmit
