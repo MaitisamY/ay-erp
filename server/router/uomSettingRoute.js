@@ -30,7 +30,7 @@ router.post('/add/uom', async (req, res) => {
             return;
         }
 
-        const result = await db.query('INSERT INTO uom (name, status) VALUES ($1, $2)', [uom, 1]);
+        const result = await db.query('INSERT INTO uom (name, status) VALUES ($1, $2) RETURNING *', [uom, 1]);
 
         if (!result) {
             res.json({ status: 400, message: 'Error adding UOM' });
@@ -87,7 +87,7 @@ router.delete('/delete/uoms', async (req, res) => {
     const { ids } = req.body;
 
     try {
-        const result = await db.query('DELETE FROM uom WHERE id = ANY($1)', [ids]);
+        const result = await db.query('DELETE FROM uom WHERE id = ANY($1) RETURNING *', [ids]);
 
         if (!result) {
             res.json({ status: 400, message: 'Error deleting uoms' });

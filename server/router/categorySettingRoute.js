@@ -30,7 +30,7 @@ router.post('/add/category', async (req, res) => {
             return;
         }
             
-        const result = await db.query('INSERT INTO category (name, status) VALUES ($1, $2)', [category, 1]);
+        const result = await db.query('INSERT INTO category (name, status) VALUES ($1, $2) RETURNING *', [category, 1]);
 
         if (!result) {
             res.json({ status: 400, message: 'Error adding category' });
@@ -68,7 +68,7 @@ router.delete('/delete/category/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const result = await db.query('DELETE FROM category WHERE id = $1', [id]);
+        const result = await db.query('DELETE FROM category WHERE id = $1 RETURNING *', [id]);
 
         if (!result) {
             res.json({ status: 400, message: 'Error deleting category' });
@@ -86,7 +86,7 @@ router.delete('/delete/categories', async (req, res) => {
     const { ids } = req.body;
 
     try {
-        const result = await db.query('DELETE FROM category WHERE id = ANY($1)', [ids]);
+        const result = await db.query('DELETE FROM category WHERE id = ANY($1) RETURNING *', [ids]);
 
         if (!result) {
             res.json({ status: 400, message: 'Error deleting categories' });

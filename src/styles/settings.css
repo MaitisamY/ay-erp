@@ -100,7 +100,7 @@
     justify-content: center;
     flex-wrap: wrap;
     width: 70%;
-    gap: 20px;
+    gap: 30px;
     height: auto;
     padding: 0;
     margin: 0;
@@ -225,7 +225,7 @@
     font-size: 14px;
     font-weight: 500;
     color: var(--text-color);
-    margin: 0 0 5px 0;
+    margin: 10px 0 5px 0;
 }
 
 .setting-container .box form .form-group input {
@@ -264,16 +264,6 @@
     padding: 10px 10px;
 }
 
-.setting-container .box form .form-group input:hover,
-.setting-container .box form .form-group input:focus,
-.setting-container .box form .form-group input:active, 
-.setting-container .box form .form-group select:hover,
-.setting-container .box form .form-group select:focus,
-.setting-container .box form .form-group select:active {
-    outline: 2px solid #31EB31;
-    border: 1px solid #31EB31;
-}
-
 .setting-container .box form .form-group textarea {
     width: 100%;
     height: auto;
@@ -287,6 +277,18 @@
     outline: none;
     font-family: "Inter", sans-serif;
     margin: 0 0 10px 0;
+    resize: none;
+}
+
+.setting-container .box form .form-group input:hover,
+/* .setting-container .box form .form-group input:focus,
+.setting-container .box form .form-group input:active,  */
+.setting-container .box form .form-group select:hover,
+/* .setting-container .box form .form-group select:focus,
+.setting-container .box form .form-group select:active { */ 
+.setting-container .box form .form-group textarea:hover {
+    outline: 2px solid #31EB31;
+    border: 1px solid #31EB31;
 }
 
 .setting-container .box form button {

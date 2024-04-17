@@ -1,6 +1,5 @@
 import '../../styles/settings.css'
 
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useTaxFunctions } from '../../util/settings/useTaxFunctions'
 
@@ -16,8 +15,7 @@ function Tax() {
     
     const {
         taxInfo,
-        handleChange,
-        handleSubmit
+        handleFieldChange
     } = useTaxFunctions()
 
     return (
@@ -54,60 +52,123 @@ function Tax() {
                         <h2>Tax Settings</h2>
                         <div className="box">
                             <div className="inner-box-1">
-                                <Card title="Tax Configuration Form" classes="card card-xx-large">
+                                <Card title="Tax Configuration" classes="card card-xx-large">
                                     <h4>The tax information saves automatically as you fill and leave the field.</h4>
-                                    <Form onSubmit={handleSubmit}>
+                                    <Form>
                                         <div className="form-group">
                                             <label htmlFor="tax-name">Tax Name</label>
-                                            <input type="text" name="taxName" value={taxInfo.taxName} onChange={handleChange} />
+                                            <input 
+                                                type="text" 
+                                                name="name" 
+                                                id="tax-name"
+                                                value={taxInfo.name} 
+                                                placeholder={!taxInfo.name ? 'Enter Tax Name' : ''}
+                                                onChange={handleFieldChange} 
+                                                onBlur={handleFieldChange}
+                                            />
                                         </div>
 
                                         <div className="form-group">
                                             <label htmlFor="tax-rate">Tax Rate (%)</label>
-                                            <input type="number" name="taxRate" value={taxInfo.taxRate} onChange={handleChange} />
+                                            <input 
+                                                type="number" 
+                                                name="rate" 
+                                                id="tax-rate"
+                                                value={taxInfo.rate} 
+                                                placeholder={!taxInfo.rate ? 'Enter Tax Rate' : ''}
+                                                onChange={handleFieldChange} 
+                                                onBlur={handleFieldChange}
+                                            />
                                         </div>
 
                                         <div className="form-group">
                                             <label htmlFor="tax-type">Tax Type:</label>
-                                            <select name="taxType" value={taxInfo.taxType} onChange={handleChange}>
+                                            <select 
+                                                name="type" 
+                                                id="tax-type"
+                                                value={taxInfo.type} 
+                                                onChange={handleFieldChange}
+                                            >
                                                 <option value="">Select Tax Type</option>
-                                                <option value="Standard Rate">Standard Rate</option>
-                                                <option value="Reduced Rate">Reduced Rate</option>
-                                                <option value="Zero Rate">Zero Rate</option>
+                                                <option value="Standard Rate">
+                                                    Standard Rate
+                                                </option>
+                                                <option value="Reduced Rate">
+                                                    Reduced Rate
+                                                </option>
+                                                <option value="Zero Rate">
+                                                    Zero Rate
+                                                </option>
                                             </select>
                                         </div>
 
                                         <div className="form-group">
                                             <label htmlFor="tax-authority">Tax Authority:</label>
-                                            <select name="taxAuthority" value={taxInfo.taxAuthority} onChange={handleChange}>
+                                            <select 
+                                                name="authority" 
+                                                id="tax-authority"
+                                                value={taxInfo.authority} 
+                                                onChange={handleFieldChange}
+                                            >
                                                 <option value="">Select Tax Authority</option>
-                                                <option value="Government Agency">Government Agency</option>
-                                                <option value="Regulatory Body">Regulatory Body</option>
+                                                <option value="Government Agency">
+                                                    Government Agency
+                                                </option>
+                                                <option value="Regulatory Body">
+                                                    Regulatory Body
+                                                </option>
                                             </select>
                                         </div>
 
                                         <div className="form-group">
                                             <label htmlFor="tax-calculation-method">Tax Calculation Method:</label>
-                                            <select name="taxCalculationMethod" value={taxInfo.taxCalculationMethod} onChange={handleChange}>
+                                            <select 
+                                                name="calculation_method" 
+                                                id="tax-calculation-method"
+                                                value={taxInfo.calculation_method} 
+                                                onChange={handleFieldChange}
+                                            >
                                                 <option value="">Select Tax Calculation Method</option>
-                                                <option value="Inclusive">Inclusive</option>
-                                                <option value="Exclusive">Exclusive</option>
+                                                <option value="Inclusive">
+                                                    Inclusive
+                                                </option>
+                                                <option value="Exclusive">
+                                                    Exclusive
+                                                </option>
                                             </select>
                                         </div>
 
                                         <div className="form-group">
                                             <label htmlFor="effective-date">Effective Date</label>
-                                            <input type="date" name="effectiveDate" value={taxInfo.effectiveDate} onChange={handleChange} />
+                                            <input 
+                                                type="date" 
+                                                name="effective_date" 
+                                                id="effective-date"
+                                                value={taxInfo.effective_date} 
+                                                placeholder={!taxInfo.effective_date ? 'Enter Effective Date' : ''}
+                                                onChange={handleFieldChange} 
+                                                onBlur={handleFieldChange}
+                                            />
                                         </div>
                                     </Form>
                                 </Card>
                             </div>
                             <div className="inner-box-2">
                                 <Card title="Additional" classes="card card-xx-large">
-                                    <Form onSubmit={handleSubmit}>
+                                    <Form>
                                         <div className="form-group">
                                             <label htmlFor="additional-notes">Notes or Description</label>
-                                            <textarea name="additionalNotes" value={taxInfo.additionalNotes} onChange={handleChange}></textarea>
+                                            <textarea 
+                                                id="additional-notes"
+                                                name="notes" 
+                                                rows="5" 
+                                                value={taxInfo.notes} 
+                                                placeholder={!taxInfo.notes ? 'Enter Additional Notes' : ''}
+                                                onChange={handleFieldChange}
+                                                onBlur={handleFieldChange}
+                                            >
+                                                
+                                            </textarea>
                                         </div>
                                     </Form>
                                 </Card>

@@ -66,7 +66,7 @@ router.post('/update/organization', async (req, res) => {
             }
 
             await db.query(
-                `INSERT INTO org_info (${fieldsToInsert.join(', ')}) VALUES (${valuesToInsert.map((_, i) => `$${i + 1}`).join(', ')})`,
+                `INSERT INTO org_info (${fieldsToInsert.join(', ')}) VALUES (${valuesToInsert.map((_, i) => `$${i + 1}`).join(', ')}) RETURNING *`,
                 valuesToInsert
             );
         } else {
@@ -95,11 +95,11 @@ router.post('/update/organization', async (req, res) => {
             }
 
             // Construct the SQL query for updating the organization
-            const query = `UPDATE org_info SET ${updatedFields.join(', ')} WHERE id = $${values.length + 1}`;
+            const update = `UPDATE org_info SET ${updatedFields.join(', ')} WHERE id = $${values.length + 1} RETURNING *`;
             values.push(existingOrg.id);
 
             // Execute the update query
-            await db.query(query, values);
+            await db.query(update, values);
             res.status(200).json({ status: 200, message: 'Organization details updated successfully' });
         }
     } catch (error) {
