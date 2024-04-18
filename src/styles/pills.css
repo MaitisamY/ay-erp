@@ -1,0 +1,58 @@
+.pills {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: auto;
+    padding: 5px 10px;
+    margin: 0;
+    /* box-shadow: 0px 7px 20px -15px rgba(0, 0, 0, 0.75); */
+    box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);
+    z-index: 10;
+}
+
+.pills li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pills li .link {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: fit-content;
+    height: auto;
+    padding: 7px 20px;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--text-color);
+    opacity: 0.8;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.pills li .link:hover {
+    opacity: 1;
+}
+
+.pills li .link.active {
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.75);
+    background-color: #31EB31;
+    -webkit-box-shadow: 0px 0px 13px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 13px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 13px -5px rgba(0, 0, 0, 0.75);
+}
+
+.pills li .link.active:hover {
+    opacity: 1;
+}

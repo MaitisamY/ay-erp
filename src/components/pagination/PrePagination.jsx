@@ -5,16 +5,16 @@ function PrePagination({ totalPages, handleItemsPerPage, handleSearchTerm, selec
     return (
         <div className="pre-pagination">
             <span>Total pages: {totalPages}</span>
-            <input type="text" onChange={handleSearchTerm} placeholder="Search..." />
+            <input type="text" onChange={handleSearchTerm && handleSearchTerm} placeholder="Search..." />
             {
                 selectedItems.length > 1 && (
-                    <button className="bg-danger" onClick={handleDeleteMultiple}>
+                    <button className="bg-danger" onClick={handleDeleteMultiple && handleDeleteMultiple}>
                         <FaTrashAlt /> Delete selection ({selectedItems.length})
                     </button>
                 )
             }
             <div>
-            <span>Showing</span> <select name="items-per-page" id="items-per-page" onChange={handleItemsPerPage}>
+            <span>Showing</span> <select name="items-per-page" id="items-per-page" onChange={handleItemsPerPage && handleItemsPerPage}>
                     <option value="25">25</option>
                     <option value="50">50</option>
                     <option value="100">100</option>

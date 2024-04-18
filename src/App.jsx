@@ -1,4 +1,7 @@
 import './styles/app.css'
+import './styles/pills.css'
+import './styles/container.css'
+import './styles/table.css'
 import 'react-toastify/dist/ReactToastify.css';
 
 import { OrganizationCredentialProvider } from './hooks/OrganizationCredentialProvider'

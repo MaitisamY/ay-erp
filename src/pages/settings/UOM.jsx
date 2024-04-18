@@ -92,7 +92,7 @@ function UOM() {
                             </Link>
                         </li>
                     </div>
-                    <div className="setting-container">
+                    <div className="container">
                         <h2>Unit Settings</h2>
                         <div className="box">
                             <div className="inner-box-1">
@@ -122,7 +122,7 @@ function UOM() {
                                 </Card>
                             </div>
                             <div className="inner-box-2">
-                                <Card title="All available units" classes="card card-xx-large">
+                                <Card title="All Units" classes="card card-xx-large">
                                     {   
                                         !uoms ? (
                                             <h5>Loading...</h5>

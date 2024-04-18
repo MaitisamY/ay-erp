@@ -74,7 +74,7 @@ function General() {
                         </li>
                     </div>
                     
-                    <div className="setting-container">
+                    <div className="container">
                         <h2>General Settings</h2>
                         <div className="box">
                             <div className="inner-box-1">

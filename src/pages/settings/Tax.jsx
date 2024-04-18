@@ -57,12 +57,12 @@ function Tax() {
                         </li>
                     </div>
                     
-                    <div className="setting-container">
+                    <div className="container">
                         <h2>Tax Settings</h2>
                         <div className="box">
                             <div className="inner-box-1">
                                 <Card title="Tax Configuration" classes="card card-xx-large">
-                                    <h4>The tax information saves automatically as you fill and leave the field.</h4>
+                                    <h4>All fields get saved automatically as per the changes.</h4>
                                     <Form>
                                         <div className="form-group">
                                             <label htmlFor="tax-name">Tax Name</label>
@@ -71,7 +71,7 @@ function Tax() {
                                                 name="name" 
                                                 id="tax-name"
                                                 value={taxInfo.name} 
-                                                placeholder={!taxInfo.name ? 'Enter Tax Name' : ''}
+                                                placeholder={!taxInfo.name ? 'E.g. GST' : ''}
                                                 onChange={handleFieldChange} 
                                             />
                                             {
@@ -100,7 +100,7 @@ function Tax() {
                                                 name="rate" 
                                                 id="tax-rate"
                                                 value={taxInfo.rate} 
-                                                placeholder={!taxInfo.rate ? 'Enter Tax Rate' : ''}
+                                                placeholder={!taxInfo.rate ? 'E.g. 4%' : ''}
                                                 onChange={handleFieldChange} 
                                             />
                                             {
@@ -203,7 +203,7 @@ function Tax() {
                                                 name="notes" 
                                                 rows="5" 
                                                 value={taxInfo.notes} 
-                                                placeholder={!taxInfo.notes ? 'Enter Additional Notes' : ''}
+                                                placeholder={!taxInfo.notes ? 'E.g. Yearly tax' : ''}
                                                 onChange={handleFieldChange}
                                             >
                                                 

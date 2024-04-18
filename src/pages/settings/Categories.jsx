@@ -92,7 +92,7 @@ function Categories() {
                             </Link>
                         </li>
                     </div>
-                    <div className="setting-container">
+                    <div className="container">
                         <h2>Category Settings</h2>
                         <div className="box">
                             <div className="inner-box-1">
@@ -122,7 +122,7 @@ function Categories() {
                                 </Card>
                             </div>
                             <div className="inner-box-2">
-                                <Card title="All available units" classes="card card-xx-large">
+                                <Card title="All Categories" classes="card card-xx-large">
                                     {   
                                         !categories ? (
                                             <h5>Loading...</h5>

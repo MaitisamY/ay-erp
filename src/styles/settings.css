@@ -1,114 +1,4 @@
-.pills {
-    position: sticky;
-    top: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    height: auto;
-    padding: 5px 10px;
-    margin: 0;
-    /* box-shadow: 0px 7px 20px -15px rgba(0, 0, 0, 0.75); */
-    box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(10px);
-    z-index: 10;
-}
-
-.pills li {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.pills li .link {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    width: fit-content;
-    height: auto;
-    padding: 7px 20px;
-    font-size: 14px;
-    font-weight: 400;
-    text-decoration: none;
-    color: var(--text-color);
-    opacity: 0.8;
-    cursor: pointer;
-    font-family: "Inter", sans-serif;
-    border-radius: 6px;
-    transition: all 0.2s ease-in-out;
-}
-
-.pills li .link:hover {
-    opacity: 1;
-}
-
-.pills li .link.active {
-    opacity: 1;
-    color: rgba(0, 0, 0, 0.75);
-    background-color: #31EB31;
-    -webkit-box-shadow: 0px 0px 13px -5px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 13px -5px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 13px -5px rgba(0, 0, 0, 0.75);
-}
-
-.pills li .link.active:hover {
-    opacity: 1;
-}
-
-.setting-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
-    height: auto;
-    padding: 40px 100px;
-    margin: 0;
-}
-
-.setting-container .box {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 0;
-    width: 100%;
-    height: auto;
-    padding: 0;
-    margin: 10px 0 0 0;
-}
-
-.setting-container .box .inner-box-1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 30%;
-    height: auto;
-    padding: 0 10px;
-    margin: 0;
-    gap: 30px;
-}
-
-.setting-container .box .inner-box-2 {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 70%;
-    gap: 30px;
-    height: auto;
-    padding: 0;
-    margin: 0;
-}
-
-.setting-container .box form {
+form {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -120,26 +10,26 @@
     margin: 0;
 }
 
-.setting-container .box h4 {
+h4 {
     width: 100%;
     height: auto;
     padding: 0;
     margin: 0 0 15px 0;
 }
 
-.setting-container .box h4 i {
+h4 i {
     font-style: normal;
     font-weight: 800;
 }
 
-.setting-container .box h6 {
+h6 {
     width: 100%;
     height: auto;
     padding: 10px 0 10px 0;
     margin: 0;
 }
 
-.setting-container .box form .link {
+.link {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -155,64 +45,7 @@
     text-decoration: none;
 }
 
-.setting-container .box table {
-    width: 100%;
-    height: auto;
-    padding: 0;
-    margin: 0;
-    border-collapse: collapse;
-    border-spacing: 0;
-    border-radius: 5px;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.setting-container .box table th {
-    padding: 10px;
-    margin: 0;
-    border-bottom: 1px solid #cccccc98;
-    font-weight: 500;
-    text-align: left;
-    font-size: small;
-}
-
-.setting-container .box table td {
-    padding: 10px 11px;
-    margin: 0;
-    text-align: left;
-    font-size: small;
-}
-
-.setting-container .box table tr:nth-child(even) {
-    background-color: rgba(49, 49, 235, 0.05);
-}
-
-.setting-container .box table td .link {
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.setting-container .box table button {
-    padding: 0;
-    margin: 0;
-    border: none;
-    font-size: 18px;
-    font-weight: 400;
-    color: var(--text-color);
-    background-color: transparent;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.setting-container .box table button.danger {
-    color: var(--text-color);
-}
-
-.setting-container .box table button.danger:hover {
-    color: #ca1818;
-}
-
-.setting-container .box form .form-group {
+form .form-group {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -224,7 +57,7 @@
     margin: 0;
 }
 
-.setting-container .box form .form-group .loader {
+form .form-group .loader {
     position: absolute;
     top: 53%;
     right: 15px;
@@ -245,7 +78,7 @@
     100% { transform: rotate(360deg); }
 }
 
-.setting-container .box form .form-group .responser {
+form .form-group .responser {
     position: absolute;
     top: 48%;
     right: 10px;
@@ -257,14 +90,14 @@
     background-color: var(--background-color);
 }
 
-.setting-container .box form .form-group label {
+form .form-group label {
     font-size: 14px;
     font-weight: 500;
     color: var(--text-color);
     margin: 10px 0 5px 0;
 }
 
-.setting-container .box form .form-group input {
+form .form-group input {
     width: 100%;
     height: auto;
     padding: 10px 10px;
@@ -279,7 +112,7 @@
     margin: 0 0 10px 0;
 }
 
-.setting-container .box form .form-group select {
+form .form-group select {
     width: 100%;
     height: auto;
     padding: 10px 10px;
@@ -294,13 +127,13 @@
     margin: 0 0 10px 0;
 }
 
-.setting-container .box form .form-group select option {
+form .form-group select option {
     background-color: var(--background-color);
     color: var(--text-color);
     padding: 10px 10px;
 }
 
-.setting-container .box form .form-group textarea {
+form .form-group textarea {
     width: 100%;
     height: auto;
     padding: 10px 10px;
@@ -316,18 +149,14 @@
     resize: none;
 }
 
-.setting-container .box form .form-group input:hover,
-/* .setting-container .box form .form-group input:focus,
-.setting-container .box form .form-group input:active,  */
-.setting-container .box form .form-group select:hover,
-/* .setting-container .box form .form-group select:focus,
-.setting-container .box form .form-group select:active { */ 
-.setting-container .box form .form-group textarea:hover {
+form .form-group input:hover,
+form .form-group select:hover, 
+form .form-group textarea:hover {
     outline: 2px solid #31EB31;
     border: 1px solid #31EB31;
 }
 
-.setting-container .box form button {
+form button {
     width: 100%;
     height: auto;
     padding: 10px 10px;
@@ -344,19 +173,19 @@
     box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.2);
 }
 
-.setting-container .box form button:hover {
+form button:hover {
     background-color: #31eb31e7;
     color: rgba(0, 0, 0, 0.9);
     cursor: pointer;
 }
 
-.setting-container .box form button:disabled {
+form button:disabled {
     background-color: #cccccc98;
     color: rgba(0, 0, 0, 0.9);
     cursor: not-allowed;
 }
 
-.setting-container .box form button:disabled:hover {
+form button:disabled:hover {
     background-color: #cccccc98;
     color: rgba(0, 0, 0, 0.9);
     cursor: not-allowed;
