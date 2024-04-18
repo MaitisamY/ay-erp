@@ -5,12 +5,21 @@ import { db } from '../config/connectDB.js';
 
 const router = express.Router();
 
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, './uploads/');
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+//     },
+// });
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './uploads/');
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        cb(null, file.originalname); // Keep the original filename
     },
 });
 
@@ -110,16 +119,38 @@ router.post('/update/organization', async (req, res) => {
 
 router.post('/update/logo', upload.single('logo'), async (req, res) => {
     const logo = req.file
+
+    if (!logo) {
+        res.json({ status: 400, message: 'No file uploaded' });
+        return;
+    }
+
     const logoName = logo ? logo.originalname : null;
 
     try {
-        const result = await db.query('UPDATE org_info SET logo = $1 WHERE id = 1 RETURNING *', [logoName]);
 
-        if (!result) {
-            res.json({ status: 400, message: 'Error updating logo' });
-            return;
+        const check = await db.query('SELECT * FROM org_info WHERE id = 1');
+
+        if (check.rows.length === 0) {
+            
+            const insert = await db.query('INSERT INTO org_info (logo) VALUES ($1) RETURNING *', [logoName]);
+
+            if (!insert) {
+                res.json({ status: 400, message: 'Error inserting logo' });
+                return;
+            } else {
+                res.json({ status: 200, message: 'Logo inserted successfully' });
+            }
         } else {
-            res.json({ status: 200, message: 'Logo updated successfully' });
+
+            const update = await db.query('UPDATE org_info SET logo = $1 WHERE id = 1 RETURNING *', [logoName]);
+
+            if (!update) {
+                res.json({ status: 400, message: 'Error updating logo' });
+                return;
+            } else {
+                res.json({ status: 200, message: 'Logo updated successfully' });
+            }
         }
     } catch (error) {
         res.json({ status: 500, message: error.message });

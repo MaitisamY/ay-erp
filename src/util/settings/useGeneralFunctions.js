@@ -11,9 +11,10 @@ export const useGeneralFunctions = () => {
     const [skuPrefix, setSKUPrefix] = useState(prefix)
     const [currencies, setCurrencies] = useState(null)
     const [serverResponse, setServerResponse] = useState(null)
-    // const fileInputRef = useRef(null);
-    // const [selectedFileName, setSelectedFileName] = useState('');
-    // const [fileSizeError, setFileSizeError] = useState(false);
+    const fileInputRef = useRef(null);
+    const [selectedFileName, setSelectedFileName] = useState('');
+    const [copyOfSelectedFileName, setCopyOfSelectedFileName] = useState('');
+    const [fileSizeError, setFileSizeError] = useState(false);
     const [orgInfo, setOrgInfo] = useState({
         name: '',
         email: '',
@@ -40,27 +41,27 @@ export const useGeneralFunctions = () => {
         }));
     }
 
-    // const handleFileChange = () => {
-    //   const file = fileInputRef.current.files[0]
-    //   const maxFiles = 1
-    //   if (file) {
-    //     const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
-    //     if (file.size > maxSizeInBytes) {
-    //         setFileSizeError('File size exceeds the limit (5MB)');
-    //       return;
-    //     }
-    //     if (file.length > maxFiles) {
-    //         setErrorMessage(`You can only upload ${maxFiles} file`);
-    //         return;
-    //     }
-    //     setSelectedFileName(file.name);
-    //     setFileSizeError('');
-    //   }
-    // };
+    const handleFileChange = () => {
+      const file = fileInputRef.current.files[0]
+      const maxFiles = 1
+      if (file) {
+        const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+        if (file.size > maxSizeInBytes) {
+            setFileSizeError('File size exceeds the limit (5MB)');
+          return;
+        }
+        if (file.length > maxFiles) {
+            setFileSizeError(`You can only upload ${maxFiles} file`);
+            return;
+        }
+        setSelectedFileName(file.name);
+        setFileSizeError('');
+      }
+    };
 
-    // const handleFileClick = () => {
-    //     fileInputRef.current.click()
-    // }
+    const handleFileClick = () => {
+        fileInputRef.current.click()
+    }
 
     const handlePrefixChange = (event) => {
         const { value } = event.target;
@@ -169,12 +170,76 @@ export const useGeneralFunctions = () => {
                     address: response.data.data[0].address,
                     website: response.data.data[0].website,
                 })
+
+                setSelectedFileName(
+                    response.data.data[0].logo 
+                    && response.data.data[0].logo !== 'null'
+                    && response.data.data[0].logo !== 'undefined'
+                    && response.data.data[0].logo !== '' 
+                    ? response.data.data[0].logo : ''
+                );
+
+                setCopyOfSelectedFileName(
+                    response.data.data[0].logo 
+                    && response.data.data[0].logo !== 'null'
+                    && response.data.data[0].logo !== 'undefined'
+                    && response.data.data[0].logo !== '' 
+                    ? response.data.data[0].logo : ''
+                )
             } else {
                 console.log(response.data.message);
             }
         } catch (error) {
             console.log('Error fetching organization details', error);
             setServerResponse(error.message);
+        }
+    }
+
+    const handleFileSubmit = async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData();
+        const file = fileInputRef.current.files[0];
+
+        formData.append('logo', file);
+
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/update/logo`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            if (response.data.status === 200) {
+
+                toast.success(response.data.message, {
+                    position: "bottom-right",
+                    autoClose: 6000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                });
+
+                setOrgCreds((prevOrgCreds) => ({
+                    ...prevOrgCreds,
+                    logo: selectedFileName
+                }))
+            } else {
+
+                toast.warn(response.data.message, {
+                    position: "bottom-right",
+                    autoClose: 6000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                });
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
     
@@ -197,8 +262,15 @@ export const useGeneralFunctions = () => {
         serverResponse,
         orgInfo,
         copyOfOrgInfo,
+        selectedFileName,
+        copyOfSelectedFileName,
+        fileSizeError,
+        fileInputRef,
+        handleFileChange,
+        handleFileClick,
         handleOrgInfoChange,
         handlePrefixChange,
-        handleFormSubmit
+        handleFormSubmit,
+        handleFileSubmit
     }
 }

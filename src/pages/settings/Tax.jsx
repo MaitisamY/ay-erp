@@ -2,6 +2,7 @@ import '../../styles/settings.css'
 
 import { Link } from 'react-router-dom'
 import { useTaxFunctions } from '../../util/settings/useTaxFunctions'
+import { BsCheck2, BsX } from 'react-icons/bs'
 
 import Sidebar from '../../components/Sidebar'
 import Content from '../../components/Content'
@@ -15,6 +16,14 @@ function Tax() {
     
     const {
         taxInfo,
+        isLoadingName,
+        isLoadingRate,
+        isLoadingType,
+        isLoadingAuthority,
+        isLoadingCalculationMethod,
+        isLoadingEffectiveDate,
+        isLoadingNotes,
+        serverResponse,
         handleFieldChange
     } = useTaxFunctions()
 
@@ -64,21 +73,53 @@ function Tax() {
                                                 value={taxInfo.name} 
                                                 placeholder={!taxInfo.name ? 'Enter Tax Name' : ''}
                                                 onChange={handleFieldChange} 
-                                                onBlur={handleFieldChange}
                                             />
+                                            {
+                                                isLoadingName ? <span className="loader"></span> : 
+                                                serverResponse && serverResponse.name ? 
+                                                    <span className={`responser 
+                                                        ${serverResponse.name.status === 200 ? 'text-green' 
+                                                        : serverResponse.name.status === 500 ? 'text-red' 
+                                                        : ''}
+                                                        `}
+                                                    >
+                                                        {
+                                                            serverResponse.name.status === 200 ? <BsCheck2 alt="Success" title='Saved' /> 
+                                                            : serverResponse.name.status === 500 ? <BsX alt="Error" title='Error' /> 
+                                                            : null
+                                                        }
+                                                    </span> 
+                                                : null
+                                            }
                                         </div>
 
                                         <div className="form-group">
                                             <label htmlFor="tax-rate">Tax Rate (%)</label>
                                             <input 
-                                                type="number" 
+                                                type="text" 
                                                 name="rate" 
                                                 id="tax-rate"
                                                 value={taxInfo.rate} 
                                                 placeholder={!taxInfo.rate ? 'Enter Tax Rate' : ''}
                                                 onChange={handleFieldChange} 
-                                                onBlur={handleFieldChange}
                                             />
+                                            {
+                                                isLoadingRate ? <span className="loader"></span> : 
+                                                serverResponse && serverResponse.rate ? 
+                                                    <span className={`responser 
+                                                        ${serverResponse.rate.status === 200 ? 'text-green' 
+                                                        : serverResponse.rate.status === 500 ? 'text-red' 
+                                                        : ''}
+                                                        `}
+                                                    >
+                                                        {
+                                                            serverResponse.rate.status === 200 ? <BsCheck2 alt="Success" title='Saved' /> 
+                                                            : serverResponse.rate.status === 500 ? <BsX alt="Error" title='Error' /> 
+                                                            : null
+                                                        }
+                                                    </span> 
+                                                : null
+                                            }
                                         </div>
 
                                         <div className="form-group">
@@ -147,7 +188,6 @@ function Tax() {
                                                 value={taxInfo.effective_date} 
                                                 placeholder={!taxInfo.effective_date ? 'Enter Effective Date' : ''}
                                                 onChange={handleFieldChange} 
-                                                onBlur={handleFieldChange}
                                             />
                                         </div>
                                     </Form>
@@ -165,10 +205,26 @@ function Tax() {
                                                 value={taxInfo.notes} 
                                                 placeholder={!taxInfo.notes ? 'Enter Additional Notes' : ''}
                                                 onChange={handleFieldChange}
-                                                onBlur={handleFieldChange}
                                             >
                                                 
                                             </textarea>
+                                            {
+                                                isLoadingNotes ? <span className="loader"></span> : 
+                                                serverResponse ? 
+                                                    <span className={`responser 
+                                                        ${serverResponse.notes.status === 200 ? 'text-green' 
+                                                        : serverResponse.notes.status === 500 ? 'text-red' 
+                                                        : ''}
+                                                        `}
+                                                    >
+                                                        {
+                                                            serverResponse.notes.status === 200 ? <BsCheck2 alt="Success" title='Saved' /> 
+                                                            : serverResponse.notes.status === 500 ? <BsX alt="Error" title='Error' /> 
+                                                            : null
+                                                        }
+                                                    </span> 
+                                                : null
+                                            }
                                         </div>
                                     </Form>
                                 </Card>

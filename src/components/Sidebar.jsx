@@ -15,11 +15,16 @@ function Sidebar() {
     const { isCollapsed, onSidebarToggle } = useMenuPreference()
     const { pathname } = useLocation()
 
+    console.log(organizationCredential);
+
     return (
         <div className="sidebar" style={{ width: isCollapsed ? '70px' : '15%' }}>
 
             <div className="brand">
-                <img src={Logo} alt="logo" />
+                <img 
+                    src={organizationCredential && organizationCredential.logo ? 'http://localhost:5000/uploads/' + organizationCredential.logo : Logo} 
+                    alt="logo" 
+                />
                 <span style={{ display: isCollapsed ? 'none' : 'block' }}>
                     {
                         organizationCredential === null || !organizationCredential.name ? 'Organization Name' : organizationCredential.name
