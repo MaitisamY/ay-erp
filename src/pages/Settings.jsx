@@ -72,6 +72,11 @@ function General() {
                                 Tax
                             </Link>
                         </li>
+                        <li>
+                            <Link to="/settings/tax" className="link">
+                                Brands
+                            </Link>
+                        </li>
                     </div>
                     
                     <div className="container">

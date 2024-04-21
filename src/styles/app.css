@@ -117,6 +117,10 @@ body {
     color: var(--text-color);
 }
 
+.card-xx-small {
+    width: 15%;
+}
+
 .card-x-small {
     width: 25%;
 }
@@ -609,7 +613,7 @@ form .form-group input {
 form .form-group select {
     width: 100%;
     height: auto;
-    padding: 10px 10px;
+    padding: 9px 10px;
     border: 1px solid #cccccc98;
     border-radius: 5px;
     font-size: 14px;
@@ -650,18 +654,28 @@ form .form-group textarea:hover {
     border: 1px solid #31EB31;
 }
 
+form .form-group input[type="checkbox"] {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0 5px 0 0;
+}
+
 form .input-group {
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     height: auto;
     padding: 0;
     margin: 0 0 10px 0;
-    border: 1px solid #cccccc98;
     border-radius: 5px;
+}
+
+form .input-group.bordered {
+    border: 1px solid #cccccc98;
 }
 
 form .input-group input {
@@ -716,6 +730,15 @@ form .input-group textarea {
     resize: none;
 }
 
+form .input-group p {
+    padding: 10px 10px;
+    border-radius: 0 5px 5px 0;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    border-left: 1px solid #cccccc98;
+}
+
 form .input-group span {
     padding: 10px 10px;
     border-radius: 5px 0 0 5px;
@@ -725,14 +748,23 @@ form .input-group span {
     border-right: 1px solid #cccccc98;
 }
 
+form .input-group i {
+    font-style: normal;
+    padding: 10px 10px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    border-right: 1px solid #cccccc98;
+    border-left: 1px solid #cccccc98;
+}
+
 form .input-group a {
-    color: var(--text-color);
     text-decoration: none;
     cursor: pointer;
     padding: 10px 10px;
     border-radius: 0 5px 5px 0;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 600;
     font-family: "Inter", sans-serif;
     border-left: 1px solid #cccccc98;
 }
@@ -764,6 +796,16 @@ form button {
     font-family: "Inter", sans-serif;
     transition: all 0.2s ease-in-out;
     box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.2);
+}
+
+form button.blue {
+    color: #ffffff;
+    background-color: rgb(49, 49, 235);
+}
+
+form button.blue:hover {
+    color: #ffffff;
+    background-color: rgba(49, 49, 235, 0.904);
 }
 
 form button:hover {
@@ -1233,5 +1275,16 @@ h6 {
 
 .pl-30 {
     padding-left: 30px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }
 

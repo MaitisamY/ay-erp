@@ -1,3 +1,4 @@
+import '../styles/404.css'
 
 import Sidebar from '../components/Sidebar'
 import Content from '../components/Content'
@@ -13,7 +14,12 @@ function NotFound() {
             <Content>
                 <Header />
                 <Main>
-                    <h1>Page Not Found</h1>
+                    <div className="container">
+                        <div className="page-not-found">
+                            <h2 className="text-red">Page Not Found</h2>
+                            <img src="/images/404.png" alt="404" />
+                        </div>
+                    </div>
                 </Main>
                 <Footer />
             </Content>
