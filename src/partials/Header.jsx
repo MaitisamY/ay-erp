@@ -10,7 +10,8 @@ function Header() {
     useEffect(() => {
         pathname === '/404' ? document.title = '404 - Page Not Found'
         : pathname === '/' ? document.title = 'Dashboard' 
-        : pathname === '/products' ? document.title = 'Products' 
+        : pathname === '/products' ? document.title = 'Products'
+        : pathname === '/products/add' ? document.title = 'Add Product' 
         : pathname === '/sales' ? document.title = 'Sales' 
         : pathname === '/customers' ? document.title = 'Customers'
         : pathname === '/purchases' ? document.title = 'Purchases' 
@@ -34,6 +35,7 @@ function Header() {
                     : pathname === '/settings/tax' 
                     || pathname === '/settings/uom' 
                     || pathname === '/settings/categories' ? 'Settings'
+                    : pathname === '/products/add' ? 'Products'
                     : pathname.slice(1).replace(/-/, ' ').charAt(0).toUpperCase() + pathname.slice(1).replace(/-/, ' ').slice(1)
                 }
             </h1>

@@ -2,9 +2,10 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { usePagination } from '../helpers/Pagination'
+import { FaTrashAlt, FaEdit } from 'react-icons/fa'
+
 import PrePagination from '../components/pagination/PrePagination'
 import Pagination from '../components/pagination/Pagination'
-
 import Sidebar from '../components/Sidebar'
 import Content from '../components/Content'
 import Header from '../partials/Header'
@@ -20,7 +21,7 @@ function Products() {
             sku: 'P1',
             price: 1000,
             quantity: 10,
-            category: 'Category 1',
+            category: '1',
         },
         {
             id: 2,
@@ -28,7 +29,7 @@ function Products() {
             sku: 'P2',
             price: 2000,
             quantity: 20,
-            category: 'Category 2',
+            category: '4',
         },
         {
             id: 3,
@@ -36,7 +37,7 @@ function Products() {
             sku: 'P3',
             price: 3000,
             quantity: 30,
-            category: 'Category 3',
+            category: '2',
         }
     ])
 
@@ -57,7 +58,11 @@ function Products() {
     } = usePagination({ data: products })
 
     const currentItems = products.slice(indexOfFirstItem, indexOfLastItem)
-    const filteredItems = currentItems.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredItems = currentItems.filter(
+        item => item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.category.toLowerCase().includes(searchTerm.toLowerCase())
+    )
 
     useEffect(() => {
         if (currentPage > totalPages) {
@@ -79,13 +84,8 @@ function Products() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/products/add/product" className="link">
+                            <Link to="/products/add" className="link">
                                 Add Product
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/products/analytics" className="link">
-                                Analytics
                             </Link>
                         </li>
                     </div>
@@ -104,6 +104,7 @@ function Products() {
                             <table>
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Product Name</th>
                                         <th>Product SKU</th>
                                         <th>Price</th>
@@ -115,32 +116,56 @@ function Products() {
                                 {
                                     !searchTerm ? (
                                         <tbody>
-                                            {currentItems.map((product) => (
-                                                <tr key={product.id}>
+                                            {currentItems.map((product, index) => (
+                                                <tr key={index}>
+                                                    <td>{products.indexOf(product) + 1}</td>
                                                     <td>{product.name}</td>
                                                     <td>{product.sku}</td>
                                                     <td>{product.price}</td>
                                                     <td>{product.quantity}</td>
                                                     <td>{product.category}</td>
                                                     <td>
-                                                        <button>Edit</button>
-                                                        <button>Delete</button>
+                                                        <div className="btn-group">
+                                                            <button  
+                                                                className="edit"
+                                                                title={`Edit unit: ${product.name}`}
+                                                            >
+                                                                <FaEdit />
+                                                            </button>
+                                                            <button 
+                                                                className="danger" 
+                                                                title={`Delete unit: ${product.name}`}
+                                                            >
+                                                                <FaTrashAlt />
+                                                            </button>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))}
                                         </tbody>
                                     ) : (
                                         <tbody>
-                                            {filteredItems.map((product) => (
-                                                <tr key={product.id}>
+                                            {filteredItems.map((product, index) => (
+                                                <tr key={index}>
+                                                    <td>{products.indexOf(product) + 1}</td>
                                                     <td>{product.name}</td>
                                                     <td>{product.sku}</td>
                                                     <td>{product.price}</td>
                                                     <td>{product.quantity}</td>
                                                     <td>{product.category}</td>
                                                     <td>
-                                                        <button>Edit</button>
-                                                        <button>Delete</button>
+                                                        <button  
+                                                            className="edit"
+                                                            title={`Edit unit: ${product.name}`}
+                                                        >
+                                                            <FaEdit />
+                                                        </button>
+                                                        <button 
+                                                            className="danger" 
+                                                            title={`Delete unit: ${product.name}`}
+                                                        >
+                                                            <FaTrashAlt />
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             ))}

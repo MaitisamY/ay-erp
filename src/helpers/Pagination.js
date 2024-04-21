@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 
 export const usePagination = ({ data: data }) => {
+    
     const [searchTerm, setSearchTerm] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage, setItemsPerPage] = useState(25)

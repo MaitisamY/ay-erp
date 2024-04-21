@@ -40,7 +40,7 @@ function Sidebar() {
                     </Link>
                 </li>
                 <li>
-                    <Link to="/products" className={`link ${pathname === '/products' ? 'active' : ''}`}>
+                    <Link to="/products" className={`link ${pathname === '/products' || pathname === '/products/add' ? 'active' : ''}`}>
                         <BsGift size={20} />
                         <span style={{ display: isCollapsed ? 'none' : 'block' }}>Products</span>
                     </Link>

@@ -1,7 +1,4 @@
 import './styles/app.css'
-import './styles/pills.css'
-import './styles/container.css'
-import './styles/table.css'
 import 'react-toastify/dist/ReactToastify.css';
 
 import { OrganizationCredentialProvider } from './hooks/OrganizationCredentialProvider'
@@ -16,6 +13,7 @@ import { ToastContainer } from 'react-toastify'
 
 import Dashboard from './pages/Dashboard'
 import Products from './pages/Products'
+import AddProduct from './pages/products/AddProduct'
 import Sales from './pages/Sales'
 import Purchases from './pages/Purchases'
 import Expenses from './pages/Expenses'
@@ -48,6 +46,7 @@ function App() {
                                             <Route path="/" element={<Dashboard />} />
                                             <Route path="/dashboard" element={<Dashboard />} />
                                             <Route path="/products" element={<Products />} />
+                                            <Route path="/products/add" element={<AddProduct />} />
                                             <Route path="/sales" element={<Sales />} />
                                             <Route path="/purchases" element={<Purchases />} />
                                             <Route path="/expenses" element={<Expenses />} />

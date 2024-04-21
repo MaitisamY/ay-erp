@@ -7,7 +7,7 @@ function PrePagination({ totalPages, handleItemsPerPage, handleSearchTerm, selec
             <span>Total pages: {totalPages}</span>
             <input type="text" onChange={handleSearchTerm && handleSearchTerm} placeholder="Search..." />
             {
-                selectedItems.length > 1 && (
+                selectedItems && selectedItems.length > 1 && (
                     <button className="bg-danger" onClick={handleDeleteMultiple && handleDeleteMultiple}>
                         <FaTrashAlt /> Delete selection ({selectedItems.length})
                     </button>
