@@ -236,7 +236,9 @@ function AddProduct() {
                                                             inputMode="numeric"
                                                             onChange={(e) => handleChangeVariant(variant.id, e.target.name, e.target.value)} 
                                                         />
-                                                        <a className="text-red" onClick={() => removeVariant(variant.id)}>Remove</a>
+                                                        <a className="text-red" onClick={() => removeVariant(variant.id)}>
+                                                            Remove
+                                                        </a>
                                                     </div>
                                                 </div>
                                             ))
@@ -276,7 +278,9 @@ function AddProduct() {
                                                             placeholder="E.g. Red"
                                                             onChange={(e) => handleChangeVariant(img.id, e.target.name, e.target.value)} 
                                                         />
-                                                        <a className="text-red" onClick={() => removeImages(img.id)}>Remove</a>
+                                                        <a className="text-red" onClick={() => removeImages(img.id)}>
+                                                            Remove
+                                                        </a>
                                                     </div>
                                                 </div>
                                             ))
