@@ -1,19 +1,39 @@
 import '../styles/sidebar.css'
 import Logo from '../assets/images/logo-2.png'
 
+import { useEffect } from 'react'
 import { useMenuPreference } from '../hooks/MenuPreferenceProvider'
 import { useOrganizationCredential } from '../hooks/OrganizationCredentialProvider'
 import { BsArrowBarLeft, BsArrowBarRight, BsSpeedometer2, BsGift, BsPeople, BsPersonCheck } from 'react-icons/bs'
 import { FaRegMoneyBillAlt } from 'react-icons/fa'
 import { MdOutlinePayments, MdPeopleOutline, MdOutlineFileCopy, MdOutlineSettings, MdMoneyOff } from 'react-icons/md'
 import { Link, useLocation } from 'react-router-dom'
+import axios from 'axios'
 
 function Sidebar() {
 
-    const { organizationCredential } = useOrganizationCredential()
+    const { organizationCredential, setOrgCreds } = useOrganizationCredential()
 
     const { isCollapsed, onSidebarToggle } = useMenuPreference()
     const { pathname } = useLocation()
+
+    const fetchCredentials = async () => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/get/organization`)
+            
+            if (response.data.status === 200) {
+                setOrgCreds(response.data.data[0])
+            } else {
+                console.error(response.data.message)
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    useEffect(() => {
+        fetchCredentials()
+    }, [organizationCredential])
 
     return (
         <div className="sidebar" style={{ width: isCollapsed ? '70px' : '15%' }}>

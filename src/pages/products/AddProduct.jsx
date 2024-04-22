@@ -58,11 +58,12 @@ function AddProduct() {
                         <h2>Product Details Form</h2>
 
                         <div className="box">
+                            <h4>Fields with <i className="text-red">*</i> are mandatory</h4>
                             <Form onSubmit={() => {}}>
 
                                 <Card classes="card-less card-x-small">
                                     <div className="form-group">
-                                        <label htmlFor="name">Product Name</label>
+                                        <label htmlFor="name">Product Name<i>*</i></label>
                                         <input 
                                             type="text" 
                                             name="name" 
@@ -73,7 +74,7 @@ function AddProduct() {
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="selling-price">Selling Price</label>
+                                        <label htmlFor="selling-price">Selling Price<i>*</i></label>
                                         <div className="input-group bordered">
                                             {currency && <span>{currency}</span>}
                                             <input 
@@ -90,7 +91,7 @@ function AddProduct() {
 
                                 <Card classes="card-less card-x-small">
                                     <div className="form-group">
-                                        <label htmlFor="sku">Product SKU (Stock Keeping Unit)</label>
+                                        <label htmlFor="sku">Product SKU (Stock Keeping Unit)<i>*</i></label>
                                         <div className="input-group bordered">
                                             {prefix && <span>{prefix}-</span>}
                                             <input 
@@ -122,7 +123,7 @@ function AddProduct() {
 
                                 <Card classes="card-less card-x-small">
                                     <div className="form-group">
-                                        <label htmlFor="category">Product Category</label>
+                                        <label htmlFor="category">Product Category<i>*</i></label>
                                         <select name="category" id="category" onChange={handleChange}>
                                             <option value="">Select Category</option>
                                         {
@@ -134,7 +135,7 @@ function AddProduct() {
                                         </select>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="uom">UOM (Unit of Measurement)</label>
+                                        <label htmlFor="uom">UOM (Unit of Measurement)<i>*</i></label>
                                         <select name="uom" id="uom" onChange={handleChange}>
                                             <option value="">Select UOM</option>
                                         {
@@ -149,7 +150,7 @@ function AddProduct() {
 
                                 <Card classes="card-less card-x-small">
                                     <div className="form-group">
-                                        <label htmlFor="purchase-cost">Purchase Cost</label>
+                                        <label htmlFor="purchase-cost">Purchase Cost<i>*</i></label>
                                         <div className="input-group bordered">
                                             {currency && <span>{currency}</span>}
                                             <input 
@@ -188,78 +189,100 @@ function AddProduct() {
                                             value={product.description} 
                                             placeholder="E.g. This is a description of the product"
                                             onChange={handleChange}
+                                            rows="5"
                                         ></textarea>
                                     </div>
                                 </Card>
 
-                                <Card classes="card-less card-xxx-large">
-                                    <Card className="card-less card-small">
+                                <div className="inner-box-1">
+                                    <Card classes="card-less card-x-large">
                                         <div className="form-group">
-                                            <label htmlFor="variants">Does this product have variants?</label>
-                                            <button className="blue" type="button" onClick={createVariant}>Add Variant</button>
+                                            <label htmlFor="variants">Does this product have variants? (Optional)</label>
+                                            <button 
+                                                className="blue" 
+                                                type="button" 
+                                                onClick={createVariant}
+                                                disabled={variants.length === 12}
+                                                title={variants.length === 12 ? "You can't add more than 12 variants" : "Add Variant"}
+                                            >
+                                                Add Variant
+                                            </button>
                                         </div>
                                     </Card>
-                                </Card>
-
-                                <Card classes="card-less card-medium">
-                                    {
-                                        variants && 
-                                        variants.map((variant) => (
-                                            <div key={variant.id} className="form-group">
-                                                <div className="input-group bordered">
-                                                    <span>Name</span>
-                                                    <input 
-                                                        type="text" 
-                                                        name="name" 
-                                                        value={variant.name}
-                                                        placeholder="E.g. Red"
-                                                        onChange={(e) => handleChangeVariant(variant.id, e.target.name, e.target.value)} 
-                                                    />
-                                                    <i>Price</i>
-                                                    <input 
-                                                        type="number" 
-                                                        name="price"
-                                                        value={variant.price}
-                                                        placeholder="E.g. 1299"
-                                                        inputMode="numeric"
-                                                        onChange={(e) => handleChangeVariant(variant.id, e.target.name, e.target.value)} 
-                                                    />
-                                                    <a className="text-red" onClick={() => removeVariant(variant.id)}>Remove</a>
+                                </div>
+                                
+                                <div className="inner-box-2">
+                                    <Card classes="card-less card-large">
+                                        {
+                                            variants && 
+                                            variants.map((variant) => (
+                                                <div key={variant.id} className="form-group">
+                                                    <label>{variant.id}.</label>
+                                                    <div className="input-group bordered">
+                                                        <span>Name</span>
+                                                        <input 
+                                                            type="text" 
+                                                            name="name" 
+                                                            value={variant.name}
+                                                            placeholder="E.g. Red"
+                                                            onChange={(e) => handleChangeVariant(variant.id, e.target.name, e.target.value)} 
+                                                        />
+                                                        <i>Price</i>
+                                                        <input 
+                                                            type="number" 
+                                                            name="price"
+                                                            value={variant.price}
+                                                            placeholder="E.g. 1299"
+                                                            inputMode="numeric"
+                                                            onChange={(e) => handleChangeVariant(variant.id, e.target.name, e.target.value)} 
+                                                        />
+                                                        <a className="text-red" onClick={() => removeVariant(variant.id)}>Remove</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))
-                                    }
-                                </Card>
+                                            ))
+                                        }
+                                    </Card>
+                                </div>
 
-                                <Card classes="card-less card-xxx-large">
-                                    <Card className="card-less card-small">
+                                <div className="inner-box-1">
+                                    <Card classes="card-less card-x-large">
                                         <div className="form-group">
-                                            <label htmlFor="variants">Does this product have images?</label>
-                                            <button className="blue" type="button" onClick={createImages}>Add Image</button>
+                                            <label htmlFor="variants">Does this product have images? (Optional)</label>
+                                            <button 
+                                                className="blue" 
+                                                type="button" 
+                                                onClick={createImages}
+                                                disabled={images.length === 5}
+                                                title={images.length === 5 ? 'Maximum 5 images allowed' : ''}
+                                            >
+                                                Add Image
+                                            </button>
                                         </div>
                                     </Card>
-                                </Card>
+                                </div>
 
-                                <Card classes="card-less card-medium">
-                                    {
-                                        images && 
-                                        images.map((img) => (
-                                            <div key={img.id} className="form-group">
-                                                <div className="input-group bordered">
-                                                    <span>{img.id}</span>
-                                                    <input 
-                                                        type="file" 
-                                                        name="name" 
-                                                        value={img.name}
-                                                        placeholder="E.g. Red"
-                                                        onChange={(e) => handleChangeVariant(img.id, e.target.name, e.target.value)} 
-                                                    />
-                                                    <a className="text-red" onClick={() => removeImages(img.id)}>Remove</a>
+                                <div className="inner-box-2">
+                                    <Card classes="card-less card-large">
+                                        {
+                                            images && 
+                                            images.map((img) => (
+                                                <div key={img.id} className="form-group">
+                                                    <label>{img.id}.</label>
+                                                    <div className="input-group bordered">
+                                                        <input 
+                                                            type="file" 
+                                                            name="name" 
+                                                            value={img.url}
+                                                            placeholder="E.g. Red"
+                                                            onChange={(e) => handleChangeVariant(img.id, e.target.name, e.target.value)} 
+                                                        />
+                                                        <a className="text-red" onClick={() => removeImages(img.id)}>Remove</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))
-                                    }
-                                </Card>
+                                            ))
+                                        }
+                                    </Card>
+                                </div>
                             </Form>
                         </div>
                     </div>
