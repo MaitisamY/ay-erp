@@ -47,10 +47,14 @@ export const useTaxFunctions = () => {
                     effective_date: response.data.data[0].effective_date,
                     notes: response.data.data[0].notes,  
                 }))
+            } 
+            else {
+                // setServerResponse(response.data.message)
+                console.log(response.data.message);
             }
-
         } catch (error) {
-            console.log(error);
+            // setServerResponse(error.message)
+            console.log(error)
         }
     }
 

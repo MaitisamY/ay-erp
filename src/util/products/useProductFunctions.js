@@ -8,8 +8,8 @@ export const useProductFunctions = () => {
     const { categories } = useCategoryFunctions()
     const { uoms } = useUOMFunctions()
     
-    const [categoryOptions, setCategoryOptions] = useState([]);
-    const [uomOptions, setUomOptions] = useState([]);
+    const [categoryOptions, setCategoryOptions] = useState([])
+    const [uomOptions, setUomOptions] = useState([])
 
     const [product, setProduct] = useState({
         name: '',
@@ -21,10 +21,19 @@ export const useProductFunctions = () => {
         uom: '',
         tax: '',
         description: '',
-    });
+    })
 
-    const [variants, setVariants] = useState([]);
-    const [images, setImages] = useState([]);
+    const [variants, setVariants] = useState([])
+    const [images, setImages] = useState([])
+    const [selectedItems, setSelectedItems] = useState([])
+
+    const handleSelection = (id) => {
+        if (selectedItems.includes(id)) {
+            setSelectedItems(selectedItems.filter(item => item !== id))
+        } else {
+            setSelectedItems([...selectedItems, id])
+        }
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -42,7 +51,7 @@ export const useProductFunctions = () => {
               : variant
             )
         );
-    };
+    }
         
 
     const generateSKU = () => {
@@ -77,6 +86,9 @@ export const useProductFunctions = () => {
         product,
         variants,
         images,
+        selectedItems,
+        setSelectedItems,
+        handleSelection,
         generateSKU,
         handleChange,
         handleChangeVariant,

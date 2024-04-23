@@ -51,6 +51,11 @@ function Tax() {
                             </Link>
                         </li>
                         <li>
+                            <Link to="/settings/brands" className="link">
+                                Brands
+                            </Link>
+                        </li>
+                        <li>
                             <Link to="/settings/tax" className="link active">
                                 Tax
                             </Link>

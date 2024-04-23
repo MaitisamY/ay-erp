@@ -68,13 +68,13 @@ function General() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/settings/tax" className="link">
-                                Tax
+                            <Link to="/settings/brands" className="link">
+                                Brands
                             </Link>
                         </li>
                         <li>
                             <Link to="/settings/tax" className="link">
-                                Brands
+                                Tax
                             </Link>
                         </li>
                     </div>

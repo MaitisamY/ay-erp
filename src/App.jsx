@@ -15,6 +15,7 @@ import Dashboard from './pages/Dashboard'
 import Products from './pages/Products'
 import AddProduct from './pages/products/AddProduct'
 import Sales from './pages/Sales'
+import AddSale from './pages/sales/AddSale';
 import Purchases from './pages/Purchases'
 import Expenses from './pages/Expenses'
 import Users from './pages/Users'
@@ -25,6 +26,7 @@ import General from './pages/Settings'
 import Categories from './pages/settings/Categories'
 import UOM from './pages/settings/UOM'
 import Tax from './pages/settings/Tax'
+import Brands from './pages/settings/Brands'
 import NotDefined from './pages/404'
 
 function App() {
@@ -48,6 +50,7 @@ function App() {
                                             <Route path="/products" element={<Products />} />
                                             <Route path="/products/add" element={<AddProduct />} />
                                             <Route path="/sales" element={<Sales />} />
+                                            <Route path="/sales/add" element={<AddSale />} />
                                             <Route path="/purchases" element={<Purchases />} />
                                             <Route path="/expenses" element={<Expenses />} />
                                             <Route path="/users" element={<Users />} />
@@ -58,6 +61,7 @@ function App() {
                                             <Route path="/settings/categories" element={<Categories />} />
                                             <Route path="/settings/uom" element={<UOM />} />
                                             <Route path="/settings/tax" element={<Tax />} />
+                                            <Route path="/settings/brands" element={<Brands />} />
                                         </Routes>
                                     </NotificationThresholdProvider>
                                 </SKUPrefixProvider>

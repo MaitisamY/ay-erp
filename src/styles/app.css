@@ -251,6 +251,7 @@ body {
 
 .pre-pagination button,
 .pagination button {
+    position: relative;
     height: auto;
     padding: 10px 10px;
     margin: 0 0 0 10px;
@@ -266,15 +267,113 @@ body {
     box-shadow: 0px 0px 10px -2px rgba(211, 208, 208, 0.2);
 }
 
-.pre-pagination button.bg-danger,
-.pagination button.bg-danger {
+.pre-pagination button .tooltip-light {
+    display: none;
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    width: max-content;
+    height: auto;
+    padding: 5px 10px;
+    margin: 0;
+    border-radius: 5px;
+    font-size: small;
+    font-weight: 600;
+    color: rgb(243, 237, 237);
+    background-color: rgb(53, 53, 53);
+    box-shadow: 0px 0px 10px -2px rgb(53, 53, 53);
+    transition: all 0.2s ease-in-out;
+}
+
+.pre-pagination button .tooltip-light::after {
+    content: "";
+    position: absolute;
+    top: 95%;
+    left: 48%;
+    margin-left: -5px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: rgb(53, 53, 53) transparent transparent transparent;
+}
+
+.pre-pagination button .tooltip-dark {
+    display: none;
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    width: max-content;
+    height: auto;
+    padding: 5px 10px;
+    margin: 0;
+    border-radius: 5px;
+    font-size: small;
+    font-weight: 600;
+    color: rgb(53, 53, 53);
+    background-color: rgb(243, 237, 237);
+    box-shadow: 0px 0px 10px -2px rgb(53, 53, 53);
+    transition: all 0.2s ease-in-out;
+}
+
+.pre-pagination button .tooltip-dark::after {
+    content: "";
+    position: absolute;
+    top: 95%;
+    left: 48%;
+    margin-left: -5px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: rgb(243, 237, 237) transparent transparent transparent;
+}
+
+.pre-pagination button:hover .tooltip-light,
+.pre-pagination button:hover .tooltip-dark {
+    display: block;
+}
+
+.pre-pagination button.bg-orange,
+.pagination button.bg-orange {
+    background-color: #ffa500;
+    color: #f3eded;
+    border: none;
+    outline: 1px solid #ffa500;
+}
+
+.pre-pagination button.bg-orange:hover,
+.pagination button.bg-orange:hover {
+    background-color: #ffa600e1;
+    color: #fff;
+    border: none;
+    outline: 1px solid #ffa600e1;
+}
+
+.pre-pagination button.bg-blue,
+.pagination button.bg-blue {
+    background-color: #3131eb;
+    color: #f3eded;
+    border: none;
+    outline: 1px solid #3131eb;
+}
+
+.pre-pagination button.bg-blue:hover,
+.pagination button.bg-blue:hover {
+    background-color: #3131ebe3;
+    color: #fff;
+    border: none;
+    outline: 1px solid #3131ebe3;
+}
+
+.pre-pagination button.bg-red,
+.pagination button.bg-red {
     background-color: #ca1818;
     color: #f3eded;
     border: none;
     outline: 1px solid #ca1818;
 }
-.pre-pagination button.bg-danger:hover,
-.pagination button.bg-danger:hover {
+
+.pre-pagination button.bg-red:hover,
+.pagination button.bg-red:hover {
     background-color: #ca1818e3;
     color: #fff;
     border: none;

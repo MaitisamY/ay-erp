@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 export const usePagination = ({ data: data }) => {
     
@@ -36,6 +37,16 @@ export const usePagination = ({ data: data }) => {
 
     const handleItemsPerPage = (e) => {
         setItemsPerPage(e.target.value)
+
+        toast.success('Items per page updated to: ' + e.target.value, {
+            position: "top-right",
+            autoClose: 6000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+        })
     }
 
     const handleSearchTerm = (e) => {

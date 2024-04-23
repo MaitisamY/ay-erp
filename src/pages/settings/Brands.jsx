@@ -4,8 +4,8 @@ import { useEffect } from 'react'
 import { useOrganizationCredential } from '../../hooks/OrganizationCredentialProvider'
 import { useTheme } from '../../hooks/ThemeProvider'
 import { Link } from 'react-router-dom'
-import { useUOMFunctions } from '../../util/settings/useUOMFunctions'
-import { usePagination } from '../../helpers/Pagination.js'
+import { usebrandFunctions } from '../../util/settings/useBrandFunctions'
+import { usePagination } from '../../helpers/Pagination'
 import { FaTrashAlt } from 'react-icons/fa'
 import { MdOutlineToggleOff, MdOutlineToggleOn, MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
 
@@ -19,25 +19,25 @@ import Form from '../../components/Form'
 import PrePagination from '../../components/pagination/PrePagination'
 import Pagination from '../../components/pagination/Pagination'
 
-function UOM() {
+function brands() {
 
     const { organizationCredential } = useOrganizationCredential()
     const { theme } = useTheme()
 
-    const { 
-        uom, 
-        uoms, 
-        serverResponse, 
+    const {
+        brand,
+        brands,
+        serverResponse,
         selectedItems,
         setSelectedItems,
         handleSelection,
         colorVariation,
-        handleChange, 
-        handleSubmit, 
-        handleDelete, 
+        handleChange,
+        handleSubmit,
+        handleDelete,
         handleUpdate,
         handleDeleteMultiple
-    } = useUOMFunctions()
+    } = usebrandFunctions()
 
     const {
         searchTerm,
@@ -53,10 +53,10 @@ function UOM() {
         firstPage,
         handleItemsPerPage,
         handleSearchTerm 
-    } = usePagination({ data: uoms })
+    } = usePagination({ data: brands })
 
-    const currentItems = uoms.slice(indexOfFirstItem, indexOfLastItem)
-    const filteredItems = uoms.filter(uom => uom.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    const currentItems = brands.slice(indexOfFirstItem, indexOfLastItem)
+    const filteredItems = brands.filter(brand => brand.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
     useEffect(() => {
         if (currentPage > totalPages) {
@@ -77,7 +77,7 @@ function UOM() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/settings/uom" className="link active">
+                            <Link to="/settings/uom" className="link">
                                 Units of Measurement (UOM)
                             </Link>
                         </li>
@@ -87,7 +87,7 @@ function UOM() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/settings/brands" className="link">
+                            <Link to="/settings/brands" className="link active">
                                 Brands
                             </Link>
                         </li>
@@ -98,28 +98,28 @@ function UOM() {
                         </li>
                     </div>
                     <div className="container">
-                        <h2>Unit Settings</h2>
+                        <h2>Brand Settings</h2>
                         <div className="box">
                             <div className="inner-box-1">
                                 <Card title="Add unit" classes="card card-xx-large">
                                     <Form onSubmit={handleSubmit}>
-                                        <h4>Every unit's status is Active by default</h4>
+                                        <h4>Every brand's status is Active by default</h4>
                                         <div className="form-group">
-                                            <label htmlFor="name">Define Unit</label>
+                                            <label htmlFor="brand">Define brand</label>
                                             <input 
                                                 type="text" 
-                                                name="unit" 
-                                                id="unit" 
-                                                value={uom} 
+                                                name="brand" 
+                                                id="brand" 
+                                                value={brand} 
                                                 onChange={handleChange} 
-                                                placeholder="E.g. Kg" 
+                                                placeholder="E.g. Dollar" 
                                             />
                                         </div>
                                         {serverResponse && <h6 className="text-red">{serverResponse}</h6>}
                                         <button 
                                             type="submit"
-                                            disabled={!uom || uom.length < 2}
-                                            title={!uom ? 'Add unit first' : null}
+                                            disabled={!brand || brand.length < 2}
+                                            title={!brand ? 'Add brand first' : null}
                                         >
                                             Add
                                         </button>
@@ -127,16 +127,16 @@ function UOM() {
                                 </Card>
                             </div>
                             <div className="inner-box-2">
-                                <Card title="All Units" classes="card card-xx-large">
+                                <Card title="All brands" classes="card card-xx-large">
                                     {   
-                                        !uoms ? (
+                                        !brands ? (
                                             <h5>Loading...</h5>
-                                        ) : uoms.length === 0 ? ( 
-                                            <h5>No units available</h5>
+                                        ) : brands.length === 0 ? ( 
+                                            <h5>No brands available</h5>
                                         ) : (
                                         <>
                                             <PrePagination 
-                                                serachPlaceholder="Search UOMs..."
+                                                serachPlaceholder="Search brands..."
                                                 totalPages={totalPages}
                                                 handleItemsPerPage={handleItemsPerPage}
                                                 handleSearchTerm={handleSearchTerm}
@@ -160,14 +160,14 @@ function UOM() {
                                                                 ) : (
                                                                     <MdCheckBoxOutlineBlank 
                                                                         size={20} 
-                                                                        onClick={() => setSelectedItems(uoms.map(uom => uom.id))} 
+                                                                        onClick={() => setSelectedItems(brands.map(cat => cat.id))} 
                                                                     />
                                                                 )
                                                             }
                                                         </div>
                                                     </th>
                                                     {
-                                                        Object.keys(uoms[0]).map((key, index) => (
+                                                        Object.keys(brands[0]).map((key, index) => (
                                                             <th key={index}>
                                                                 {key === 'id' ? '#' : key.charAt(0).toUpperCase() + key.slice(1)}
                                                             </th>
@@ -178,56 +178,53 @@ function UOM() {
                                                 </thead>
                                                 {
                                                     !searchTerm ? (
-                                                        <tbody>
-                                                            {currentItems.map((uom, index) => (
-                                                                <tr key={index}>
-                                                                    <td>
-                                                                        <div>
-                                                                            {
-                                                                                selectedItems.includes(uom.id) ? (
-                                                                                    <MdCheckBox 
-                                                                                        size={20} 
-                                                                                        style={{ cursor: 'pointer'}}
-                                                                                        className={theme === 'dark' ? 'text-lime-green' : 'text-green'}
-                                                                                        onClick={() => handleSelection(uom.id)} 
-                                                                                    />
-                                                                                ) : (
-                                                                                    <MdCheckBoxOutlineBlank 
-                                                                                        size={20} 
-                                                                                        style={{ cursor: 'pointer'}}
-                                                                                        onClick={() => handleSelection(uom.id)} 
-                                                                                    />
-                                                                                )
-                                                                            }
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>{uoms.indexOf(uom) + 1}</td>
-                                                                    <td>{uom.name}</td>
-                                                                    <td>
-                                                                        <a 
-                                                                            className={`link ${colorVariation(uom.status, theme)}`} 
-                                                                            onClick={() => handleUpdate(uom.id, uom.status)}
-                                                                            title={uom.status === 1 ? 'Deactivate unit' : 'Activate unit'}
-                                                                        >
-                                                                            {
-                                                                                uom.status === 1 ? <MdOutlineToggleOn size={24} /> 
-                                                                                : <MdOutlineToggleOff size={24} />
-                                                                            }
-                                                                        </a>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button 
-                                                                            className="danger" 
-                                                                            onClick={() => handleDelete(uom.id)}
-                                                                            title={`Delete unit: ${uom.name}`}
-                                                                        >
-                                                                            <FaTrashAlt />
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    ) : filteredItems.length === 0 ? (
+                                                    <tbody>
+                                                        {currentItems.map((brand, index) => (
+                                                            <tr key={index}>
+                                                                <td>
+                                                                    <div>
+                                                                        {
+                                                                            selectedItems.includes(brand.id) ? (
+                                                                                <MdCheckBox 
+                                                                                    size={20} 
+                                                                                    style={{ cursor: 'pointer'}}
+                                                                                    className={theme === 'dark' ? 'text-lime-green' : 'text-green'}
+                                                                                    onClick={() => handleSelection(brand.id)} 
+                                                                                />
+                                                                            ) : (
+                                                                                <MdCheckBoxOutlineBlank 
+                                                                                    size={20} 
+                                                                                    style={{ cursor: 'pointer'}}
+                                                                                    onClick={() => handleSelection(brand.id)} 
+                                                                                />
+                                                                            )
+                                                                        }
+                                                                    </div>
+                                                                </td>
+                                                                <td>{brands.indexOf(brand) + 1}</td>
+                                                                <td>{brand.name.charAt(0).toUpperCase() + brand.name.slice(1)}</td>
+                                                                <td>
+                                                                    <a 
+                                                                        className={`link ${colorVariation(brand.status, theme)}`} 
+                                                                        onClick={() => handleUpdate(brand.id, brand.status)}
+                                                                        title={brand.status === 1 ? 'Deactivate brand' : 'Activate brand'}
+                                                                    >
+                                                                        {brand.status === 1 ? <MdOutlineToggleOn size={24} /> : <MdOutlineToggleOff size={24} />}
+                                                                    </a>
+                                                                </td>
+                                                                <td>
+                                                                    <button 
+                                                                        className="danger" 
+                                                                        onClick={() => handleDelete(brand.id)}
+                                                                        title={`Delete brand: ${brand.name}`}
+                                                                    >
+                                                                        <FaTrashAlt />
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                    ) : filteredItems === 0 ? (
                                                         <tbody>
                                                             <tr>
                                                                 <td colSpan={4}>No results found</td>
@@ -235,47 +232,44 @@ function UOM() {
                                                         </tbody>
                                                     ) : (
                                                         <tbody>
-                                                            {filteredItems.map((uom, index) => (
+                                                            {filteredItems.map((brand, index) => (
                                                                 <tr key={index}>
                                                                     <td>
                                                                         <div style={{ cursor: 'pointer'}}>
                                                                             {
-                                                                                selectedItems.includes(uom.id) ? (
+                                                                                selectedItems.includes(brand.id) ? (
                                                                                     <MdCheckBox 
                                                                                         size={20} 
                                                                                         style={{ cursor: 'pointer'}}
                                                                                         className={theme === 'dark' ? 'text-lime-green' : 'text-green'}
-                                                                                        onClick={() => handleSelection(uom.id)} 
+                                                                                        onClick={() => handleSelection(brand.id)} 
                                                                                     />
                                                                                 ) : (
                                                                                     <MdCheckBoxOutlineBlank 
                                                                                         size={20} 
                                                                                         style={{ cursor: 'pointer'}}
-                                                                                        onClick={() => handleSelection(uom.id)} 
+                                                                                        onClick={() => handleSelection(brand.id)} 
                                                                                     />
                                                                                 )
                                                                             }
                                                                         </div>
                                                                     </td>
-                                                                    <td>{uoms.indexOf(uom) + 1}</td>
-                                                                    <td>{uom.name}</td>
+                                                                    <td>{brands.indexOf(brand) + 1}</td>
+                                                                    <td>{brand.name}</td>
                                                                     <td>
                                                                         <a 
-                                                                            className={`link ${colorVariation(uom.status, theme)}`} 
-                                                                            onClick={() => handleUpdate(uom.id, uom.status)}
-                                                                            title={uom.status === 1 ? 'Deactivate unit' : 'Activate unit'}
+                                                                            className={`link ${colorVariation(brand.status, theme)}`} 
+                                                                            onClick={() => handleUpdate(brand.id, brand.status)}
+                                                                            title={cat.status === 1 ? 'Deactivate brand' : 'Activate brand'}
                                                                         >
-                                                                            {
-                                                                                uom.status === 1 ? <MdOutlineToggleOn size={24} /> 
-                                                                                : <MdOutlineToggleOff size={24} />
-                                                                            }
+                                                                            {cat.status === 1 ? <MdOutlineToggleOn size={24} /> : <MdOutlineToggleOff size={24} />}
                                                                         </a>
                                                                     </td>
                                                                     <td>
                                                                         <button 
                                                                             className="danger" 
-                                                                            onClick={() => handleDelete(uom.id)}
-                                                                            title={`Delete unit: ${uom.name}`}
+                                                                            onClick={() => handleDelete(brand.id)}
+                                                                            title={`Delete brand: ${brand.name}`}
                                                                         >
                                                                             <FaTrashAlt />
                                                                         </button>
@@ -286,9 +280,9 @@ function UOM() {
                                                     )
                                                 }
                                             </table>
-                                            
+
                                             <Pagination 
-                                                data={uoms}
+                                                data={brands}
                                                 handleCurrentPage={handleCurrentPage}
                                                 currentPage={currentPage}
                                                 totalPages={totalPages}
@@ -311,4 +305,4 @@ function UOM() {
     )
 }
 
-export default UOM
+export default brands

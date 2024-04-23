@@ -87,6 +87,11 @@ function Categories() {
                             </Link>
                         </li>
                         <li>
+                            <Link to="/settings/brands" className="link">
+                                Brands
+                            </Link>
+                        </li>
+                        <li>
                             <Link to="/settings/tax" className="link">
                                 Tax
                             </Link>
@@ -131,6 +136,7 @@ function Categories() {
                                         ) : (
                                         <>
                                             <PrePagination 
+                                                serachPlaceholder="Search categories..."
                                                 totalPages={totalPages}
                                                 handleItemsPerPage={handleItemsPerPage}
                                                 handleSearchTerm={handleSearchTerm}
@@ -201,7 +207,7 @@ function Categories() {
                                                                     <a 
                                                                         className={`link ${colorVariation(cat.status, theme)}`} 
                                                                         onClick={() => handleUpdate(cat.id, cat.status)}
-                                                                        title={cat.status === 1 ? 'Deactivate unit' : 'Activate unit'}
+                                                                        title={cat.status === 1 ? 'Deactivate category' : 'Activate category'}
                                                                     >
                                                                         {cat.status === 1 ? <MdOutlineToggleOn size={24} /> : <MdOutlineToggleOff size={24} />}
                                                                     </a>
@@ -210,7 +216,7 @@ function Categories() {
                                                                     <button 
                                                                         className="danger" 
                                                                         onClick={() => handleDelete(cat.id)}
-                                                                        title={`Delete unit: ${cat.name}`}
+                                                                        title={`Delete category: ${cat.name}`}
                                                                     >
                                                                         <FaTrashAlt />
                                                                     </button>
@@ -254,7 +260,7 @@ function Categories() {
                                                                         <a 
                                                                             className={`link ${colorVariation(cat.status, theme)}`} 
                                                                             onClick={() => handleUpdate(cat.id, cat.status)}
-                                                                            title={cat.status === 1 ? 'Deactivate unit' : 'Activate unit'}
+                                                                            title={cat.status === 1 ? 'Deactivate category' : 'Activate category'}
                                                                         >
                                                                             {cat.status === 1 ? <MdOutlineToggleOn size={24} /> : <MdOutlineToggleOff size={24} />}
                                                                         </a>
@@ -263,7 +269,7 @@ function Categories() {
                                                                         <button 
                                                                             className="danger" 
                                                                             onClick={() => handleDelete(cat.id)}
-                                                                            title={`Delete unit: ${cat.name}`}
+                                                                            title={`Delete category: ${cat.name}`}
                                                                         >
                                                                             <FaTrashAlt />
                                                                         </button>

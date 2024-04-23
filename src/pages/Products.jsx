@@ -1,8 +1,12 @@
 
 import { useState, useEffect } from 'react'
+import { useTheme } from '../hooks/ThemeProvider'
 import { Link } from 'react-router-dom'
 import { usePagination } from '../helpers/Pagination'
+import { useProductFunctions } from '../util/products/useProductFunctions'
+import { useCurrency } from '../hooks/CurrencyProvider'
 import { FaTrashAlt, FaEdit } from 'react-icons/fa'
+import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
 
 import PrePagination from '../components/pagination/PrePagination'
 import Pagination from '../components/pagination/Pagination'
@@ -14,32 +18,42 @@ import Footer from '../partials/Footer'
 
 function Products() {
 
+    const { theme } = useTheme()
+    const { currency } = useCurrency()
+
     const [products, setProducts] = useState([
         {
             id: 1,
             name: 'Product 1',
             sku: 'P1',
-            price: 1000,
+            price: 199.99,
             quantity: 10,
-            category: '1',
+            category: 1,
         },
         {
             id: 2,
             name: 'Product 2',
             sku: 'P2',
-            price: 2000,
+            price: 10.67,
             quantity: 20,
-            category: '4',
+            category: 4,
         },
         {
             id: 3,
             name: 'Product 3',
             sku: 'P3',
-            price: 3000,
+            price: 30,
             quantity: 30,
-            category: '2',
+            category: 2,
         }
     ])
+
+    const {
+        categoryOptions,
+        selectedItems,
+        setSelectedItems,
+        handleSelection,
+    } = useProductFunctions()
 
     const {
         searchTerm,
@@ -59,9 +73,9 @@ function Products() {
 
     const currentItems = products.slice(indexOfFirstItem, indexOfLastItem)
     const filteredItems = currentItems.filter(
-        item => item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.category.toLowerCase().includes(searchTerm.toLowerCase())
+        item => item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+                || item.sku.toLowerCase().includes(searchTerm.toLowerCase()) 
+                || categoryOptions.find(option => option.id === item.category).name.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
     useEffect(() => {
@@ -96,18 +110,42 @@ function Products() {
                         <div className="box">
 
                             <PrePagination 
+                                items={products}
+                                serachPlaceholder="Search by Name, SKU or Category..."
                                 totalPages={totalPages}
                                 handleItemsPerPage={handleItemsPerPage}
                                 handleSearchTerm={handleSearchTerm}
+                                selectedItems={selectedItems}
+                                isImportable={true}
+                                isExportable={true}
                            />
 
                             <table>
                                 <thead>
                                     <tr>
+                                        <th>
+                                            <div style={{ cursor: 'pointer'}}>
+                                                {
+                                                    selectedItems.length > 0 ? (
+                                                        <MdCheckBox 
+                                                            size={20} 
+                                                            style={{ cursor: 'pointer'}}
+                                                            className={theme === 'dark' ? 'text-lime-green' : 'text-green'}
+                                                            onClick={() => setSelectedItems([])} 
+                                                        />
+                                                    ) : (
+                                                        <MdCheckBoxOutlineBlank 
+                                                            size={20} 
+                                                            onClick={() => setSelectedItems(products.map(item => item.id))} 
+                                                        />
+                                                    )
+                                                }
+                                            </div>
+                                        </th>
                                         <th>#</th>
-                                        <th>Product Name</th>
-                                        <th>Product SKU</th>
-                                        <th>Price</th>
+                                        <th>Name</th>
+                                        <th>SKU</th>
+                                        <th>Price ({currency})</th>
                                         <th>Quantity</th>
                                         <th>Category</th>
                                         <th>Actions</th>
@@ -118,23 +156,53 @@ function Products() {
                                         <tbody>
                                             {currentItems.map((product, index) => (
                                                 <tr key={index}>
+                                                    <td>
+                                                        <div>
+                                                            {
+                                                                selectedItems.includes(product.id) ? (
+                                                                    <MdCheckBox 
+                                                                        size={20} 
+                                                                        style={{ cursor: 'pointer'}}
+                                                                        className={theme === 'dark' ? 'text-lime-green' : 'text-green'}
+                                                                        onClick={() => handleSelection(product.id)} 
+                                                                    />
+                                                                ) : (
+                                                                    <MdCheckBoxOutlineBlank 
+                                                                        size={20} 
+                                                                        style={{ cursor: 'pointer'}}
+                                                                        onClick={() => handleSelection(product.id)} 
+                                                                    />
+                                                                )
+                                                            }
+                                                        </div>
+                                                    </td>
                                                     <td>{products.indexOf(product) + 1}</td>
                                                     <td>{product.name}</td>
                                                     <td>{product.sku}</td>
-                                                    <td>{product.price}</td>
+                                                    <td>
+                                                        {
+                                                            Float32Array ? product.price.toFixed(2) + '/-'
+                                                            : Float64Array ? product.price.toFixed(2) + '/-'
+                                                            : product.price + '/-'
+                                                        }
+                                                    </td>
                                                     <td>{product.quantity}</td>
-                                                    <td>{product.category}</td>
+                                                    <td>
+                                                        {   
+                                                            categoryOptions.filter(cat => cat.id === product.category).map(cat => cat.name)
+                                                        }
+                                                    </td>
                                                     <td>
                                                         <div className="btn-group">
                                                             <button  
                                                                 className="edit"
-                                                                title={`Edit unit: ${product.name}`}
+                                                                title={`Edit product: ${product.name}`}
                                                             >
                                                                 <FaEdit />
                                                             </button>
                                                             <button 
                                                                 className="danger" 
-                                                                title={`Delete unit: ${product.name}`}
+                                                                title={`Delete product: ${product.name}`}
                                                             >
                                                                 <FaTrashAlt />
                                                             </button>
@@ -147,22 +215,52 @@ function Products() {
                                         <tbody>
                                             {filteredItems.map((product, index) => (
                                                 <tr key={index}>
+                                                    <td>
+                                                        <div>
+                                                            {
+                                                                selectedItems.includes(product.id) ? (
+                                                                    <MdCheckBox 
+                                                                        size={20} 
+                                                                        style={{ cursor: 'pointer'}}
+                                                                        className={theme === 'dark' ? 'text-lime-green' : 'text-green'}
+                                                                        onClick={() => handleSelection(product.id)} 
+                                                                    />
+                                                                ) : (
+                                                                    <MdCheckBoxOutlineBlank 
+                                                                        size={20} 
+                                                                        style={{ cursor: 'pointer'}}
+                                                                        onClick={() => handleSelection(product.id)} 
+                                                                    />
+                                                                )
+                                                            }
+                                                        </div>
+                                                    </td>
                                                     <td>{products.indexOf(product) + 1}</td>
                                                     <td>{product.name}</td>
                                                     <td>{product.sku}</td>
-                                                    <td>{product.price}</td>
+                                                    <td>
+                                                        {
+                                                            Float32Array ? product.price.toFixed(2) + '/-'
+                                                            : Float64Array ? product.price.toFixed(2) + '/-'
+                                                            : product.price + '/-'
+                                                        }
+                                                    </td>
                                                     <td>{product.quantity}</td>
-                                                    <td>{product.category}</td>
+                                                    <td>
+                                                        {   
+                                                            categoryOptions.filter(cat => cat.id === product.category).map(cat => cat.name)
+                                                        }
+                                                    </td>
                                                     <td>
                                                         <button  
                                                             className="edit"
-                                                            title={`Edit unit: ${product.name}`}
+                                                            title={`Edit product: ${product.name}`}
                                                         >
                                                             <FaEdit />
                                                         </button>
                                                         <button 
                                                             className="danger" 
-                                                            title={`Delete unit: ${product.name}`}
+                                                            title={`Delete product: ${product.name}`}
                                                         >
                                                             <FaTrashAlt />
                                                         </button>

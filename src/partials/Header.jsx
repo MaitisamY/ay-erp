@@ -12,7 +12,8 @@ function Header() {
         : pathname === '/' ? document.title = 'Dashboard' 
         : pathname === '/products' ? document.title = 'Products'
         : pathname === '/products/add' ? document.title = 'Add Product' 
-        : pathname === '/sales' ? document.title = 'Sales' 
+        : pathname === '/sales' ? document.title = 'Sales'
+        : pathname === '/sales/add' ? document.title = 'Add Sale' 
         : pathname === '/customers' ? document.title = 'Customers'
         : pathname === '/purchases' ? document.title = 'Purchases' 
         : pathname === '/expenses' ? document.title = 'Expenses'
@@ -24,6 +25,7 @@ function Header() {
         : pathname === '/settings/categories' ? document.title = 'Category Settings'
         : pathname === '/settings/uom' ? document.title = 'UOM Settings'
         : pathname === '/settings/tax' ? document.title = 'Tax Settings'
+        : pathname === '/settings/brands' ? document.title = 'Brand Settings'
         : document.title = `${pathname.slice(1).replace(/-/, ' ').charAt(0).toUpperCase() + pathname.slice(1).replace(/-/, ' ').slice(1)}`
     }, [pathname])
 
@@ -32,10 +34,12 @@ function Header() {
             <h1>
                 {
                     pathname === '/' ? 'Dashboard' 
-                    : pathname === '/settings/tax' 
+                    : pathname === '/settings/brands'
+                    || pathname === '/settings/tax' 
                     || pathname === '/settings/uom' 
                     || pathname === '/settings/categories' ? 'Settings'
                     : pathname === '/products/add' ? 'Products'
+                    : pathname === '/sales/add' ? 'Sales'
                     : pathname.slice(1).replace(/-/, ' ').charAt(0).toUpperCase() + pathname.slice(1).replace(/-/, ' ').slice(1)
                 }
             </h1>

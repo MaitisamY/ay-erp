@@ -38,18 +38,12 @@ export function useCategoryFunctions() {
                 setCategories(response.data.data)
             }
             else {
-                setServerResponse(response.data.message)
+                // setServerResponse(response.data.message)
+                console.log(response.data.message);
             }
         } catch (error) {
-            toast.error(error.message, {
-                position: "bottom-right",
-                autoClose: 6000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: false,
-                progress: undefined,
-            })
+            // setServerResponse(error.message)
+            console.log(error)
         }
     }
 

@@ -64,7 +64,7 @@ function Sidebar() {
                     </Link>
                 </li>
                 <li>
-                    <Link to="/sales" className={`link ${pathname === '/sales' ? 'active' : ''}`}>
+                    <Link to="/sales" className={`link ${pathname === '/sales' || pathname === '/sales/add' ? 'active' : ''}`}>
                         <FaRegMoneyBillAlt size={20} />
                         <span style={{ display: isCollapsed ? 'none' : 'block' }}>Sales</span>
                     </Link>

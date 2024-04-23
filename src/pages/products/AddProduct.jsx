@@ -58,7 +58,7 @@ function AddProduct() {
                         <h2>Product Details Form</h2>
 
                         <div className="box">
-                            <h4>Fields with <i className="text-red">*</i> are mandatory</h4>
+                            <h4>Fields with (<i className="text-red">*</i>) are mandatory</h4>
                             <Form onSubmit={() => {}}>
 
                                 <Card classes="card-less card-x-small">
@@ -182,7 +182,7 @@ function AddProduct() {
 
                                 <Card classes="card-less card-xxx-large">
                                     <div className="form-group">
-                                        <label htmlFor="description">Description</label>
+                                        <label htmlFor="description">Product Description</label>
                                         <textarea 
                                             name="description" 
                                             id="description" 

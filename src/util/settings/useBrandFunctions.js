@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 
-export function useUOMFunctions() {
+export function usebrandFunctions() {
 
-    const [uom, setUom] = useState('')
-    const [uoms, setUoms] = useState([])
+    const [brand, setBrand] = useState('')
+    const [brands, setBrands] = useState([])
     const [serverResponse, setServerResponse] = useState(null)
     const [selectedItems, setSelectedItems] = useState([])
 
@@ -27,15 +27,15 @@ export function useUOMFunctions() {
     }
 
     const handleChange = (e) => {
-        setUom(e.target.value)
+        setBrand(e.target.value)
     }
 
-    const fetchUoms = async () => {
+    const fetchBrands = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/get/uoms`)
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/get/brands`)
 
             if (response.data.status === 200) {
-                setUoms(response.data.data)
+                setBrands(response.data.data)
             }
             else {
                 // setServerResponse(response.data.message)
@@ -51,11 +51,12 @@ export function useUOMFunctions() {
         e.preventDefault()
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/add/uom`, { uom: uom })
+            const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/add/brand`, { brand: brand })
 
             if (response.data.status === 200) {
-                fetchUoms()
-                setUom('')
+                fetchBrands()
+                setBrand('')
+                setServerResponse(null)
 
                 toast.success(response.data.message, {
                     position: "bottom-right",
@@ -95,10 +96,11 @@ export function useUOMFunctions() {
 
     const handleDelete = async (id) => {
         try {
-            const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/delete/uom/${id}`)
+            const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/delete/brand/${id}`)
 
             if (response.data.status === 200) {
-                fetchUoms()
+                fetchBrands()
+                setServerResponse(null)
 
                 toast.success(response.data.message, {
                     position: "bottom-right",
@@ -122,7 +124,7 @@ export function useUOMFunctions() {
                 })
             }
         } catch (error) {
-            toast.error(error.message, {
+            toast.error(response.data.message, {
                 position: "bottom-right",
                 autoClose: 6000,
                 hideProgressBar: true,
@@ -136,10 +138,11 @@ export function useUOMFunctions() {
 
     const handleUpdate = async (id, status) => {
         try {
-            const response = await axios.put(`${import.meta.env.VITE_SERVER_URL}/update/uom/${id}`, { status: status })
+            const response = await axios.put(`${import.meta.env.VITE_SERVER_URL}/update/brand/${id}`, { status: status })
 
             if (response.data.status === 200) {
-                fetchUoms()
+                fetchBrands()
+                setServerResponse(null)
 
                 toast.success(response.data.message, {
                     position: "bottom-right",
@@ -162,7 +165,7 @@ export function useUOMFunctions() {
                 })
             }
         } catch (error) {
-            toast.error(error.message, {
+            toast.error(response.data.message, {
                 position: "bottom-right",
                 autoClose: 6000,
                 hideProgressBar: true,
@@ -176,14 +179,14 @@ export function useUOMFunctions() {
 
     const handleDeleteMultiple = async () => {
         try {
-            const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/delete/uoms`, { data: { ids: selectedItems } })
+            const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/delete/brands`, { data: { ids: selectedItems } })
 
             if (response.data.status === 200) {
-                fetchUoms()
-                
-                setUoms([])
-                setSelectedItems([])
+                fetchBrands()
+                setServerResponse(null)
 
+                setBrands([])
+                setSelectedItems([])
                 toast.success(response.data.message, {
                     position: "bottom-right",
                     autoClose: 6000,
@@ -218,12 +221,12 @@ export function useUOMFunctions() {
     }
 
     useEffect(() => {
-        fetchUoms()
+        fetchBrands()
     }, [])
 
     return {
-        uom,
-        uoms,
+        brand,
+        brands,
         serverResponse,
         selectedItems,
         setSelectedItems,
