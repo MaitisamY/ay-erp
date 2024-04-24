@@ -32,13 +32,21 @@
 
 :root {
     --background-color: rgb(243, 237, 237);
-    --text-color: rgb(53, 53, 53);
+    --text-color: rgb(28, 29, 51);
+    --bg-utils: rgba(0, 0, 0, 0.05);
+    --bg-utils-hover: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(28, 29, 51, 0.185);
 }
 
 .dark {
-    --background-color: rgb(53, 53, 53);
+    --background-color: rgb(28, 29, 51);
     --text-color: rgb(243, 237, 237);
+    --bg-utils: rgba(255, 255, 255, 0.05);
+    --bg-utils-hover: rgba(255, 255, 255, 0.1);
+    --border-color: rgba(243, 237, 237, 0.185);
 }
+
+/* rgb(28, 29, 51) */
 
 * {
     box-sizing: border-box;
@@ -159,7 +167,7 @@ body {
     height: auto;
     padding: 15px 20px;
     margin: 0;
-    border-bottom: 1px solid #cccccc98;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .card .card-body,
@@ -195,7 +203,7 @@ body {
     height: auto;
     padding: 10px;
     margin: 0;
-    border-bottom: 1px solid #cccccc98;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .pagination {
@@ -249,11 +257,10 @@ body {
     font-family: "Inter", sans-serif;
 }
 
-.pre-pagination button,
-.pagination button {
+.pre-pagination button {
     position: relative;
     height: auto;
-    padding: 10px 10px;
+    padding: 10px 12px;
     margin: 0 0 0 10px;
     border-radius: 5px;
     font-size: small;
@@ -281,8 +288,8 @@ body {
     font-size: small;
     font-weight: 600;
     color: rgb(243, 237, 237);
-    background-color: rgb(53, 53, 53);
-    box-shadow: 0px 0px 10px -2px rgb(53, 53, 53);
+    background-color: rgb(28, 29, 51);
+    box-shadow: 0px 0px 10px -2px rgb(28, 29, 51);
     transition: all 0.2s ease-in-out;
 }
 
@@ -294,7 +301,7 @@ body {
     margin-left: -5px;
     border-width: 7px;
     border-style: solid;
-    border-color: rgb(53, 53, 53) transparent transparent transparent;
+    border-color: rgb(28, 29, 51) transparent transparent transparent;
 }
 
 .pre-pagination button .tooltip-dark {
@@ -310,9 +317,9 @@ body {
     border-radius: 5px;
     font-size: small;
     font-weight: 600;
-    color: rgb(53, 53, 53);
+    color: rgb(28, 29, 51);
     background-color: rgb(243, 237, 237);
-    box-shadow: 0px 0px 10px -2px rgb(53, 53, 53);
+    box-shadow: 0px 0px 10px -2px rgb(28, 29, 51);
     transition: all 0.2s ease-in-out;
 }
 
@@ -396,14 +403,32 @@ body {
     cursor: pointer;
 }
 
+.pagination button {
+    position: relative;
+    height: auto;
+    padding: 10px 12px;
+    margin: 0 0 0 10px;
+    border-radius: 5px;
+    font-size: small;
+    font-weight: 400;
+    color: var(--text-color);
+    border: none;
+    background-color: var(--background-color);
+    outline: none;
+    font-family: "Inter", sans-serif;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 0px 10px -2px rgba(211, 208, 208, 0.2);
+}
+
 .pre-pagination button:disabled,
 .pagination button:disabled,
 .pre-pagination button:disabled:hover,
 .pagination button:disabled:hover {
     background-color: #cccccc98;
-    outline: 1px solid #8f8f8f;
+    outline: none;
     color: rgba(0, 0, 0, 1);
     cursor: not-allowed;
+    box-shadow: 0px 0px 10px -2px rgba(211, 208, 208, 0.2);
 }
 
 .pre-pagination button[disabled],
@@ -411,9 +436,10 @@ body {
 .pre-pagination button[disabled]:hover,
 .pagination button[disabled]:hover {
     background-color: #cccccc98;
-    outline: 1px solid #8f8f8f;
+    outline: none;
     color: rgba(0, 0, 0, 1);
     cursor: not-allowed;
+    box-shadow: 0px 0px 10px -2px rgba(211, 208, 208, 0.2);
 }
 
 .container {
@@ -507,7 +533,7 @@ body {
     /* box-shadow: 0px 7px 20px -15px rgba(0, 0, 0, 0.75); */
     box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(6px);
-    z-index: 10;
+    z-index: 1;
 }
 
 .pills li {
@@ -528,7 +554,7 @@ body {
     font-weight: 600;
     text-decoration: none;
     color: var(--text-color);
-    opacity: 0.8;
+    opacity: 0.87;
     cursor: pointer;
     font-family: "Inter", sans-serif;
     border-radius: 6px;
@@ -568,7 +594,7 @@ table {
 table th {
     padding: 10px;
     margin: 0;
-    border-bottom: 1px solid #cccccc98;
+    border-bottom: 1px solid var(--border-color);
     font-weight: 500;
     text-align: left;
     font-size: small;
@@ -698,6 +724,14 @@ form .form-group label {
 form .form-group label i {
     font-style: normal;
     color: #ca1818;
+}
+
+form .form-group label span {
+    font-style: normal;
+    padding: 5px 10px;
+    color: rgb(243, 237, 237);
+    background-color: #5f5fe7;
+    border-radius: 5px;
 }
 
 form .form-group input {
@@ -1142,19 +1176,19 @@ h6 {
 }
 
 .top-border {
-    border-top: 1px solid #cccccc98;
+    border-top: 1px solid var(--border-color);
 }
 
 .bottom-border {
-    border-bottom: 1px solid #cccccc98;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .left-border {
-    border-left: 1px solid #cccccc98;
+    border-left: 1px solid var(--border-color);
 }
 
 .right-border {
-    border-right: 1px solid #cccccc98;
+    border-right: 1px solid var(--border-color);
 }
 
 .m-5 {

@@ -31,7 +31,7 @@ function PrePagination({
             {
                 importData && isImportable && (
                     <button>
-                        <BsUpload /> 
+                        <BsDownload /> 
 
                         <span 
                             className={theme === 'dark' ? 'tooltip-dark' : 'tooltip-light'}
@@ -44,7 +44,7 @@ function PrePagination({
             {
                 exportData && isExportable && items && items.length > 0 && (
                     <button>
-                        <BsDownload /> 
+                        <BsUpload />
 
                         <span 
                             className={theme === 'dark' ? 'tooltip-dark' : 'tooltip-light'}

@@ -256,18 +256,24 @@ function General() {
                                 <Card title="Currency" classes="card card-small">
                                     <h4>Selected Currency: {currency}</h4>
                                     {currencies ? (
-                                        <form>
-                                            <div className="form-group">
-                                                <label htmlFor="currency">Set Currency</label>
-                                                <select name="currency" id="currency" onChange={(event) => toggleCurrency(event.target.value)}>
-                                                    {Object.keys(currencies).map((currencyCode) => (
-                                                        <option key={currencyCode} value={currencyCode} selected={currencyCode === currency}>
-                                                            {currencyCode} - {currencies[currencyCode]}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                        </form>
+                                        <>
+                                            <form>
+                                                <div className="form-group">
+                                                    <label htmlFor="currency">Set Currency</label>
+                                                    <select name="currency" id="currency" onChange={(event) => toggleCurrency(event.target.value)}>
+                                                        {Object.keys(currencies).map((currencyCode) => (
+                                                            <option key={currencyCode} value={currencyCode} selected={currencyCode === currency}>
+                                                                {currencyCode} - {currencies[currencyCode]}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                            </form>
+                                            <h6>
+                                                Currency will be reflected on the invoices and all 
+                                                the related data tables in the system as well.
+                                            </h6>
+                                        </>
                                     ) : (
                                         <p>Loading currencies...</p>
                                     )}
@@ -286,6 +292,10 @@ function General() {
                                             </a>
                                         </div>
                                     </Form>
+                                    <h6>
+                                        If enabled, Export data option will be available in the system 
+                                        for all the related data tables in the system for download.
+                                    </h6>
                                 </Card>
 
                                 <Card title="Import Data" classes="card card-small">
@@ -301,6 +311,10 @@ function General() {
                                             </a>
                                         </div>
                                     </Form>
+                                    <h6>
+                                        If enabled, Import data option will be available in the system 
+                                        for all the related data tables in the system for upload.
+                                    </h6>
                                 </Card>
                                 
                                 <Card title="SKU Prefix" classes="card card-small">

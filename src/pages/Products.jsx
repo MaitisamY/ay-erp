@@ -28,7 +28,7 @@ function Products() {
             sku: 'P1',
             price: 199.99,
             quantity: 10,
-            category: 1,
+            category: 22,
         },
         {
             id: 2,
@@ -36,7 +36,7 @@ function Products() {
             sku: 'P2',
             price: 10.67,
             quantity: 20,
-            category: 4,
+            category: 30,
         },
         {
             id: 3,
@@ -44,7 +44,7 @@ function Products() {
             sku: 'P3',
             price: 30,
             quantity: 30,
-            category: 2,
+            category: 44,
         }
     ])
 
@@ -189,7 +189,7 @@ function Products() {
                                                     <td>{product.quantity}</td>
                                                     <td>
                                                         {   
-                                                            categoryOptions.filter(cat => cat.id === product.category).map(cat => cat.name)
+                                                            categoryOptions.find(cat => cat.id === product.category)?.name || 'Unknown'
                                                         }
                                                     </td>
                                                     <td>
@@ -248,7 +248,7 @@ function Products() {
                                                     <td>{product.quantity}</td>
                                                     <td>
                                                         {   
-                                                            categoryOptions.filter(cat => cat.id === product.category).map(cat => cat.name)
+                                                            categoryOptions.find(cat => cat.id === product.category)?.name || 'Unknown'
                                                         }
                                                     </td>
                                                     <td>

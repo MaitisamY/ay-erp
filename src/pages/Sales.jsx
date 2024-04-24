@@ -222,7 +222,7 @@ function Sales() {
                                                     <td>{sale.quantity}</td>
                                                     <td>
                                                         {   
-                                                            categoryOptions.filter(cat => cat.id === sale.category).map(cat => cat.name)
+                                                            categoryOptions.find(cat => cat.id === sale.category)?.name || 'Unknown'
                                                         }
                                                     </td>
                                                     <td>
@@ -289,7 +289,7 @@ function Sales() {
                                                     <td>{sale.quantity}</td>
                                                     <td>
                                                         {   
-                                                            categoryOptions.filter(cat => cat.id === sale.category).map(cat => cat.name)
+                                                            categoryOptions.find(cat => cat.id === sale.category)?.name || 'Unknown'
                                                         }
                                                     </td>
                                                     <td>
