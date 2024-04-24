@@ -11,12 +11,13 @@ export const useSaleFunctions = () => {
     const [sale, setSale] = useState({
         saleId: '',
         clientName: '',
-        product: '',
-        category: '',
-        sellingPrice: '',
-        cutOffPrice: '',
-        quantity: '',
+        products: [],
+        category: [],
+        sellingPrice: [],
+        cutOffPrice: [],
+        quantity: [],
         tax: '',
+        warehouse: [],
         remarks: '',
     })
 

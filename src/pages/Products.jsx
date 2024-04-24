@@ -21,6 +21,7 @@ function Products() {
     const { theme } = useTheme()
     const { currency } = useCurrency()
 
+    /* SHOP PC */
     const [products, setProducts] = useState([
         {
             id: 1,
@@ -28,7 +29,7 @@ function Products() {
             sku: 'P1',
             price: 199.99,
             quantity: 10,
-            category: 22,
+            category: 1,
         },
         {
             id: 2,
@@ -36,7 +37,7 @@ function Products() {
             sku: 'P2',
             price: 10.67,
             quantity: 20,
-            category: 30,
+            category: 2,
         },
         {
             id: 3,
@@ -44,9 +45,37 @@ function Products() {
             sku: 'P3',
             price: 30,
             quantity: 30,
-            category: 44,
+            category: 4,
         }
     ])
+
+    /* HOME PC */
+    // const [products, setProducts] = useState([
+    //     {
+    //         id: 1,
+    //         name: 'Product 1',
+    //         sku: 'P1',
+    //         price: 199.99,
+    //         quantity: 10,
+    //         category: 22,
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'Product 2',
+    //         sku: 'P2',
+    //         price: 10.67,
+    //         quantity: 20,
+    //         category: 30,
+    //     },
+    //     {
+    //         id: 3,
+    //         name: 'Product 3',
+    //         sku: 'P3',
+    //         price: 30,
+    //         quantity: 30,
+    //         category: 44,
+    //     }
+    // ])
 
     const {
         categoryOptions,
