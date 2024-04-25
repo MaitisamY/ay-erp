@@ -50,7 +50,7 @@ function AddSale() {
 
                         <div className="box">
                             <h4>Fields with (<i className="text-red">*</i>) are mandatory</h4>
-                            <h4>The flag (<i className="text-red">AD</i>) means Auto Deduction</h4>
+                            <h4>The (<i className="text-red">AD</i>) flag represents Auto Detection</h4>
                             <Form onSubmit={() => {}}>
 
                                 <Card classes="card-less card-x-small">

@@ -1,6 +1,7 @@
 import './styles/app.css'
 import 'react-toastify/dist/ReactToastify.css';
 
+import { lazy, Suspense } from 'react'
 import { OrganizationCredentialProvider } from './hooks/OrganizationCredentialProvider'
 import { useTheme } from './hooks/ThemeProvider'
 import { MenuPreferenceProvider } from './hooks/MenuPreferenceProvider'
@@ -11,23 +12,23 @@ import { NotificationThresholdProvider } from './hooks/NotificationThresholdProv
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
-import Dashboard from './pages/Dashboard'
-import Products from './pages/Products'
-import AddProduct from './pages/products/AddProduct'
-import Sales from './pages/Sales'
-import AddSale from './pages/sales/AddSale';
-import Purchases from './pages/Purchases'
-import Expenses from './pages/Expenses'
-import Users from './pages/Users'
-import Customers from './pages/Customers'
-import Reports from './pages/Reports'
-import Vendors from './pages/Vendors'
-import General from './pages/Settings'
-import Categories from './pages/settings/Categories'
-import UOM from './pages/settings/UOM'
-import Tax from './pages/settings/Tax'
-import Brands from './pages/settings/Brands'
-import NotDefined from './pages/404'
+const Dashboard = lazy(() => import('./pages/Dashboard'))
+const Products = lazy(() => import('./pages/Products'))
+const AddProduct = lazy(() => import('./pages/products/AddProduct'))
+const Sales = lazy(() => import('./pages/Sales'))
+const AddSale = lazy(() => import('./pages/sales/AddSale'))
+const Purchases = lazy(() => import('./pages/Purchases'))
+const Expenses = lazy(() => import('./pages/Expenses'))
+const Users = lazy(() => import('./pages/Users'))
+const Customers = lazy(() => import('./pages/Customers'))
+const Reports = lazy(() => import('./pages/Reports'))
+const Vendors = lazy(() => import('./pages/Vendors'))
+const GeneralSettings = lazy(() => import('./pages/Settings'))
+const CategorySettings = lazy(() => import('./pages/settings/Categories'))
+const UOMSettings = lazy(() => import('./pages/settings/UOM'))
+const TaxSettings = lazy(() => import('./pages/settings/Tax'))
+const BrandSettings = lazy(() => import('./pages/settings/Brands'))
+const NotDefined = lazy(() => import('./pages/404'))
 
 function App() {
 
@@ -35,41 +36,43 @@ function App() {
 
     return (
         <div id="app" className={theme === 'light' ? '' : 'dark'}>
-            <Router>
-                <OrganizationCredentialProvider>
-                    <CurrencyProvider>
-                        <ExportDataProvider>
-                            <MenuPreferenceProvider>
-                                <SKUPrefixProvider>
-                                    <NotificationThresholdProvider>
-                                        <ToastContainer />
-                                        <Routes>
-                                            <Route path="*" element={<NotDefined />} />
-                                            <Route path="/" element={<Dashboard />} />
-                                            <Route path="/dashboard" element={<Dashboard />} />
-                                            <Route path="/products" element={<Products />} />
-                                            <Route path="/products/add" element={<AddProduct />} />
-                                            <Route path="/sales" element={<Sales />} />
-                                            <Route path="/sales/add" element={<AddSale />} />
-                                            <Route path="/purchases" element={<Purchases />} />
-                                            <Route path="/expenses" element={<Expenses />} />
-                                            <Route path="/users" element={<Users />} />
-                                            <Route path="/customers" element={<Customers />} />
-                                            <Route path="/reports" element={<Reports />} />
-                                            <Route path="/vendors" element={<Vendors />} />
-                                            <Route path="/settings" element={<General />} />
-                                            <Route path="/settings/categories" element={<Categories />} />
-                                            <Route path="/settings/uom" element={<UOM />} />
-                                            <Route path="/settings/tax" element={<Tax />} />
-                                            <Route path="/settings/brands" element={<Brands />} />
-                                        </Routes>
-                                    </NotificationThresholdProvider>
-                                </SKUPrefixProvider>
-                            </MenuPreferenceProvider>
-                        </ExportDataProvider>
-                    </CurrencyProvider>
-                </OrganizationCredentialProvider>
-            </Router>
+            <Suspense fallback={<div className="lazy-loading"><span className="suspense-loader"></span></div>}>
+                <Router>
+                    <OrganizationCredentialProvider>
+                        <CurrencyProvider>
+                            <ExportDataProvider>
+                                <MenuPreferenceProvider>
+                                    <SKUPrefixProvider>
+                                        <NotificationThresholdProvider>
+                                            <ToastContainer />
+                                            <Routes>
+                                                <Route path="*" element={<NotDefined />} />
+                                                <Route path="/" element={<Dashboard />} />
+                                                <Route path="/dashboard" element={<Dashboard />} />
+                                                <Route path="/products" element={<Products />} />
+                                                <Route path="/products/add" element={<AddProduct />} />
+                                                <Route path="/sales" element={<Sales />} />
+                                                <Route path="/sales/add" element={<AddSale />} />
+                                                <Route path="/purchases" element={<Purchases />} />
+                                                <Route path="/expenses" element={<Expenses />} />
+                                                <Route path="/users" element={<Users />} />
+                                                <Route path="/customers" element={<Customers />} />
+                                                <Route path="/reports" element={<Reports />} />
+                                                <Route path="/vendors" element={<Vendors />} />
+                                                <Route path="/settings" element={<GeneralSettings />} />
+                                                <Route path="/settings/categories" element={<CategorySettings />} />
+                                                <Route path="/settings/uom" element={<UOMSettings />} />
+                                                <Route path="/settings/tax" element={<TaxSettings />} />
+                                                <Route path="/settings/brands" element={<BrandSettings />} />
+                                            </Routes>
+                                        </NotificationThresholdProvider>
+                                    </SKUPrefixProvider>
+                                </MenuPreferenceProvider>
+                            </ExportDataProvider>
+                        </CurrencyProvider>
+                    </OrganizationCredentialProvider>
+                </Router>
+            </Suspense>
         </div>
     )
 }

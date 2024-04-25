@@ -329,33 +329,23 @@ function Sales() {
                                                     <td>{sale.saleId}</td>
                                                     <td>{sale.clientName}</td>
                                                     <td>
-                                                        {
-                                                            sale.products.map((product, index) => (
-                                                                <div key={index}>{product}</div>
-                                                            ))
-                                                        }
+                                                    {sale.products.map((product, index) => (
+                                                        <div key={index}>
+                                                            {product} - (
+                                                                {sale.cutOffPrice[index].toFixed(2)}) - (
+                                                                    {sale.quantity[index]}) - (
+                                                                        {categoryOptions.find(c => c.id === sale.category[index])?.name || 'Unknown'})
+                                                        </div>
+                                                    ))}
                                                     </td>
-                                                    <td>
-                                                        {/* {
-                                                            Float32Array ? sale.cutOffPrice.toFixed(2) + '/-'
-                                                            : Float64Array ? sale.cutOffPrice.toFixed(2) + '/-'
-                                                            : sale.cutOffPrice + '/-'
-                                                        } */}
-                                                    </td>
-                                                    <td>{sale.quantity}</td>
+                                                    <td>{sale.tax || 'N/A'}</td>
+                                                    <td>{sale.remarks || 'N/A'}</td>
                                                     <td>
                                                         {
-                                                            sale.category.map((cat, index) => (
-                                                                <div key={index}>{categoryOptions.find(c => c.id === cat)?.name || 'Unknown'}</div>
-                                                            ))
+                                                            sale.cutOffPrice.reduce((total, price, index) => (
+                                                                total + (sale.quantity[index] * price)
+                                                            ), 0).toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/-'
                                                         }
-                                                    </td>
-                                                    <td>
-                                                        {/* {
-                                                            Float32Array ? sale.cutOffPrice * sale.quantity.toFixed(2) + '/-'
-                                                            : Float64Array ? sale.cutOffPrice * sale.quantity.toFixed(2) + '/-'
-                                                            : sale.cutOffPrice * sale.quantity + '/-'
-                                                        } */}
                                                     </td>
                                                     <td>
                                                         <button  
