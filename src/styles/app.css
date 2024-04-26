@@ -137,6 +137,13 @@ body {
     justify-content: flex-start;
 }
 
+.sale-list-items {
+    width: 40%;
+    height: auto;
+    padding: 0 40px;
+    margin: 0;
+}
+
 .card {
     height: auto;
     min-height: 250px;
@@ -839,6 +846,12 @@ form .form-group textarea:hover {
     border: 1px solid #31EB31;
 }
 
+form .form-group input.error,
+form .form-group input.error:hover {
+    outline: 1px solid #ca1818;
+    border: 1px solid #ca1818;
+}
+
 form .form-group input[type="checkbox"] {
     width: auto;
     height: auto;
@@ -859,11 +872,32 @@ form .input-group {
     border-radius: 5px;
 }
 
+form .input-group-error {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    margin: 0 0 10px 0;
+    border-radius: 5px;
+    outline: 1px solid #ca1818;
+    border: 1px solid #ca1818;
+}
+
+form .input-group-error:hover {
+    outline: 1px solid #ca1818;
+    border: 1px solid #ca1818;
+}
+
 form .input-group.bordered {
     border: 1px solid #cccccc98;
 }
 
-form .input-group input {
+form .input-group input,
+form .input-group-error input {
     width: 100%;
     height: auto;
     padding: 10px 10px;
@@ -915,7 +949,8 @@ form .input-group textarea {
     resize: none;
 }
 
-form .input-group div {
+form .input-group div.normal,
+form .input-group-error div.normal {
     position: absolute;
     right: 2px;
     top: 2px;
@@ -924,6 +959,26 @@ form .input-group div {
     color: rgb(243, 237, 237);
     background-color: rgb(49, 49, 235);
     font-size: 12px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: max-content;
+    height: auto;
+    margin: 0;
+}
+
+form .input-group div.danger,
+form .input-group-error div.danger {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    font-style: normal;
+    padding: 2.4px 4px;
+    color: rgb(243, 237, 237);
+    background-color: #ca1818;
+    font-size: 28px;
     border-radius: 5px;
     display: flex;
     flex-direction: row;

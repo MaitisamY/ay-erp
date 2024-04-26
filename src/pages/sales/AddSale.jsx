@@ -1,8 +1,10 @@
 
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useCurrency } from '../../hooks/CurrencyProvider'
 import { useSaleFunctions } from '../../util/sales/useSaleFunctions'
 import { useTaxFunctions } from '../../util/settings/useTaxFunctions'
+import { BsX } from 'react-icons/bs'
 
 import Sidebar from '../../components/Sidebar'
 import Content from '../../components/Content'
@@ -25,6 +27,80 @@ function AddSale() {
         sale,
         handleChange,
     } = useSaleFunctions()
+
+    const [products, setProducts] = useState([
+        {
+            id: 1,
+            productName: 'Cut marker',
+            brand: 'Mercury',
+            category: 26,
+            quantity: 10,
+            uom: 'Pcs'
+        },
+        {
+            id: 2,
+            productName: 'Ball Pen',
+            brand: 'Dollar',
+            category: 23,
+            quantity: 20,
+            uom: 'Pack'
+        },
+        {
+            id: 3,
+            productName: 'Eraser',
+            brand: 'Shark',
+            category: 26,
+            quantity: 200,
+            uom: 'Carton'
+        }
+    ])
+
+    const [seller, setSeller] = useState({
+        id: '',
+        productName: '',
+        brand: '',
+        category: '',
+        quantity: '',
+        uom: '',
+    })
+
+    const handleSellerChange = (e) => {
+        const { name, value } = e.target
+        setSeller({ ...seller, [name]: value })
+    }
+
+    const handleProductSelect = (e) => {
+        const selectedProduct = e.target.value;
+        if (selectedProduct === "") {
+            // If the input field is cleared, reset the seller state
+            setSeller({ id: '', productName: '', brand: '', category: '', quantity: '', uom: '' });
+        } else {
+            const product = products.find((p) => (p.productName + ' - ' + p.brand) === selectedProduct);
+            if (product) {
+                setSeller({ ...seller, productName: product.productName, category: product.category, quantity: product.quantity, uom: product.uom });
+            }
+        }
+    };
+
+    const clearProductName = () => {
+        setSeller({ ...seller, productName: '', brand: '', category: '', quantity: '', uom: '' });
+    }
+       
+
+    const getQuantityInputClassName = () => {
+        const selectedProduct = products.find(product => product.productName === seller.productName);
+        
+        if (!selectedProduct) {
+            return "input-group bordered"; // No error if no product is selected
+        }
+    
+        // Check if quantity is less than or equal to 0 or greater than available quantity
+        if (seller.quantity <= 0 || seller.quantity > selectedProduct.quantity) {
+            return "input-group-error"; // Add error class if quantity is 0 or less or greater than available quantity
+        }
+        
+        return "input-group bordered"; // No error, return empty string
+    };    
 
     return (
         <>
@@ -49,8 +125,11 @@ function AddSale() {
                         <h2>Sale Details Form</h2>
 
                         <div className="box">
-                            <h4>Fields with (<i className="text-red">*</i>) are mandatory</h4>
-                            <h4>The (<i className="text-red">AD</i>) flag represents Auto Detection</h4>
+                            <ul className="sale-list-items">
+                                <li><h4>Fields with (<i className="text-red">*</i>) are mandatory</h4></li>
+                                <li><h4>The (<i className="text-red">AD</i>) flag represents "Auto Detection"</h4></li>
+                                <li><h4>A datalist is used for the ease of product selection</h4></li>
+                            </ul>
                             <Form onSubmit={() => {}}>
 
                                 <Card classes="card-less card-x-small">
@@ -118,27 +197,41 @@ function AddSale() {
                                 <Card classes="card-less card-x-small">
                                     <div className="form-group">
                                         <label htmlFor="product">Products<i>*</i></label>
-                                        <input // product will be filtered as the user types
-                                            type="text" 
-                                            name="product" 
-                                            value={sale.products[0]} 
-                                            id="product" 
-                                            placeholder="E.g. T-Shirt" 
-                                            onChange={handleChange} 
-                                        />
+                                        <div className="input-group bordered">
+                                            <input
+                                                type="text" 
+                                                name="productName" // Change to "productName"
+                                                value={seller.productName} 
+                                                id="product" 
+                                                placeholder="E.g. T-Shirt"  
+                                                onInput={handleProductSelect}
+                                                list="supporting-products"
+                                            />
+                                            {
+                                                seller.productName && seller.quantity > 0 && 
+                                                <div className="danger" onClick={clearProductName} style={{ cursor: 'pointer' }}>
+                                                    <BsX />
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
+                                    <datalist id="supporting-products">
+                                        {products.map((product) => 
+                                            <option key={product.id} value={product.productName + ' - ' + product.brand} label={product.productName} />
+                                        )}
+                                    </datalist>
                                 </Card>
 
                                 <Card classes="card-less card-x-small">
                                     <div className="form-group">
-                                        <label htmlFor="product">Category</label>
-                                        <input // category will be automatically selected (detected) based on product
+                                        <label htmlFor="category">Category</label> {/* Changed to category */}
+                                        <input 
                                             type="text" 
                                             name="category" 
-                                            value={sale.category[0]} 
+                                            value={products.find(product => product.productName === seller.productName)?.category || ''} // Fixed the logic
                                             id="category" 
                                             placeholder="AD" 
-                                            onChange={handleChange} 
+                                            onChange={handleSellerChange} 
                                             readOnly
                                         />
                                     </div>
@@ -147,16 +240,29 @@ function AddSale() {
                                 <Card classes="card-less card-x-small">
                                     <div className="form-group">
                                         <label htmlFor="quantity">Quantity</label>
-                                        <div className="input-group bordered">
-                                        <input // quantity can be manually entered, the maximum quantity will be shown
-                                            type="text" 
-                                            name="quantity" 
-                                            value={sale.quantity[0]} 
-                                            id="quantity" 
-                                            placeholder="E.g. 10" 
-                                            onChange={handleChange}
-                                        />
-                                        <div>Availablity: AD</div>
+                                        <div className={getQuantityInputClassName()}>
+                                            <input 
+                                                className="error"
+                                                type="number" 
+                                                name="quantity" 
+                                                value={seller.quantity} 
+                                                id="quantity" 
+                                                placeholder="E.g. 10" 
+                                                onChange={handleSellerChange}
+                                            />
+                                            <div className="normal">
+                                                Availability: &nbsp;
+                                                {
+                                                    seller.productName ?
+                                                    (
+                                                        products.find(product => product.productName === seller.productName) ?
+                                                        products.find(product => product.productName === seller.productName).quantity + ' ' +
+                                                        products.find(product => product.productName === seller.productName).uom :
+                                                        'AD'
+                                                    ) :
+                                                    'AD'
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </Card>

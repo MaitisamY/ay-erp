@@ -22,13 +22,65 @@ function Sales() {
     const { currency } = useCurrency()
 
     /* SHOP PC */
+    // const [sales, setSales] = useState([
+    //     {
+    //         id: 1,
+    //         saleId: 12548569,
+    //         clientName: 'Clinet Name 1',
+    //         products: ['Product 1', 'Product 2', 'Product 3'],
+    //         category: [1, 2, 3],
+    //         sellingPrice: [300, 149.99, 110],
+    //         cutOffPrice: [300, 120.00, 110],
+    //         quantity: [22, 12, 18],
+    //         tax: '',
+    //         remarks: 'Great to have you sir!',
+    //     },
+    //     {
+    //         id: 2,
+    //         saleId: 12548570,
+    //         clientName: 'Clinet Name 2',
+    //         products: ['Product 4', 'Product 5', 'Product 6'],
+    //         category: [1, 2, 3],
+    //         sellingPrice: [199.99, 280, 99.99],
+    //         cutOffPrice: [154.99, 190.00, 85.00],
+    //         quantity: [12, 8, 2],
+    //         tax: 'GST',
+    //         remarks: '',
+    //     },
+    //     {
+    //         id: 3,
+    //         saleId: 12548571,
+    //         clientName: 'Clinet Name 3',
+    //         products: ['Product 7', 'Product 8', 'Product 9'],
+    //         category: [1, 2, 3],
+    //         sellingPrice: [199.99, 149.99, 99.99],
+    //         cutOffPrice: [75.00, 60.00, 85.00],
+    //         quantity: [1, 3, 1],
+    //         tax: '',
+    //         remarks: '',
+    //     },
+    //     {
+    //         id: 4,
+    //         saleId: 12548572,
+    //         clientName: 'Clinet Name 4',
+    //         products: ['Product 10', 'Product 11', 'Product 12'],
+    //         category: [22, 2, 3],
+    //         sellingPrice: [199.99, 149.99, 99.99],
+    //         cutOffPrice: [156.55, 120.00, 85.00],
+    //         quantity: [20, 15, 10],
+    //         tax: 'VAT',
+    //         remarks: 'Awesome customer with high ethics.',
+    //     }
+    // ])
+
+    /* HOME PC */
     const [sales, setSales] = useState([
         {
             id: 1,
             saleId: 12548569,
             clientName: 'Clinet Name 1',
             products: ['Product 1', 'Product 2', 'Product 3'],
-            category: [1, 2, 3],
+            category: [22, 28, 30],
             sellingPrice: [300, 149.99, 110],
             cutOffPrice: [300, 120.00, 110],
             quantity: [22, 12, 18],
@@ -39,8 +91,8 @@ function Sales() {
             id: 2,
             saleId: 12548570,
             clientName: 'Clinet Name 2',
-            products: ['Product 1', 'Product 2', 'Product 3'],
-            category: [1, 2, 3],
+            products: ['Product 4', 'Product 5', 'Product 6'],
+            category: [44, 46, 30],
             sellingPrice: [199.99, 280, 99.99],
             cutOffPrice: [154.99, 190.00, 85.00],
             quantity: [12, 8, 2],
@@ -51,8 +103,8 @@ function Sales() {
             id: 3,
             saleId: 12548571,
             clientName: 'Clinet Name 3',
-            products: ['Product 1', 'Product 2', 'Product 3'],
-            category: [1, 2, 3],
+            products: ['Product 7', 'Product 8', 'Product 9'],
+            category: [22, 47, 44],
             sellingPrice: [199.99, 149.99, 99.99],
             cutOffPrice: [75.00, 60.00, 85.00],
             quantity: [1, 3, 1],
@@ -63,8 +115,8 @@ function Sales() {
             id: 4,
             saleId: 12548572,
             clientName: 'Clinet Name 4',
-            products: ['Product 1', 'Product 2', 'Product 3'],
-            category: [1, 2, 3],
+            products: ['Product 10', 'Product 11', 'Product 12'],
+            category: [26, 29, 30],
             sellingPrice: [199.99, 149.99, 99.99],
             cutOffPrice: [156.55, 120.00, 85.00],
             quantity: [20, 15, 10],
@@ -72,58 +124,6 @@ function Sales() {
             remarks: 'Awesome customer with high ethics.',
         }
     ])
-
-    /* HOME PC */
-    // const [sales, setSales] = useState([
-    //     {
-    //         id: 1,
-    //         saleId: 12548569,
-    //         clientName: 'Name 1',
-    //         product: 'Product 1',
-    //         category: 22,
-    //         sellingPrice: 199.99,
-    //         cutOffPrice: 156.55,
-    //         quantity: 20,
-    //         tax: 'none',
-    //         remarks: 'Remarks 1',
-    //     },
-    //     {
-    //         id: 2,
-    //         saleId: 12548570,
-    //         clientName: 'Name 2',
-    //         product: 'Product 2',
-    //         category: 30,
-    //         sellingPrice: 149.99,
-    //         cutOffPrice: 120.00,
-    //         quantity: 15,
-    //         tax: 'VAT',
-    //         remarks: 'Remarks 2',
-    //     },
-    //     {
-    //         id: 3,
-    //         saleId: 12548571,
-    //         clientName: 'Name 3',
-    //         product: 'Product 3',
-    //         category: 44,
-    //         sellingPrice: 99.99,
-    //         cutOffPrice: 85.00,
-    //         quantity: 10,
-    //         tax: 'GST',
-    //         remarks: 'Remarks 3',
-    //     },
-    //     {
-    //         id: 4,
-    //         saleId: 12548572,
-    //         clientName: 'Name 4',
-    //         product: 'Product 4',
-    //         category: 28,
-    //         sellingPrice: 129.99,
-    //         cutOffPrice: 110.00,
-    //         quantity: 12,
-    //         tax: 'VAT',
-    //         remarks: 'Remarks 4',
-    //     }
-    // ])
 
     const {
         categoryOptions,
