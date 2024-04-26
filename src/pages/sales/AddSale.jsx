@@ -84,23 +84,7 @@ function AddSale() {
 
     const clearProductName = () => {
         setSeller({ ...seller, productName: '', brand: '', category: '', quantity: '', uom: '' });
-    }
-       
-
-    const getQuantityInputClassName = () => {
-        const selectedProduct = products.find(product => product.productName === seller.productName);
-        
-        if (!selectedProduct) {
-            return "input-group bordered"; // No error if no product is selected
-        }
-    
-        // Check if quantity is less than or equal to 0 or greater than available quantity
-        if (seller.quantity <= 0 || seller.quantity > selectedProduct.quantity) {
-            return "input-group-error"; // Add error class if quantity is 0 or less or greater than available quantity
-        }
-        
-        return "input-group bordered"; // No error, return empty string
-    };    
+    }    
 
     return (
         <>
@@ -128,7 +112,7 @@ function AddSale() {
                             <ul className="sale-list-items">
                                 <li><h4>Fields with (<i className="text-red">*</i>) are mandatory</h4></li>
                                 <li><h4>The (<i className="text-red">AD</i>) flag represents "Auto Detection"</h4></li>
-                                <li><h4>A datalist is used for the ease of product selection</h4></li>
+                                <li><h4>Datalist is used for the ease of product selection</h4></li>
                             </ul>
                             <Form onSubmit={() => {}}>
 
@@ -233,6 +217,7 @@ function AddSale() {
                                             placeholder="AD" 
                                             onChange={handleSellerChange} 
                                             readOnly
+                                            title="Category: Read only"
                                         />
                                     </div>
                                 </Card>
@@ -240,9 +225,8 @@ function AddSale() {
                                 <Card classes="card-less card-x-small">
                                     <div className="form-group">
                                         <label htmlFor="quantity">Quantity</label>
-                                        <div className={getQuantityInputClassName()}>
+                                        <div className="input-group bordered">
                                             <input 
-                                                className="error"
                                                 type="number" 
                                                 name="quantity" 
                                                 value={seller.quantity} 
