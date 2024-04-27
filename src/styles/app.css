@@ -171,6 +171,10 @@ body {
     color: var(--text-color);
 }
 
+.card-xxx-small {
+    width: 10%;
+}
+
 .card-xx-small {
     width: 15%;
 }
