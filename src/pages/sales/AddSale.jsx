@@ -32,27 +32,30 @@ function AddSale() {
     const [products, setProducts] = useState([
         {
             id: 1,
-            productName: 'Cut marker',
+            productName: 'Penner',
             brand: 'Mercury',
-            category: 26,
+            category: 1,
             quantity: 10,
-            uom: 'Pcs'
+            uom: 'Pcs',
+            price: 25
         },
         {
             id: 2,
-            productName: 'Ball Pen',
+            productName: 'My Pencil',
             brand: 'Dollar',
-            category: 23,
+            category: 2,
             quantity: 20,
-            uom: 'Pack'
+            uom: 'Pack',
+            price: 30
         },
         {
             id: 3,
-            productName: 'Eraser',
+            productName: 'Cut marker',
             brand: 'Shark',
-            category: 26,
+            category: 3,
             quantity: 200,
-            uom: 'Carton'
+            uom: 'Carton',
+            price: 20
         }
     ])
 
@@ -63,32 +66,11 @@ function AddSale() {
         category: '',
         quantity: '',
         uom: '',
+        price: '',
+        remarks: '',
     })
 
     const [selectedProducts, setSelectedProducts] = useState([]);
-
-    const handleSellerChange = (e) => {
-        const { name, value } = e.target
-        setSeller({ ...seller, [name]: value })
-    }
-
-    const handleProductSelect = (e) => {
-        const selectedProduct = e.target.value;
-        if (selectedProduct === "") {
-            // If the input field is cleared, reset the seller state
-            setSeller({ id: '', productName: '', brand: '', category: '', quantity: '', uom: '' });
-        } else {
-            const product = products.find((p) => (p.productName + ' - ' + p.brand) === selectedProduct);
-            if (product) {
-                setSeller({ ...seller, productName: product.productName, category: product.category, quantity: '', uom: product.uom });
-            }
-        }
-    };
-
-    const clearProductName = () => {
-        setSeller({ ...seller, productName: '', brand: '', category: '', quantity: '', uom: '' });
-        setSelectedProducts([]);
-    }    
 
     const handleProductChange = (e) => {
         const { name, value } = e.target;
@@ -100,40 +82,70 @@ function AddSale() {
         }
     }
 
+    const handleSellerChange = (e) => {
+        const { name, value } = e.target
+        setSeller({ ...seller, [name]: value })
+    }
+
+    const handleProductSelect = (e) => {
+        const selectedProduct = e.target.value;
+        if (selectedProduct === "") {
+            // If the input field is cleared, reset the seller state
+            setSeller({ id: '', productName: '', brand: '', category: '', quantity: '', uom: '', price: '', remarks: '' });
+        } else {
+            const product = products.find((p) => (p.productName + ' - ' + p.brand) === selectedProduct);
+            if (product) {
+                setSeller({ 
+                    ...seller, 
+                    productName: product.productName, 
+                    category: product.category, 
+                    quantity: '', 
+                    uom: product.uom, 
+                    price: product.price, 
+                    remarks: product.remarks 
+                });
+            }
+        }
+    };
+
+    const clearProductName = () => {
+        setSeller({ ...seller, productName: '', brand: '', category: '', quantity: '', uom: '', price: '', remarks: '' });
+    }  
+    
+    const removeProducts = () => {
+        setSelectedProducts([])
+    }
     const addProduct = () => {
-        // Find the product index in the selected products array
         const existingProductIndex = selectedProducts.findIndex(product => product.productName === seller.productName);
     
-        // Calculate the total quantity including the new addition
-        const totalQuantity = existingProductIndex !== -1
-            ? parseInt(seller.quantity, 10) + selectedProducts[existingProductIndex].quantity
-            : parseInt(seller.quantity, 10);
+        const totalQuantity = parseInt(seller.quantity, 10);
     
-        // Check if the total quantity exceeds the available quantity
-        if (existingProductIndex !== -1 && totalQuantity > products.quantity) {
-            // If the total quantity exceeds the available quantity, show a message or handle as desired
-            console.log("Cannot add more than available quantity");
-            toast.error("Cannot add more than available quantity", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored"
-            });
-        } else if (existingProductIndex !== -1) {
-            // Update the quantity of the existing product
+        if (existingProductIndex !== -1) {
             const updatedProducts = [...selectedProducts];
-            updatedProducts[existingProductIndex].quantity = totalQuantity;
+            const newQuantity = selectedProducts[existingProductIndex].quantity + totalQuantity;
+    
+            if (newQuantity > products.find(product => product.productName === seller.productName)?.quantity) {
+                console.log("Cannot add more than available quantity");
+                toast.error("Cannot add more than available quantity", {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+                return; // Exit the function early if quantity exceeds available quantity
+            }
+    
+            updatedProducts[existingProductIndex].quantity = newQuantity;
             setSelectedProducts(updatedProducts);
+            setSeller(prevSeller => ({ ...prevSeller, productName: '', brand: '', category: '', quantity: '', uom: '', price: '', remarks: '' }));
         } else {
-            // Check if the first time adding the product and ensure that seller.quantity reflects the available quantity
             const availableQuantity = products.find(product => product.productName === seller.productName)?.quantity || 0;
     
             if (totalQuantity > availableQuantity) {
-                // If the total quantity exceeds the available quantity, show a message or handle as desired
                 console.log("Cannot add more than available quantity");
                 toast.error("Cannot add more than available quantity", {
                     position: "bottom-right",
@@ -146,23 +158,32 @@ function AddSale() {
                     theme: "colored"
                 });
             } else {
-                // Add the new product to the list
-                setSelectedProducts([
-                    ...selectedProducts,
-                    {
-                        id: selectedProducts.length + 1, // Generate unique ID
-                        productName: seller.productName,
-                        brand: seller.brand,
-                        category: seller.category,
-                        quantity: parseInt(seller.quantity, 10), // Convert to integer
-                        uom: seller.uom
-                    }
-                ]);
+                const product = products.find(product => product.productName === seller.productName);
+                if (product) {
+                    // Add the new product to the list with price included
+                    setSelectedProducts([
+                        ...selectedProducts,
+                        {
+                            id: selectedProducts.length + 1, 
+                            productName: seller.productName,
+                            brand: seller.brand,
+                            category: seller.category,
+                            quantity: totalQuantity, 
+                            uom: seller.uom,
+                            price: product.price // Include the price
+                        }
+                    ]);
+                }
             }
         }
     }
+         
     
-            
+    const removeSingleProduct = (id) => {
+        setSelectedProducts([
+            ...selectedProducts.filter((product) => product.id !== id)
+        ])
+    }
 
     return (
         <>
@@ -243,23 +264,23 @@ function AddSale() {
                                         </div>
                                     </Card>
 
-                                    {/* <Card classes="card-less card-x-small">
+                                    <Card classes="card-less card-xx-large">
                                         <div className="form-group">
-                                            <label htmlFor="warehouse">Warehouse<i>*</i></label>
-                                            <select onChange={handleChange} name="warehouse" id="warehouse">
-                                                <option value="">Select Warehouse</option>
-                                                <option value="warehouse-001">Warehouse 001</option>
-                                                <option value="warehouse-002">Warehouse 002</option>
-                                                <option value="warehouse-003">Warehouse 003</option>
-                                                <option value="warehouse-004">Warehouse 004</option>
-                                                <option value="warehouse-005">Warehouse 005</option>
-                                            </select>
+                                            <label htmlFor="remarks">Remarks</label>
+                                            <textarea 
+                                                placeholder="Thank You!"
+                                                name="remarks" 
+                                                id="remarks" 
+                                                value={seller.remarks}
+                                                onChange={handleChange}
+                                            >
+                                            </textarea>
                                         </div>
-                                    </Card> */}
+                                    </Card>
 
                                     <Card classes="card-less card-small">
                                         <div className="form-group">
-                                            <label htmlFor="product">Products<i>*</i></label>
+                                            <label htmlFor="product">Product<i>*</i></label>
                                             <div className="input-group bordered">
                                                 <input
                                                     type="text" 
@@ -271,7 +292,7 @@ function AddSale() {
                                                     list="supporting-products"
                                                 />
                                                 {
-                                                    seller.productName && seller.quantity > 0 && 
+                                                    seller.productName &&  
                                                     <div className="danger" onClick={clearProductName} style={{ cursor: 'pointer' }}>
                                                         <BsX />
                                                     </div>
@@ -292,11 +313,9 @@ function AddSale() {
                                                 type="text" 
                                                 name="category" 
                                                 value={
-                                                    categoryOptions.map(option => {
-                                                        return seller.productName ?
-                                                            (products.find(product => product.productName === seller.productName)?.category ?
-                                                                categoryOptions.find(opt => opt.id === products.find(product => product.productName === seller.productName)?.category)?.name : '') : '';
-                                                    })}
+                                                    seller.productName &&
+                                                    categoryOptions.find(opt => opt.id === products.find(product => product.productName === seller.productName)?.category)?.name             
+                                                }
                                                 id="category" 
                                                 placeholder="AD" 
                                                 onChange={handleSellerChange} 
@@ -347,16 +366,78 @@ function AddSale() {
                             </div>
                             <div className="inner-box-1">
                                 <Form onSubmit={() => {}}>
-                                    <Card title="Products" classes="card card-xxx-large">
+                                    <Card 
+                                        title="Products" 
+                                        headerContent={
+                                            selectedProducts.length > 0 &&
+                                            <span 
+                                                onClick={removeProducts} 
+                                                style={{ 
+                                                    cursor: 'pointer', 
+                                                    fontSize: 'small',
+                                                    backgroundColor: '#ca1818', 
+                                                    color: '#fff',
+                                                    padding: '5px 10px',
+                                                    borderRadius: '6px'
+                                                }}
+                                            >
+                                                Clear all products
+                                            </span>
+                                        } 
+                                        classes="card card-xxx-large"
+                                    >
                                         <div className="form-group">
                                             {
-                                                selectedProducts.length > 0 ? selectedProducts.map((product) => (
-                                                    <p>{product.productName} X {product.quantity}</p>
-                                                )) : <h4>Products will be shown here</h4>
+                                                selectedProducts.length > 0 ? (
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Product</th>
+                                                                <th>Price</th>
+                                                                <th>Net</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {
+                                                                selectedProducts.map((product) => (
+                                                                    <>
+                                                                    <tr key={product.id}>
+                                                                        <td>
+                                                                            <span  
+                                                                                style={{ 
+                                                                                    cursor: 'pointer', 
+                                                                                    fontSize: 'smaller', 
+                                                                                    fontWeight: '700',
+                                                                                    textShadow: '0px 0px 2px #000'
+                                                                                }}
+                                                                                className="text-red"
+                                                                                onClick={() => removeSingleProduct(product.id)}
+                                                                            >
+                                                                                Remove
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>{product.productName} &nbsp; x <i className="text-lime-green">{product.quantity}</i></td>
+                                                                        <td>{product.price}</td>
+                                                                        <td>{product.quantity * product.price}/-</td>
+                                                                    </tr>
+                                                                    </>
+                                                                ))
+                                                            }
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td><strong>Total: </strong></td>
+                                                                <td>
+                                                                    {selectedProducts.reduce((total, product) => total + (product.quantity * product.price), 0)}/-
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                ) : <h4>Products will be shown here</h4>
                                             }
                                         </div>
                                     </Card>
-
                                 </Form>
                             </div>
                         </div>

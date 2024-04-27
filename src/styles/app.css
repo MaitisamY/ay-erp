@@ -659,6 +659,10 @@ table td {
     white-space: wrap;
 }
 
+table td i {
+    font-style: normal;
+}
+
 table tr:nth-child(even) {
     background-color: rgba(49, 49, 235, 0.05);
 }

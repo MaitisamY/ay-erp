@@ -57,11 +57,11 @@ export const useSaleFunctions = () => {
     // If the previous saleId exists:
     const previousSaleId = "00900002";
     const newSaleId = generateSaleId(previousSaleId);
-    console.log(newSaleId); // Output: 00900003
+    // console.log(newSaleId); // Output: 00900003
     
     // If the previous saleId doesn't exist (for the first sale):
     const newSaleIdForFirstSale = generateSaleId();
-    console.log(newSaleIdForFirstSale); // Output: 00900001
+    // console.log(newSaleIdForFirstSale); // Output: 00900001
 
     useEffect(() => {
         
