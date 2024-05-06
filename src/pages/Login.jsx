@@ -15,6 +15,7 @@ function Login() {
     const {
         loginData,
         showPassword,
+        isLoading,
         handleChange,
         handleLogin,
         handleShowPassword
@@ -71,7 +72,15 @@ function Login() {
                         <Link className="link" to="/reset-password">Forgot Password?</Link>
                     </div>
 
-                    <button type="submit">Login</button>
+                    <button type="submit">
+                        {
+                            isLoading ? 
+                            <div className="loader">
+                                <span className="loading-spinner"></span>
+                            </div> 
+                            : 'Login'
+                        }
+                    </button>
                 </form>
             </div>
         </div>

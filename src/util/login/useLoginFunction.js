@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import validator from 'validator'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 
 
 export const useLoginFunction = () => {
@@ -13,6 +14,8 @@ export const useLoginFunction = () => {
 
     const [showPassword, setShowPassword] = useState(false)
     const handleShowPassword = () => setShowPassword(!showPassword)
+
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -53,17 +56,35 @@ export const useLoginFunction = () => {
             })
             return;
         }
+        else {
+            setIsLoading(true)
 
-        // Login successful
-        toast.success('Login successful', {
-            position: "top-right",
-            autoClose: 6000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-        })
+            try {
+                const response = axios.post('/login', {
+                    email: loginData.email,
+                    password: loginData.password
+                })
+
+                if (response.status === 200) {
+                    toast.success(response.data.message)
+                    setTimeout(() => {
+                        window.location.href = '/dashboard'
+                    }, 2000)
+                }
+            } catch (error) {
+                toast.error(error.response.data.message, {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: 'light',
+                })
+            }
+        }
+        setIsLoading(false)
     }
 
     useEffect(() => {
@@ -85,6 +106,7 @@ export const useLoginFunction = () => {
     return {
         loginData,
         showPassword,
+        isLoading,
         handleChange,
         handleLogin,
         handleShowPassword
