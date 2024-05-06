@@ -12,6 +12,7 @@ import { NotificationThresholdProvider } from './hooks/NotificationThresholdProv
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
+const Login = lazy(() => import('./pages/Login'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
 const Products = lazy(() => import('./pages/Products'))
 const AddProduct = lazy(() => import('./pages/products/AddProduct'))
@@ -47,7 +48,7 @@ function App() {
                                             <ToastContainer />
                                             <Routes>
                                                 <Route path="*" element={<NotDefined />} />
-                                                <Route path="/" element={<Dashboard />} />
+                                                <Route path="/" element={<Login />} />
                                                 <Route path="/dashboard" element={<Dashboard />} />
                                                 <Route path="/products" element={<Products />} />
                                                 <Route path="/products/add" element={<AddProduct />} />

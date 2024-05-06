@@ -33,7 +33,7 @@ function Sidebar() {
 
     useEffect(() => {
         fetchCredentials()
-    }, [organizationCredential])
+    }, [])
 
     return (
         <div className="sidebar" style={{ width: isCollapsed ? '70px' : '15%' }}>
@@ -114,6 +114,8 @@ function Sidebar() {
                             ||  pathname === '/settings/profile' 
                             || pathname === '/settings/uom' 
                             || pathname === '/settings/categories' 
+                            || pathname === '/settings/brands'
+                            || pathname === '/settings/tax'
                             ? 'active' : ''}
                         `}
                     >
