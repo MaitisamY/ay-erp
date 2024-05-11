@@ -25,31 +25,33 @@ export const useLoginFunction = () => {
         })
     }
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
 
-        if (loginData.email === '') {
+        const { email, password } = loginData
+
+        if (email === '') {
             setLoginData({
                 ...loginData,
                 emailError: 'Email is required'
             })
             return;
         }
-        if (!validator.isEmail(loginData.email)) {
+        if (!validator.isEmail(email)) {
             setLoginData({
                 ...loginData,
                 emailError: 'Invalid email address'
             })
             return;
         }
-        if (loginData.password === '') {
+        if (password === '') {
             setLoginData({
                 ...loginData,
                 passwordError: 'Password is required'
             })
             return;
         }
-        if (loginData.password.length < 6) {
+        if (password.length < 6) {
             setLoginData({
                 ...loginData,
                 passwordError: 'Password must be at least 6 characters long'
@@ -60,10 +62,12 @@ export const useLoginFunction = () => {
             setIsLoading(true)
 
             try {
-                const response = axios.post('/login', {
-                    email: loginData.email,
-                    password: loginData.password
+                const response = await axios.post('http://localhost:5000/login', {
+                    email: email,
+                    password: password
                 })
+
+                console.log(response.data.user);
 
                 if (response.status === 200) {
                     toast.success(response.data.message)
@@ -72,19 +76,24 @@ export const useLoginFunction = () => {
                     }, 2000)
                 }
             } catch (error) {
-                toast.error(error.response.data.message, {
-                    position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: false,
-                    progress: undefined,
-                    theme: 'light',
-                })
+                setTimeout(() => {
+                    toast.error(error.response.data.error, {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: false,
+                        progress: undefined,
+                        theme: 'dark',
+                    })
+                }, 3000)
             }
         }
-        setIsLoading(false)
+        // Delay setting isLoading to false by 3 seconds
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 3000);
     }
 
     useEffect(() => {

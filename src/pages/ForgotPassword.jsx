@@ -3,12 +3,12 @@ import '../styles/login.css'
 import { useTheme } from '../hooks/ThemeProvider'
 import { useLoginFunction } from '../util/login/useLoginFunction'
 import { Link } from 'react-router-dom'
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { FaArrowLeft } from 'react-icons/fa6'
 
 
-function Login() {
+function ForgotPassword() {
 
-    document.title = 'ERP - Login'
+    document.title = 'ERP - Forgot Password'
 
     const { theme } = useTheme()
 
@@ -45,7 +45,7 @@ function Login() {
                 <img src={`/images/${theme === 'light' ? 'erp' : 'erp-white'}.png`} alt="ERP" />
 
                 <form onSubmit={handleLogin}>
-                    <h1 className="title">Login to your account</h1>
+                    <h1 className="title">Reset Password</h1>
 
                     <div className="form-group">
                         <label htmlFor="email">Email</label>
@@ -58,52 +58,20 @@ function Login() {
                             placeholder="E.g. your@email.com"
                         />
 
-                        {
-                            loginData.emailError && 
-                            <p className="error" style={{ textShadow: theme === 'light' ? '#fff 0 0 5px' : '#000 0px 0px 5px' }}>{loginData.emailError}</p>
-                        }
+                        {loginData.emailError && <p className="error">{loginData.emailError}</p>}
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="password">
-                            Password
-                        </label>
-
-                        <div className="fielder">
-                            <input 
-                                type={showPassword ? 'text' : 'password'} 
-                                id="password" 
-                                name="password"
-                                value={loginData.password}
-                                onChange={handleChange}
-                                placeholder="Enter your password"
-                            />
-                            <span onClick={handleShowPassword}>{showPassword ? <FaEye /> : <FaEyeSlash />}</span>
-                        </div>
-
-                        {
-                            loginData.passwordError && 
-                            <p className="error" style={{ textShadow: theme === 'light' ? '#fff 0 0 5px' : '#000 0px 0px 5px' }}>{loginData.passwordError}</p>
-                        }
-                    </div>
-
-                    <div className="form-group">
-                        <Link className="link" to="/reset-password">Forgot Password?</Link>
-                    </div>
-
-                    <button 
-                        type="submit" 
-                        disabled={isLoading}
-                        title={isLoading ? 'Loading... Please wait' : ''}
-                    >
+                    <button type="submit">
                         {
                             isLoading ? 
                             <div className="loader">
-                                <span className="loading-spinner"></span> Please wait
+                                <span className="loading-spinner"></span>
                             </div> 
                             : 'Login'
                         }
                     </button>
+
+                    <Link className="back" to="/"><span><FaArrowLeft /></span> Go to Login</Link>
                 </form>
 
                 <h5>Copyright &copy; {new Date().getFullYear()}. ay-folio ERP System.</h5>
@@ -112,4 +80,4 @@ function Login() {
     )
 }
 
-export default Login
+export default ForgotPassword

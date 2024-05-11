@@ -1,17 +1,19 @@
 import express from 'express';
-import { db } from '../config/connectDB.js';
+import Category from '../models/Category.js';
 
 const router = express.Router();
 
 /* Get all categories */
 router.get('/get/categories', async (req, res) => {
     try {
-        const result = await db.query('SELECT * FROM category ORDER BY id ASC');
+        const result = await Category.findAll({
+            order: [['id', 'ASC']]
+        });
 
-        if (!result) {
-            res.json({ status: 500, message: 'Internal server error' });
+        if (result.length === 0) {
+            res.json({ status: 500, message: 'No categories found' });
         } else {
-            res.json({ status: 200, data: result.rows });
+            res.json({ status: 200, data: result });
         }
     } catch (error) {
         res.json({ status: 500, message: error.message });
@@ -23,20 +25,21 @@ router.post('/add/category', async (req, res) => {
     const { category } = req.body;
 
     try {
-        const check = await db.query('SELECT * FROM category WHERE name = $1', [category]);
+        const check = await Category.findOne({
+            where: { name: category }
+        });
 
-        if (check.rows.length > 0) {
+        if (check) {
             res.json({ status: 400, message: 'Category already exists' });
             return;
         }
             
-        const result = await db.query('INSERT INTO category (name, status) VALUES ($1, $2) RETURNING *', [category, 1]);
+        await Category.create({
+            name: category,
+            status: 1
+        });
 
-        if (!result) {
-            res.json({ status: 400, message: 'Error adding category' });
-        } else {
-            res.json({ status: 200, message: 'Category added successfully' });
-        }
+        res.json({ status: 200, message: 'Category added successfully' });
     } catch (error) {
         res.json({ status: 500, message: error.message });
     }
@@ -50,9 +53,12 @@ router.put('/update/category/:id', async (req, res) => {
     const updater = status === 0 ? 1 : 0;
 
     try {
-        const result = await db.query('UPDATE category SET status = $1 WHERE id = $2 RETURNING *', [updater, id]);
+        const result = await Category.update(
+            { status: updater },
+            { where: { id: id } }
+        );
 
-        if (!result) {
+        if (result[0] === 0) {
             res.json({ status: 400, message: 'Error updating category' });
             return;
         } else {
@@ -68,9 +74,11 @@ router.delete('/delete/category/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const result = await db.query('DELETE FROM category WHERE id = $1 RETURNING *', [id]);
+        const result = await Category.destroy({
+            where: { id: id }
+        });
 
-        if (!result) {
+        if (result === 0) {
             res.json({ status: 400, message: 'Error deleting category' });
             return;
         } else {
@@ -86,9 +94,11 @@ router.delete('/delete/categories', async (req, res) => {
     const { ids } = req.body;
 
     try {
-        const result = await db.query('DELETE FROM category WHERE id = ANY($1) RETURNING *', [ids]);
+        const result = await Category.destroy({
+            where: { id: ids }
+        });
 
-        if (!result) {
+        if (result === 0) {
             res.json({ status: 400, message: 'Error deleting categories' });
             return;
         } else {
@@ -97,6 +107,6 @@ router.delete('/delete/categories', async (req, res) => {
     } catch (error) {
         res.json({ status: 500, message: error.message });
     }
-})
+});
 
 export default router;

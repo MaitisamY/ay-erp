@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
 const Login = lazy(() => import('./pages/Login'))
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
 const Products = lazy(() => import('./pages/Products'))
 const AddProduct = lazy(() => import('./pages/products/AddProduct'))
@@ -49,6 +50,7 @@ function App() {
                                             <Routes>
                                                 <Route path="*" element={<NotDefined />} />
                                                 <Route path="/" element={<Login />} />
+                                                <Route path="/reset-password" element={<ForgotPassword />} />
                                                 <Route path="/dashboard" element={<Dashboard />} />
                                                 <Route path="/products" element={<Products />} />
                                                 <Route path="/products/add" element={<AddProduct />} />

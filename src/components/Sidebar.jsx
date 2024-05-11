@@ -52,7 +52,7 @@ function Sidebar() {
 
             <ul>
                 <li>
-                    <Link to="/" className={`link ${pathname === '/' ? 'active' : ''}`}>
+                    <Link to="/dashboard" className={`link ${pathname === '/dashboard' ? 'active' : ''}`}>
                         <BsSpeedometer2 size={20} /> 
                         <span style={{ display: isCollapsed ? 'none' : 'block' }}>Dashboard</span>
                     </Link>

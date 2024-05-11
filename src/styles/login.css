@@ -44,6 +44,63 @@
     align-items: center;
     gap: 15px;
     box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.35);
+    position: relative;
+}
+
+.login-page .left .menu-bar {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: fit-content;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 30px;
+    gap: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 50px;
+    z-index: 10;
+}
+
+.login-page .left .menu-bar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    gap: 30px;
+    list-style: none;
+}
+
+.login-page .left .menu-bar ul li {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    gap: 10px;
+}
+
+.login-page .left .menu-bar ul li .link {
+    text-decoration: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Tilt Neon', sans-serif;
+    opacity: 0.8;
+}
+
+.login-page .left .menu-bar ul li .link:hover {
+    opacity: 1;
 }
 
 .login-page .left video {
@@ -52,23 +109,15 @@
     object-fit: cover;
 }
 
-@media screen and (max-width: 1000px) {
-
-    .login-page .left {
-        display: none;
-    }
-    
-}
-
 .login-page .right {
     grid-area: 1 / 2 / 2 / 3;
     width: 100%;
     height: 100%;
-    padding: 0;
+    padding: 40px 0 20px 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 15px;
 }
@@ -80,14 +129,6 @@
     object-fit: contain;
 }
 
-.login-page .right .title {
-    font-size: 24px;
-    font-weight: 500;
-    text-align: center;
-    color: var(--text-color);
-    font-family: 'Tilt Neon', sans-serif;
-}
-
 .login-page .right form {
     display: flex;
     flex-direction: column;
@@ -97,6 +138,46 @@
     height: auto;
     padding: 20px;
     margin: 0;
+}
+
+.login-page .right form .title {
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text-color);
+    font-family: 'Tilt Neon', sans-serif;
+    padding: 0 0 15px 0;
+}
+
+.login-page .right form .back {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 400;
+    margin: 15px 0 25px 0;
+    font-family: 'Tilt Neon', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    opacity: 0.8;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-page .right form .back:hover {
+    opacity: 1;
+}
+
+.login-page .right form .back span {
+    transition: all 0.2s ease-in-out;
+    margin-top: 5px;
+}
+
+.login-page .right form .back:hover span {
+    transition: all 0.2s ease-in-out;
+    transform: translateX(-5px);
 }
 
 .login-page .right form .form-group {
@@ -146,9 +227,13 @@
     transition: all 0.2s ease-in-out;
 }
 
-.login-page .right form .form-group input:hover,
+.login-page .right form .form-group input:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 .login-page .right form .form-group input:focus,
 .login-page .right form .form-group input:active {
+    background-color: rgba(255, 255, 255, 0.1);
     outline: 3px solid #4be04bc2;
     border: 1px solid #4be04bc2;
 }
@@ -193,51 +278,12 @@
     font-family: 'Tilt Neon', sans-serif;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 .login-page .right form .form-group .link:hover {
     opacity: 1;
 }
 
-.login-page .right form .form-group button {
-    width: 100%;
-    height: auto;
-    padding: 10px 10px;
-    border: 1px solid #cccccc98;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--text-color);
-    background-color: transparent;
-    outline: none;
-    font-family: 'Tilt Neon', sans-serif;
-    margin: 0 0 10px 0;
-}
 
-.loader {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-    height: 100%;
-}
 
-.loading-spinner {
-    border: 4px solid blue; 
-    border-radius: 50%;
-    border-top: 4px solid var(--border-color); 
-    border-bottom: 4px solid var(--border-color); 
-    width: 26px; 
-    height: 26px; 
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-    align-self: center;
-}
-
-@keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-}

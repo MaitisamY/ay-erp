@@ -1,29 +1,24 @@
 import '../styles/404.css'
 
-import Sidebar from '../components/Sidebar'
-import Content from '../components/Content'
-import Header from '../partials/Header'
-import Main from '../partials/Main'
-import Footer from '../partials/Footer'
+import { Link } from 'react-router-dom'
+import { FaArrowLeft } from 'react-icons/fa6'
 
 function NotFound() {
 
+    const goBack = () => {
+        window.history.back(); // This will navigate back one step in the browser history
+    }
+
     return (
-        <>
-            <Sidebar />
-            <Content>
-                <Header />
-                <Main>
-                    <div className="container">
-                        <div className="page-not-found">
-                            <h2 className="text-red">Page Not Found</h2>
-                            <img src="/images/404.png" alt="404" />
-                        </div>
-                    </div>
-                </Main>
-                <Footer />
-            </Content>
-        </>
+        <div className="page-not-found">
+            <img src="/images/404.png" alt="404" />
+
+            <div className="text-holder">
+                <h1 className="text-red">404</h1>
+                <h2 className="text-red">Page Not Found</h2>
+                <a className="link" onClick={goBack}><span><FaArrowLeft /></span> <i>Go Back</i></a>
+            </div>
+        </div>
     )
 }
 
