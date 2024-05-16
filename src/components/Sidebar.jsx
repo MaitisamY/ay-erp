@@ -35,6 +35,8 @@ function Sidebar() {
         fetchCredentials()
     }, [])
 
+    console.log(organizationCredential)
+
     return (
         <div className="sidebar" style={{ width: isCollapsed ? '70px' : '15%' }}>
 
@@ -82,7 +84,7 @@ function Sidebar() {
                     </Link>
                 </li>
                 <li>
-                    <Link to="/users" className={`link ${pathname === '/users' ? 'active' : ''}`}>
+                    <Link to="/users" className={`link ${pathname === '/users' || pathname === '/users/add' ? 'active' : ''}`}>
                         <MdPeopleOutline size={20} />
                         <span style={{ display: isCollapsed ? 'none' : 'block' }}>Users</span>
                     </Link>

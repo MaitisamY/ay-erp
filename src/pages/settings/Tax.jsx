@@ -237,7 +237,6 @@ function Tax() {
                         </div>
                     </div>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

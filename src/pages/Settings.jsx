@@ -368,7 +368,6 @@ function General() {
                         </div>
                     </div>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

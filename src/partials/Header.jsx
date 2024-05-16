@@ -65,6 +65,7 @@ function Header() {
         : pathname === '/purchases' ? document.title = 'Purchases' 
         : pathname === '/expenses' ? document.title = 'Expenses'
         : pathname === '/users' ? document.title = 'Users'
+        : pathname === '/users/add' ? document.title = 'Add User'
         : pathname === '/customers' ? document.title = 'Customers'
         : pathname === '/reports' ? document.title = 'Reports'
         : pathname === '/vendors' ? document.title = 'Vendors'
@@ -87,6 +88,7 @@ function Header() {
                     || pathname === '/settings/categories' ? 'Settings'
                     : pathname === '/products/add' ? 'Products'
                     : pathname === '/sales/add' ? 'Sales'
+                    : pathname === '/user/add' ? 'Users'
                     : pathname.slice(1).replace(/-/, ' ').charAt(0).toUpperCase() + pathname.slice(1).replace(/-/, ' ').slice(1)
                 }
             </h1>

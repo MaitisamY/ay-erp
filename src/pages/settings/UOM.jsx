@@ -305,7 +305,6 @@ function UOM() {
                         </div>
                     </div>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

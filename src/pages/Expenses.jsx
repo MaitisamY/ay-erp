@@ -14,7 +14,6 @@ function Expenses() {
                 <Main>
                     <h1>All Expenses</h1>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

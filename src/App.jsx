@@ -1,6 +1,7 @@
 import './styles/app.css'
 import 'react-toastify/dist/ReactToastify.css';
 
+// Import modules and hooks
 import { lazy, Suspense } from 'react'
 import { OrganizationCredentialProvider } from './hooks/OrganizationCredentialProvider'
 import { useTheme } from './hooks/ThemeProvider'
@@ -12,6 +13,7 @@ import { NotificationThresholdProvider } from './hooks/NotificationThresholdProv
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
+// Import pages with lazy loading
 const Login = lazy(() => import('./pages/Login'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
@@ -22,6 +24,7 @@ const AddSale = lazy(() => import('./pages/sales/AddSale'))
 const Purchases = lazy(() => import('./pages/Purchases'))
 const Expenses = lazy(() => import('./pages/Expenses'))
 const Users = lazy(() => import('./pages/Users'))
+const AddUser = lazy(() => import('./pages/users/AddUser'))
 const Customers = lazy(() => import('./pages/Customers'))
 const Reports = lazy(() => import('./pages/Reports'))
 const Vendors = lazy(() => import('./pages/Vendors'))
@@ -59,6 +62,7 @@ function App() {
                                                 <Route path="/purchases" element={<Purchases />} />
                                                 <Route path="/expenses" element={<Expenses />} />
                                                 <Route path="/users" element={<Users />} />
+                                                <Route path="/users/add" element={<AddUser />} />
                                                 <Route path="/customers" element={<Customers />} />
                                                 <Route path="/reports" element={<Reports />} />
                                                 <Route path="/vendors" element={<Vendors />} />

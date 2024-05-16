@@ -14,7 +14,6 @@ function Purchases() {
                 <Main>
                     <h1>All Purchases</h1>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

@@ -67,7 +67,7 @@ router.post('/login', validateLogin, (req, res, next) => {
         }
         req.logIn(user, (err) => {
             if (err) {
-            return res.status(500).json({ error: err.message });
+                return res.status(500).json({ error: err.message });
             }
             return res.status(200).json({ message: 'Login successful' });
         });

@@ -1,13 +1,15 @@
 
 import { Link } from 'react-router-dom'
 
-import Sidebar from '../components/Sidebar'
-import Content from '../components/Content'
-import Header from '../partials/Header'
-import Main from '../partials/Main'
-import Footer from '../partials/Footer'
+import Sidebar from '../../components/Sidebar'
+import Content from '../../components/Content'
+import Header from '../../partials/Header'
+import Main from '../../partials/Main'
+import Footer from '../../partials/Footer'
 
-function Users() {
+import AddUserForm from './AddUserForm'
+
+function AddUser() {
 
     return (
         <>
@@ -18,19 +20,21 @@ function Users() {
                     
                     <div className="pills">
                         <li>
-                            <Link to="/users" className="link active">
+                            <Link to="/users" className="link">
                                 All Users
                             </Link>
                         </li>
                         <li>
-                            <Link to="/users/add" className="link">
+                            <Link to="/users/add" className="link active">
                                 Add User
                             </Link>
                         </li>
                     </div>
 
                     <div className="container">
-                        <h2>Users data</h2>
+                        <h2>Add User Form</h2>
+                        
+                        <AddUserForm />
                     </div>
 
                 </Main>
@@ -39,4 +43,4 @@ function Users() {
     )
 }
 
-export default Users
+export default AddUser

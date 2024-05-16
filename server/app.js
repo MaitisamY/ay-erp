@@ -5,7 +5,6 @@ import session from 'express-session';
 import path from 'path';
 import passport from 'passport';
 import flash from 'connect-flash';
-import helmet from 'helmet';
 
 import sequelize from './config/sequelize.js';
 import userRoutes from './router/userRoute.js';
@@ -17,46 +16,6 @@ import brandRoutes from './router/brandSettingRoute.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
-
-app.use(
-    helmet({
-        contentSecurityPolicy: {
-            // Content Security Policy (CSP) directives
-            directives: {
-            defaultSrc: ["'self'"],                                               // Allow resources from the same origin by default
-            scriptSrc: ["'self'", "'unsafe-inline'", 'http://localhost:5173/'],   // Allow scripts from these sources
-            },
-            // Other CSP options
-            // reportOnly: true,                                                  // Enable report-only mode
-            // reportUri: '/report-violation',                                    // Specify URI to send CSP violation reports
-        },
-        frameguard: {
-            action: 'deny',                                                       // Set X-Frame-Options to deny framing
-        },
-        // Configuration of other security headers
-        dnsPrefetchControl: { allow: false },                                     // Disable DNS prefetching
-        expectCt: { enforce: true, maxAge: 123 },                                 // Configure Expect-CT header
-        featurePolicy: {
-            features: {                                                           // Configure Feature-Policy header
-            camera: ["'none'"],
-            microphone: ["'none'"],
-            },
-        },
-        hidePoweredBy: true,                                                      // Remove the X-Powered-By header
-        hpkp: false,                                                              // Disable HTTP Public Key Pinning (HPKP)
-        hsts: {
-            maxAge: 31536000,                                                     // Set HSTS max-age to one year (in seconds)
-            includeSubDomains: true,                                              // Include subdomains
-            preload: true,                                                        // Enable HSTS preload
-        },
-        ieNoOpen: true,                                                           // Set X-Download-Options to noopen for IE8+
-        noCache: false,                                                           // Disable client-side caching
-        noSniff: true,                                                            // Enable X-Content-Type-Options to prevent MIME type sniffing
-        permittedCrossDomainPolicies: { permittedPolicies: 'none' },              // Disable cross-domain policy file
-        referrerPolicy: { policy: 'same-origin' },                                // Set Referrer-Policy header
-        xssFilter: true,                                                          // Enable XSS protection filter
-        })
-);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

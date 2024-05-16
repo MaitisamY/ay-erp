@@ -1168,13 +1168,13 @@ form button:disabled:hover {
 }
 
 .loading-spinner {
-    border: 4px solid transparent; 
+    border: 2px solid transparent; 
     border-radius: 50%;
-    border-top: 4px solid rgb(28, 29, 51); 
-    border-bottom: 4px solid rgb(28, 29, 51); 
-    border-left: 4px solid rgb(28, 29, 51);
-    width: 20px; 
-    height: 20px; 
+    border-top: 2px solid rgb(28, 29, 51); 
+    border-bottom: 2px solid rgb(28, 29, 51); 
+    border-left: 2px solid rgb(28, 29, 51);
+    width: 16px; 
+    height: 16px; 
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
     align-self: center;

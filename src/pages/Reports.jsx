@@ -14,7 +14,6 @@ function Reports() {
                 <Main>
                     <h1>All Reports</h1>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

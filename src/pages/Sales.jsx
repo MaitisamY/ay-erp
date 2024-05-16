@@ -381,7 +381,6 @@ function Sales() {
                         </div>
                     </div>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

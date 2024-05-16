@@ -14,7 +14,6 @@ function Dashboard() {
                 <Main>
                     <h1>Welcome!</h1>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

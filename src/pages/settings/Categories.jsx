@@ -299,7 +299,6 @@ function Categories() {
                         </div>
                     </div>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

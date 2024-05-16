@@ -14,7 +14,6 @@ function Customers() {
                 <Main>
                     <h1>All Customers</h1>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

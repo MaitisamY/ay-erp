@@ -14,7 +14,6 @@ function Vendors() {
                 <Main>
                     <h1>All Vendors</h1>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

@@ -291,7 +291,6 @@ function AddProduct() {
                         </div>
                     </div>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

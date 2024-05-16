@@ -299,7 +299,6 @@ function brands() {
                         </div>
                     </div>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

@@ -488,7 +488,6 @@ function AddSale() {
                         </div>
                     </div>
                 </Main>
-                <Footer />
             </Content>
         </>
     )

@@ -314,7 +314,6 @@ function Products() {
                         </div>
                     </div>
                 </Main>
-                <Footer />
             </Content>
         </>
     )
