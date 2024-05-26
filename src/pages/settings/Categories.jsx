@@ -4,8 +4,8 @@ import { useEffect } from 'react'
 import { useOrganizationCredential } from '../../hooks/OrganizationCredentialProvider'
 import { useTheme } from '../../hooks/ThemeProvider'
 import { Link } from 'react-router-dom'
-import { useCategoryFunctions } from '../../util/settings/useCategoryFunctions'
-import { usePagination } from '../../helpers/Pagination'
+import { useCategoryFunctions } from '../../util/settings/useCategoryFunctions.js'
+import { usePagination } from '../../helpers/Pagination.js'
 import { FaTrashAlt } from 'react-icons/fa'
 import { MdOutlineToggleOff, MdOutlineToggleOn, MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
 
@@ -13,7 +13,6 @@ import Sidebar from '../../components/Sidebar'
 import Content from '../../components/Content'
 import Header from '../../partials/Header'
 import Main from '../../partials/Main'
-import Footer from '../../partials/Footer'
 import Card from '../../components/Card'
 import Form from '../../components/Form'
 import PrePagination from '../../components/pagination/PrePagination'
@@ -117,6 +116,7 @@ function Categories() {
                                         </div>
                                         {serverResponse && <h6 className="text-red">{serverResponse}</h6>}
                                         <button 
+                                            className="theme"
                                             type="submit"
                                             disabled={!category || category.length < 2}
                                             title={!category ? 'Add category first' : null}

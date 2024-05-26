@@ -30,7 +30,7 @@ function PrePagination({
             <div>
             {
                 importData && isImportable && (
-                    <button>
+                    <button className="bg-theme">
                         <BsDownload /> 
 
                         <span 
@@ -43,7 +43,7 @@ function PrePagination({
             }
             {
                 exportData && isExportable && items && items.length > 0 && (
-                    <button>
+                    <button className="bg-theme">
                         <BsUpload />
 
                         <span 
@@ -70,10 +70,10 @@ function PrePagination({
             </div>
             <div>
             <span>Showing</span> <select name="items-per-page" id="items-per-page" onChange={handleItemsPerPage && handleItemsPerPage}>
+                    <option value="10">10</option>
                     <option value="25">25</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
-                    <option value="200">200</option>
                 </select> <span>rows</span>
             </div>
         </div>

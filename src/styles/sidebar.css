@@ -77,7 +77,7 @@
     height: auto;
     padding: 10px 10px;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 600;
     text-decoration: none;
     color: var(--text-color);
     cursor: pointer;
@@ -94,8 +94,8 @@
 
 .sidebar ul li .link.active {
     opacity: 1;
-    background-color: rgb(49, 49, 235);
-    color: rgb(243, 237, 237)
+    background-color: #FBA834;
+    color: rgba(0, 0, 0, 0.75)
 }
 
 .sidebar ul li .link.active:hover {

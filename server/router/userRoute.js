@@ -69,9 +69,33 @@ router.post('/login', validateLogin, (req, res, next) => {
             if (err) {
                 return res.status(500).json({ error: err.message });
             }
-            return res.status(200).json({ message: 'Login successful' });
+
+            // set session token
+            req.session.token = req.sessionID;
+
+            return res.status(200).json({ 
+                status: 200, 
+                token: req.session.token,
+                user: user 
+            });
         });
     })(req, res, next);
 });
+
+router.get('/get/users', async (req, res) => {
+    try {
+        const result = await User.findAll({
+            order: [['id', 'ASC']]
+        });
+
+        if (result.length === 0) {
+            res.json({ status: 500, message: 'No users found' });
+        } else {
+            res.json({ status: 200, data: result });
+        }
+    } catch (error) {
+        res.json({ status: 500, message: error.message });
+    }
+})
 
 export default router;

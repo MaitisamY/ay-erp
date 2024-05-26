@@ -315,13 +315,11 @@ body {
     border-radius: 5px;
     font-size: small;
     font-weight: 400;
-    color: var(--text-color);
-    border: none;
-    background-color: var(--background-color);
-    outline: 1px solid #8f8f8f;
+    background-color: transparent;
     font-family: "Inter", sans-serif;
     transition: all 0.2s ease-in-out;
     box-shadow: 0px 0px 10px -2px rgba(211, 208, 208, 0.2);
+    cursor: pointer;
 }
 
 .pre-pagination button .tooltip-light {
@@ -389,6 +387,19 @@ body {
     display: block;
 }
 
+.pre-pagination button.bg-theme {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    outline: none;
+}
+
+.pre-pagination button.bg-theme:hover {
+    background-color: #333A73;
+    border: 1px solid #333A73;
+    color: #fff;
+}
+
 .pre-pagination button.bg-orange,
 .pagination button.bg-orange {
     background-color: #ffa500;
@@ -437,16 +448,16 @@ body {
     outline: 1px solid #ca1818e3;
 }
 
-.pre-pagination button:hover,
-.pagination button:hover {
+.pre-pagination button.bg-green:hover,
+.pagination button.bg-green:hover {
     background-color: #31eb31dc;
     outline: 1px solid #31eb31dc;
     color: rgba(0, 0, 0, 1);
     cursor: pointer;
 }
 
-.pre-pagination button.active,
-.pagination button.active {
+.pre-pagination button.bg-green.active,
+.pagination button.bg-green.active {
     background-color: #31eb31dc;
     outline: 1px solid #31eb31dc;
     color: rgba(0, 0, 0, 1);
@@ -461,13 +472,29 @@ body {
     border-radius: 5px;
     font-size: small;
     font-weight: 400;
-    color: var(--text-color);
-    border: none;
-    background-color: var(--background-color);
-    outline: none;
+    background-color: transparent;
     font-family: "Inter", sans-serif;
     transition: all 0.2s ease-in-out;
     box-shadow: 0px 0px 10px -2px rgba(211, 208, 208, 0.2);
+    cursor: pointer;
+}
+
+.pagination button.bg-theme {
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    outline: none;
+}
+
+.pagination button.bg-theme:hover {
+    background-color: #333a73e3;
+    color: #fff;
+}
+
+.pagination button.bg-theme.active,
+.pagination button.bg-theme.active:hover {
+    background-color: #333A73;
+    color: #fff;
 }
 
 .pre-pagination button:disabled,
@@ -618,8 +645,8 @@ body {
 .pills li .link.active {
     opacity: 1;
     font-weight: 600;
-    color: rgba(0, 0, 0, 0.75);
-    background-color: #31EB31;
+    color: rgb(243, 237, 237);
+    background-color: #333A73;
     -webkit-box-shadow: 0px 0px 13px -5px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 13px -5px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 13px -5px rgba(0, 0, 0, 0.75);
@@ -670,6 +697,14 @@ table tr:nth-child(even) {
 table td .link {
     text-decoration: none;
     cursor: pointer;
+}
+
+table td span {
+    font-size: 10px; 
+    padding: 3px 6px; 
+    border-radius: 5px; 
+    background: #FBA834;
+    color: rgba(0, 0, 0, 0.9);
 }
 
 table .btn-group {
@@ -803,6 +838,8 @@ form .form-group input {
     outline: none;
     font-family: "Inter", sans-serif;
     margin: 0 0 10px 0;
+    background-clip: padding-box;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 form .form-group select {
@@ -818,6 +855,8 @@ form .form-group select {
     outline: none;
     font-family: "Inter", sans-serif;
     margin: 0 0 10px 0;
+    background-clip: padding-box;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 form .form-group select option {
@@ -840,6 +879,8 @@ form .form-group textarea {
     font-family: "Inter", sans-serif;
     margin: 0 0 10px 0;
     resize: none;
+    background-clip: padding-box;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 form .form-group input:read-only:hover {
@@ -850,14 +891,30 @@ form .form-group input:read-only:hover {
 form .form-group input:hover,
 form .form-group select:hover, 
 form .form-group textarea:hover {
-    outline: 1px solid #31EB31;
-    border: 1px solid #31EB31;
+    outline: 3px solid #387ADF;
+    outline-offset: 2px;
+    border: 1px solid #cccccc98;
+}
+
+form .form-group input:focus,
+form .form-group select:focus, 
+form .form-group textarea:focus,
+form .form-group input:focus:hover,
+form .form-group select:focus:hover,
+form .form-group textarea:focus:hover {
+    /* outline: 3px solid #387ADF;
+    outline-offset: 2px;
+    border: 1px solid #cccccc98; */
+    border-color: #387ADF;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
 }
 
 form .form-group input.error,
 form .form-group input.error:hover {
-    outline: 1px solid #ca1818;
-    border: 1px solid #ca1818;
+    outline: 3px solid #ca1818;
+    outline-offset: 2px;
+    border: 1px solid #cccccc98;
 }
 
 form .form-group input[type="checkbox"] {
@@ -965,7 +1022,7 @@ form .input-group-error div.normal {
     font-style: normal;
     padding: 8px 10px;
     color: rgb(243, 237, 237);
-    background-color: rgb(49, 49, 235);
+    background-color: #387ADF;
     font-size: 12px;
     border-radius: 5px;
     display: flex;
@@ -1039,8 +1096,9 @@ form .input-group a {
 }
 
 form .input-group:hover {
-    outline: 1px solid #31EB31;
-    border: 1px solid #31EB31;
+    outline: 3px solid #387ADF;
+    outline-offset: 2px;
+    border: 1px solid #cccccc98;
 }
 
 form .input-group input:hover,
@@ -1058,13 +1116,44 @@ form button {
     border-radius: 5px;
     font-size: 14px;
     font-weight: 400;
-    color: rgba(0, 0, 0, 0.9);
-    background-color: #31eb31d5;
     border: none;
     outline: none;
     font-family: "Inter", sans-serif;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.5s ease-in-out;
     box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.2);
+}
+
+form button.theme {
+    color: rgb(243, 237, 237);
+    background:  #387bdfde;
+}
+
+form button.theme:hover {
+    color: rgb(243, 237, 237);
+    background: #387bdf;
+}
+
+form button.green {
+    color: rgba(0, 0, 0, 0.9);
+    background-color: #31EB31;
+}
+
+form button.green:hover {
+    color: rgba(0, 0, 0, 0.9);
+    background-color: #31EB31e3;
+}
+
+form button.red {
+    color: #ffffff;
+    background-color: #ca1818;
+}
+
+form button.red:hover {
+    color: #ffffff;
+    background-color: #ca1818e3;
 }
 
 form button.blue {
@@ -1077,10 +1166,14 @@ form button.blue:hover {
     background-color: rgba(49, 49, 235, 0.904);
 }
 
-form button:hover {
-    background-color: #31EB31;
+form button.orange {
     color: rgba(0, 0, 0, 0.9);
-    cursor: pointer;
+    background-color: #ff9f00;
+}
+
+form button.orange:hover {
+    color: rgba(0, 0, 0, 0.9);
+    background-color: #ff9f00e3;
 }
 
 form button:disabled {
@@ -1093,6 +1186,15 @@ form button:disabled:hover {
     background-color: #cccccc98;
     color: rgba(0, 0, 0, 0.9);
     cursor: not-allowed;
+}
+
+@keyframes backgroundSlideLeftToRight {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
 }
 
 .file-input-container {
@@ -1118,8 +1220,9 @@ form button:disabled:hover {
 }
 
 .file-input-container:hover {
-    outline: 2px solid #31EB31;
-    border: 1px solid #31EB31;
+    outline: 3px solid #387bdf;
+    outline-offset: 2px;
+    border: 1px solid #cccccc98;
 }
   
 .file-input {
@@ -1180,6 +1283,19 @@ form button:disabled:hover {
     align-self: center;
 }
 
+.loading-spinner-style-two {
+    border: 2px solid transparent; 
+    border-radius: 50%;
+    border-top: 2px solid #387ADF; 
+    border-bottom: 2px solid #387ADF; 
+    border-left: 2px solid #387ADF;
+    width: 26px; 
+    height: 26px; 
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    align-self: center;
+}
+
 @keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }
@@ -1228,6 +1344,10 @@ h6 {
     margin: 0;
     font-size: 11px;
     font-weight: 600;
+}
+
+.text-center {
+    text-align: center;
 }
 
 /* Colors */

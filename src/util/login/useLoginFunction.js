@@ -3,8 +3,13 @@ import validator from 'validator'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 
+import { useUser } from '../../hooks/UserProvider'
+
 
 export const useLoginFunction = () => {
+
+    const { updateUser, updateToken } = useUser()
+
     const [loginData, setLoginData] = useState({
         email: '',
         password: '',
@@ -70,7 +75,8 @@ export const useLoginFunction = () => {
                 console.log(response.data.user);
 
                 if (response.status === 200) {
-                    toast.success(response.data.message)
+                    updateToken(response.data.token)
+                    updateUser(response.data.user)
                     setTimeout(() => {
                         window.location.href = '/dashboard'
                     }, 2000)

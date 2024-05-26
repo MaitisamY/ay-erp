@@ -40,7 +40,7 @@ header .utils .dropdown {
     border-radius: 50px;
     margin: 0;
     gap: 10px;
-    font-size: large;
+    font-size: 14px;
     cursor: pointer;
     background-color: var(--bg-utils);
 }
@@ -56,9 +56,10 @@ header .utils .dropdown .dropdown-menu {
     margin: 0;
     min-width: 380px;
     max-width: 500px;
-    min-height: 500px;
+    min-height: auto;
+    max-height: 500px;
     position: absolute;
-    top: 150%;
+    top: 145%;
     right: 0;
     background-color: var(--bg-utils);
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -79,6 +80,7 @@ header .utils .dropdown .dropdown-menu::after {
     border-right: 10px solid transparent;
     border-bottom: 10px solid var(--bg-utils);
     backdrop-filter: blur(8px);
+    z-index: 3;
 }
 
 header .utils .dropdown .dropdown-menu .menu-content {
@@ -91,6 +93,7 @@ header .utils .dropdown .dropdown-menu .menu-content {
     padding: 0;
     margin: 0;
     gap: 10px;
+    cursor: default;
 }
 
 header .utils .dropdown .dropdown-menu .menu-content .content-header {
@@ -109,7 +112,7 @@ header .utils .dropdown .dropdown-menu .menu-content .content-header {
 header .utils .dropdown .dropdown-menu .menu-content .content-header .dropdown-link {
     text-decoration: none;
     color: rgb(243, 237, 237);
-    background-color: rgb(49, 49, 235);
+    background: #387bdf;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -126,11 +129,25 @@ header .utils .dropdown .dropdown-menu .menu-content .content-header .dropdown-l
 header .utils .dropdown .dropdown-menu .menu-content .content-body {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: auto;
-    padding: 0;
+    height: 100%;
+    padding: 10px 20px 20px 20px;
     margin: 0;
     gap: 10px;
+    cursor: default;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+header .utils .dropdown .dropdown-menu .menu-content .content-body p > .badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.9);
+    background-color: rgb(240, 186, 11);
+    opacity: 0.87;
+    transition: all 0.1s ease-in-out;
 }

@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { lazy, Suspense } from 'react'
 import { OrganizationCredentialProvider } from './hooks/OrganizationCredentialProvider'
 import { useTheme } from './hooks/ThemeProvider'
+import { UserProvider } from './hooks/UserProvider';
 import { MenuPreferenceProvider } from './hooks/MenuPreferenceProvider'
 import { CurrencyProvider } from './hooks/CurrencyProvider'
 import { ExportDataProvider } from './hooks/ExportDataProvider'
@@ -14,6 +15,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
 // Import pages with lazy loading
+import ProtectedRoute from './pages/protected/ProtectedRoute'
 const Login = lazy(() => import('./pages/Login'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
@@ -49,29 +51,31 @@ function App() {
                                 <MenuPreferenceProvider>
                                     <SKUPrefixProvider>
                                         <NotificationThresholdProvider>
-                                            <ToastContainer />
-                                            <Routes>
-                                                <Route path="*" element={<NotDefined />} />
-                                                <Route path="/" element={<Login />} />
-                                                <Route path="/reset-password" element={<ForgotPassword />} />
-                                                <Route path="/dashboard" element={<Dashboard />} />
-                                                <Route path="/products" element={<Products />} />
-                                                <Route path="/products/add" element={<AddProduct />} />
-                                                <Route path="/sales" element={<Sales />} />
-                                                <Route path="/sales/add" element={<AddSale />} />
-                                                <Route path="/purchases" element={<Purchases />} />
-                                                <Route path="/expenses" element={<Expenses />} />
-                                                <Route path="/users" element={<Users />} />
-                                                <Route path="/users/add" element={<AddUser />} />
-                                                <Route path="/customers" element={<Customers />} />
-                                                <Route path="/reports" element={<Reports />} />
-                                                <Route path="/vendors" element={<Vendors />} />
-                                                <Route path="/settings" element={<GeneralSettings />} />
-                                                <Route path="/settings/categories" element={<CategorySettings />} />
-                                                <Route path="/settings/uom" element={<UOMSettings />} />
-                                                <Route path="/settings/tax" element={<TaxSettings />} />
-                                                <Route path="/settings/brands" element={<BrandSettings />} />
-                                            </Routes>
+                                            <UserProvider>
+                                                <ToastContainer />
+                                                <Routes>
+                                                    <Route path="*" element={<NotDefined />} />
+                                                    <Route path="/" element={<Login />} />
+                                                    <Route path="/reset-password" element={<ForgotPassword />} />
+                                                    <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                                                    <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
+                                                    <Route path="/products/add" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
+                                                    <Route path="/sales" element={<ProtectedRoute><Sales /></ProtectedRoute>} />
+                                                    <Route path="/sales/add" element={<ProtectedRoute><AddSale /></ProtectedRoute>} />
+                                                    <Route path="/purchases" element={<ProtectedRoute><Purchases /></ProtectedRoute>} />
+                                                    <Route path="/expenses" element={<ProtectedRoute><Expenses /></ProtectedRoute>} />
+                                                    <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+                                                    <Route path="/users/add" element={<ProtectedRoute><AddUser /></ProtectedRoute>} />
+                                                    <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
+                                                    <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+                                                    <Route path="/vendors" element={<ProtectedRoute><Vendors /></ProtectedRoute>} />
+                                                    <Route path="/settings" element={<ProtectedRoute><GeneralSettings /></ProtectedRoute>} />
+                                                    <Route path="/settings/categories" element={<ProtectedRoute><CategorySettings /></ProtectedRoute>} />
+                                                    <Route path="/settings/uom" element={<ProtectedRoute><UOMSettings /></ProtectedRoute>} />
+                                                    <Route path="/settings/tax" element={<ProtectedRoute><TaxSettings /></ProtectedRoute>} />
+                                                    <Route path="/settings/brands" element={<ProtectedRoute><BrandSettings /></ProtectedRoute>} />
+                                                </Routes>
+                                            </UserProvider>
                                         </NotificationThresholdProvider>
                                     </SKUPrefixProvider>
                                 </MenuPreferenceProvider>

@@ -351,8 +351,7 @@ function AddSale() {
                                                             products.find(product => product.productName === seller.productName).quantity + ' ' +
                                                             products.find(product => product.productName === seller.productName).uom :
                                                             'AD'
-                                                        ) :
-                                                        'AD'
+                                                        ) : 'AD'
                                                     }
                                                 </div>
                                             </div>
@@ -363,7 +362,7 @@ function AddSale() {
                                         seller.productName && seller.quantity > 0 &&
                                         <Card classes="card-less card-xx-small">
                                             <div className="form-group">
-                                                <button type="button" onClick={addProduct}>Add</button>
+                                                <button className="theme" type="button" onClick={addProduct}>Add</button>
                                             </div>
                                         </Card>
                                     }
@@ -426,7 +425,7 @@ function AddSale() {
                                                                         <>
                                                                         <tr key={product.id}>
                                                                             <td>
-                                                                                <span  
+                                                                                <a  
                                                                                     style={{ 
                                                                                         cursor: 'pointer', 
                                                                                         fontSize: 'smaller', 
@@ -437,7 +436,7 @@ function AddSale() {
                                                                                     onClick={() => removeSingleProduct(product.id)}
                                                                                 >
                                                                                     Remove
-                                                                                </span>
+                                                                                </a>
                                                                             </td>
                                                                             <td>{product.productName} &nbsp; x 
                                                                                 <i className={theme === 'dark' ? 'text-lime-green' : 'text-green'}>

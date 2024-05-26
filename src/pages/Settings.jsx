@@ -4,7 +4,7 @@ import { useTheme } from '../hooks/ThemeProvider'
 import { useCurrency } from '../hooks/CurrencyProvider'
 import { useExportData } from '../hooks/ExportDataProvider'
 import { usePrefix } from '../hooks/SKUPrefixProvider'
-import { useGeneralFunctions } from '../util/settings/useGeneralFunctions'
+import { useGeneralFunctions } from '../util/settings/useGeneralFunctions.js'
 import { useNotificationThreshold } from '../hooks/NotificationThresholdProvider'
 import { Link } from 'react-router-dom'
 import { MdOutlineToggleOff, MdOutlineToggleOn, MdRefresh, MdOutlineUpload } from 'react-icons/md'
@@ -112,10 +112,29 @@ function General() {
                                         </div>
                                         {
                                             selectedFileName === '' ? 
-                                            <button type="submit" title="No file selected" disabled>Update</button>
+                                            <button 
+                                                type="submit" 
+                                                title="No file selected" 
+                                                disabled
+                                            >
+                                                Update
+                                            </button>
                                             : selectedFileName === copyOfSelectedFileName ? 
-                                            <button type="submit" title="No change detected" disabled>Update</button>
-                                            : <button type="submit" title="Update">Update</button>
+                                            <button 
+                                                type="submit" 
+                                                title="No change detected" 
+                                                disabled
+                                            >
+                                                Update
+                                            </button>
+                                            : 
+                                            <button 
+                                                className="theme"
+                                                type="submit" 
+                                                title="Update"
+                                            >
+                                                Update
+                                            </button>
                                         }
                                     </Form>
                                 </Card>
@@ -201,7 +220,13 @@ function General() {
                                                     Update and Save
                                                 </button>
                                             ) : (
-                                                <button type="submit" title="Update">Update</button>
+                                                <button 
+                                                    className="theme" 
+                                                    type="submit" 
+                                                    title="Update"
+                                                >
+                                                    Update
+                                                </button>
                                             )
                                         }
                                     </Form>
@@ -354,6 +379,7 @@ function General() {
                                                 </button>
                                             ) : (
                                                 <button 
+                                                    className="theme"
                                                     type="button"
                                                     title="Update and Save"
                                                     onClick={() => togglePrefix(skuPrefix)}

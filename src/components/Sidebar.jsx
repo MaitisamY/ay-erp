@@ -35,8 +35,6 @@ function Sidebar() {
         fetchCredentials()
     }, [])
 
-    console.log(organizationCredential)
-
     return (
         <div className="sidebar" style={{ width: isCollapsed ? '70px' : '15%' }}>
 

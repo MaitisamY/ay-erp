@@ -4,8 +4,8 @@ import { useEffect } from 'react'
 import { useOrganizationCredential } from '../../hooks/OrganizationCredentialProvider'
 import { useTheme } from '../../hooks/ThemeProvider'
 import { Link } from 'react-router-dom'
-import { usebrandFunctions } from '../../util/settings/useBrandFunctions'
-import { usePagination } from '../../helpers/Pagination'
+import { usebrandFunctions } from '../../util/settings/useBrandFunctions.js'
+import { usePagination } from '../../helpers/Pagination.js'
 import { FaTrashAlt } from 'react-icons/fa'
 import { MdOutlineToggleOff, MdOutlineToggleOn, MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
 
@@ -117,6 +117,7 @@ function brands() {
                                         </div>
                                         {serverResponse && <h6 className="text-red">{serverResponse}</h6>}
                                         <button 
+                                            className="theme"
                                             type="submit"
                                             disabled={!brand || brand.length < 2}
                                             title={!brand ? 'Add brand first' : null}

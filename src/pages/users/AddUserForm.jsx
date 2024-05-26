@@ -1,8 +1,9 @@
 
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import axios from 'axios'
 import validator from 'validator'
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
 
 import Form from '../../components/Form'
 import Card from '../../components/Card'
@@ -33,6 +34,7 @@ function AddUserForm() {
 
     const [isLoading, setIsLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -42,6 +44,7 @@ function AddUserForm() {
     }
 
     const handleShowPassword = () => setShowPassword(!showPassword)
+    const handleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword)
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()
@@ -69,7 +72,7 @@ function AddUserForm() {
             setErrors(prev => ({ ...prev, confirmPassword: 'Passwords do not match' }))
             return
         }
-
+        else {}
         setIsLoading(true)
 
         try {
@@ -83,26 +86,77 @@ function AddUserForm() {
             })
 
             if (response.data.status === 200) {
-                toast.success(response.data.message)
-                setFormData({
-                    name: '',
-                    email: '',
-                    phone: '',
-                    address: '',
-                    role: '',
-                    password: '',
-                    confirmPassword: ''
-                })
+                setTimeout(() => {
+                    setFormData({
+                        name: '',
+                        email: '',
+                        phone: '',
+                        address: '',
+                        role: '',
+                        password: '',
+                        confirmPassword: ''
+                    })
+                    toast.success(response.data.message, {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: false,
+                        progress: undefined,
+                        theme: 'dark',
+                    })
+                }, 2000)
+                
+            } else {
+                setTimeout(() => {
+                    toast.error(response.data.message, {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: false,
+                        progress: undefined,
+                        theme: 'dark',
+                    });
+                }, 2000)
             }
         } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.message)
-        } finally {
-            setIsLoading(false)
+            console.error('Error submitting form:', error); // Log the error message
+            setTimeout(() => {
+                toast.error(error.response?.data?.message || 'An error occurred', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: 'dark',
+                })
+            }, 3000)
         }
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 3000);
     }
     
     const valuesValid = getTheValues(formData);
+
+    const generatePassword = (length) => {
+        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let randomPassword = '';
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * chars.length);
+            randomPassword += chars[randomIndex];
+        }
+        setFormData(prev => ({ 
+            ...prev, 
+            password: randomPassword,
+            confirmPassword: randomPassword 
+        }));
+    }    
 
     return (
         <div className="box">
@@ -111,12 +165,12 @@ function AddUserForm() {
                 <li><h4>Datalist is used for the ease of role selection</h4></li>
             </ul>
             <div className="inner-box-2">
-                <Form onSubmit={() => {}}>
+                <Form onSubmit={handleFormSubmit}>
                     
                     <Card classes="card-less card-small">
                         <div className="form-group">
                             <label htmlFor="name">Name<i>*</i></label>
-                            <input // customer name can be manual or from existing customers
+                            <input 
                                 type="text"
                                 name="name" 
                                 value={formData.name} 
@@ -132,7 +186,7 @@ function AddUserForm() {
                         <div className="form-group">
                             <label htmlFor="email">Email<i>*</i></label>
                             <div className="input-group bordered">
-                                <input // customer name can be manual or from existing customers
+                                <input 
                                     type="email"
                                     name="email" 
                                     value={formData.email} 
@@ -140,8 +194,8 @@ function AddUserForm() {
                                     placeholder="E.g. johnDoe@mail.com" 
                                     onChange={handleChange} 
                                 />
-                                {errors.email && <span className="text-red">{errors.email}</span>}
                             </div>
+                            {errors.email && <span className="text-red">{errors.email}</span>}
                         </div>
                     </Card>
 
@@ -149,7 +203,7 @@ function AddUserForm() {
                         <div className="form-group">
                             <label htmlFor="phone">Phone</label>
                             <div className="input-group bordered">
-                                <input // customer name can be manual or from existing customers
+                                <input 
                                     type="text"
                                     name="phone" 
                                     value={formData.phone} 
@@ -157,15 +211,64 @@ function AddUserForm() {
                                     placeholder="E.g. +2348123456789" 
                                     onChange={handleChange} 
                                 />
-                                {errors.phone && <span className="text-red">{errors.phone}</span>}
                             </div>
+                            {errors.phone && <span className="text-red">{errors.phone}</span>}
+                        </div>
+                    </Card>
+
+                    <Card classes="card-less card-small">
+                        <div className="form-group">
+                            <label htmlFor="password">Password<i>*</i></label>
+                            <div className="input-group bordered">
+                                <input 
+                                    type={showPassword ? 'text' : 'password'}
+                                    name="password" 
+                                    value={formData.password} 
+                                    id="password" 
+                                    placeholder="Enter a good password" 
+                                    onChange={handleChange} 
+                                />
+                                <p style={{ cursor: 'pointer' }} onClick={handleShowPassword}>{showPassword ? <FaRegEyeSlash /> : <FaRegEye />}</p>
+                            </div>
+                            {errors.password && <span className="text-red">{errors.password}</span>}
+                        </div>
+                    </Card>
+
+                    <Card classes="card-less card-small">
+                        <div className="form-group">
+                            <label htmlFor="confirmPassword">Confirm Password<i>*</i></label>
+                            <div className="input-group bordered">
+                                <input 
+                                    type={showConfirmPassword ? 'text' : 'password'}
+                                    name="confirmPassword" 
+                                    value={formData.confirmPassword} 
+                                    id="confirmPassword" 
+                                    placeholder="Confirm that good password" 
+                                    onChange={handleChange} 
+                                />
+                                <p style={{ cursor: 'pointer' }} onClick={handleShowConfirmPassword}>{showConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}</p>
+                            </div>
+                            {errors.confirmPassword && <span className="text-red">{errors.confirmPassword}</span>}
+                        </div>
+                    </Card>
+
+                    <Card classes="card-less card-small">
+                        <div className="form-group">
+                            <label htmlFor="confirmPassword">Generate Password</label>
+                            <select name="length" id="length" onChange={(e) => generatePassword(parseInt(e.target.value, 10))}>
+                                <option value="">Select</option>
+                                <option value="8">8 random characters</option>
+                                <option value="12">12 random characters</option>
+                                <option value="16">16 random characters</option>
+                                <option value="20">20 random characters</option>
+                            </select>
                         </div>
                     </Card>
 
                     <Card classes="card-less card-small">
                         <div className="form-group">
                             <label htmlFor="role">Role<i>*</i></label>
-                            <input // customer name can be manual or from existing customers
+                            <input 
                                 type="text"
                                 name="role" 
                                 value={formData.role} 
@@ -183,68 +286,32 @@ function AddUserForm() {
                         </div>
                     </Card>
 
-                    <Card classes="card-less card-small">
-                        <div className="form-group">
-                            <label htmlFor="password">Password<i>*</i></label>
-                            <div className="input-group bordered">
-                                <input // customer name can be manual or from existing customers
-                                    type={showPassword ? 'text' : 'password'}
-                                    name="password" 
-                                    value={formData.password} 
-                                    id="password" 
-                                    placeholder="Enter a good password" 
-                                    onChange={handleChange} 
-                                />
-                                <i onClick={() => setShowPassword(!showPassword)} className={`fa ${showPassword ? 'fa-eye' : 'fa-eye-slash'}`}></i>
-                                {errors.password && <span className="text-red">{errors.password}</span>}
-                            </div>
-                        </div>
-                    </Card>
-
-                    <Card classes="card-less card-small">
-                        <div className="form-group">
-                            <label htmlFor="confirmPassword">Confirm Password<i>*</i></label>
-                            <div className="input-group bordered">
-                                <input // customer name can be manual or from existing customers
-                                    type="text"
-                                    name="confirmPassword" 
-                                    value={formData.confirmPassword} 
-                                    id="confirmPassword" 
-                                    placeholder="Confirm that good password" 
-                                    onChange={handleChange} 
-                                />
-                                {errors.confirmPassword && <span className="text-red">{errors.confirmPassword}</span>}
-                            </div>
-                        </div>
-                    </Card>
-
-                    <Card classes="card-less card-xx-large">
+                    <Card classes="card-less card-large">
                         <div className="form-group">
                             <label htmlFor="address">Address</label>
-                            <textarea 
-                                placeholder="Thank You!"
+                            <input 
+                                type="text"
                                 name="address" 
-                                id="address" 
                                 value={formData.address} 
-                                rows="3"
-                                onChange={handleChange}
-                            >
-                            </textarea>
+                                id="address" 
+                                placeholder="E.g. 5th Avenue, New York" 
+                                onChange={handleChange} 
+                            />
                             {errors.address && <span className="text-red">{errors.address}</span>}
                         </div>
                     </Card>
 
                     <Card classes="card-less card-small">
                         {
-                            valuesValid 
+                            formData.name.length >= 3 && formData.email.length >= 3 && formData.password.length >= 3 && formData.confirmPassword.length >= 3 && formData.role.length >= 1 
                             ? 
-                            <button type="submit">
+                            <button className="theme" type="submit" disabled={isLoading}>
                                 {
-                                    isLoading
-                                    ?
-                                    <i className="fa fa-spinner fa-pulse"></i>
-                                    :
-                                    'Add User'
+                                    isLoading ? 
+                                    <div className="loader">
+                                        <span className="loading-spinner"></span> Please wait
+                                    </div> 
+                                    : 'Add User'
                                 }
                             </button> 
                             : 

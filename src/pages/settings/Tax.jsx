@@ -1,7 +1,7 @@
 import '../../styles/settings.css'
 
 import { Link } from 'react-router-dom'
-import { useTaxFunctions } from '../../util/settings/useTaxFunctions'
+import { useTaxFunctions } from '../../util/settings/useTaxFunctions.js'
 import { BsCheck2, BsX } from 'react-icons/bs'
 
 import Sidebar from '../../components/Sidebar'
@@ -187,7 +187,7 @@ function Tax() {
                                         <div className="form-group">
                                             <label htmlFor="effective-date">Effective Date</label>
                                             <input 
-                                                type="date" 
+                                                type="month" 
                                                 name="effective_date" 
                                                 id="effective-date"
                                                 value={taxInfo.effective_date} 

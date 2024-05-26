@@ -4,53 +4,47 @@ function Pagination({ data, handleCurrentPage, currentPage, totalPages, firstPag
             <span>Total rows: {data.length}</span>
             <div>
                 {currentPage > 1 && (
-                    <button onClick={firstPage}>
+                    <button className="bg-theme" onClick={firstPage}>
                         {'First'}
                     </button>
                 )}
 
-                <button 
-                    onClick={previousPage}
-                    disabled={currentPage === 1}
-                >
+                <button className="bg-theme" onClick={previousPage} disabled={currentPage === 1}>
                     {'Prev'}
                 </button>
 
                 {currentPage > 3 && totalPages > 5 && (
-                    <button onClick={() => handleCurrentPage(currentPage - 2)}>
+                    <button className="bg-theme" onClick={() => handleCurrentPage(currentPage - 2)}>
                         ...
                     </button>
                 )}
 
                 {currentPage > 1 && (
-                    <button onClick={() => handleCurrentPage(currentPage - 1)}>
+                    <button className="bg-theme" onClick={() => handleCurrentPage(currentPage - 1)}>
                         {currentPage - 1}
                     </button>
                 )}
 
-                <button className="active">{currentPage}</button>
+                <button className="bg-theme active">{currentPage}</button>
 
                 {currentPage < totalPages && (
-                    <button onClick={() => handleCurrentPage(currentPage + 1)}>
+                    <button className="bg-theme" onClick={() => handleCurrentPage(currentPage + 1)}>
                         {currentPage + 1}
                     </button>
                 )}
 
                 {currentPage < totalPages - 1 && (
-                    <button onClick={() => handleCurrentPage(currentPage + 2)}>
+                    <button className="bg-theme" onClick={() => handleCurrentPage(currentPage + 2)}>
                         ...
                     </button>
                 )}
 
-                <button 
-                    onClick={nextPage}
-                    disabled={currentPage === totalPages}
-                >
+                <button className="bg-theme" onClick={nextPage} disabled={currentPage === totalPages}>
                     {'Next'}
                 </button>
 
                 {currentPage < totalPages && (
-                    <button onClick={lastPage}>
+                    <button className="bg-theme" onClick={lastPage}>
                         {'Last'}
                     </button>
                 )}

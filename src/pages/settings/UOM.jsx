@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useOrganizationCredential } from '../../hooks/OrganizationCredentialProvider'
 import { useTheme } from '../../hooks/ThemeProvider'
 import { Link } from 'react-router-dom'
-import { useUOMFunctions } from '../../util/settings/useUOMFunctions'
+import { useUOMFunctions } from '../../util/settings/useUOMFunctions.js'
 import { usePagination } from '../../helpers/Pagination.js'
 import { FaTrashAlt } from 'react-icons/fa'
 import { MdOutlineToggleOff, MdOutlineToggleOn, MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
@@ -117,6 +117,7 @@ function UOM() {
                                         </div>
                                         {serverResponse && <h6 className="text-red">{serverResponse}</h6>}
                                         <button 
+                                            className="theme"
                                             type="submit"
                                             disabled={!uom || uom.length < 2}
                                             title={!uom ? 'Add unit first' : null}

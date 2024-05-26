@@ -1,8 +1,9 @@
 import '../styles/login.css'
 
 import { useTheme } from '../hooks/ThemeProvider'
+import { useUser } from '../hooks/UserProvider'
 import { useLoginFunction } from '../util/login/useLoginFunction'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 
@@ -11,6 +12,9 @@ function Login() {
     document.title = 'ERP - Login'
 
     const { theme } = useTheme()
+    const { token } = useUser()
+
+    const navigate = useNavigate()
 
     const {
         loginData,
@@ -20,6 +24,10 @@ function Login() {
         handleLogin,
         handleShowPassword
     } = useLoginFunction()
+
+    if (token){
+        navigate('/dashboard')
+    }
 
     return (
         <div className="login-page">
@@ -92,6 +100,7 @@ function Login() {
                     </div>
 
                     <button 
+                        className="green"
                         type="submit" 
                         disabled={isLoading}
                         title={isLoading ? 'Loading... Please wait' : ''}

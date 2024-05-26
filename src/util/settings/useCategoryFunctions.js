@@ -32,17 +32,11 @@ export function useCategoryFunctions() {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/get/categories`)
 
-            if (response.data.status === 200) {
-                setCategories(response.data.data)
-            }
-            else {
-                // setServerResponse(response.data.message)
-                console.log(response.data.message);
-            }
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/get/categories`)
+            setCategories(response.data.data)
+
         } catch (error) {
-            // setServerResponse(error.message)
             console.log(error)
         }
     }

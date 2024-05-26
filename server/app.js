@@ -13,6 +13,8 @@ import categoryRoutes from './router/categorySettingRoute.js';
 import uomRoutes from './router/uomSettingRoute.js';
 import taxRoutes from './router/taxSettingRoute.js';
 import brandRoutes from './router/brandSettingRoute.js';
+import addUserRoute from './router/addUserRoute.js';
+import logoutRoute from './router/logoutRoute.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -53,6 +55,8 @@ app.use('/', uomRoutes);
 app.use('/', generalSettingRoutes);
 app.use('/', taxRoutes);
 app.use('/', brandRoutes);
+app.use('/', addUserRoute);
+app.use('/', logoutRoute);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

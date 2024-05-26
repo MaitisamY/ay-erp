@@ -2,8 +2,8 @@
 import { Link } from 'react-router-dom'
 import { usePrefix } from '../../hooks/SKUPrefixProvider'
 import { useCurrency } from '../../hooks/CurrencyProvider'
-import { useProductFunctions } from '../../util/products/useProductFunctions'
-import { useTaxFunctions } from '../../util/settings/useTaxFunctions'
+import { useProductFunctions } from '../../util/products/useProductFunctions.js'
+import { useTaxFunctions } from '../../util/settings/useTaxFunctions.js'
 
 import Sidebar from '../../components/Sidebar'
 import Content from '../../components/Content'
@@ -199,7 +199,7 @@ function AddProduct() {
                                         <div className="form-group">
                                             <label htmlFor="variants">Does this product have variants? (Optional)</label>
                                             <button 
-                                                className="blue" 
+                                                className="theme" 
                                                 type="button" 
                                                 onClick={createVariant}
                                                 disabled={variants.length === 12}
@@ -251,7 +251,7 @@ function AddProduct() {
                                         <div className="form-group">
                                             <label htmlFor="variants">Does this product have images? (Optional)</label>
                                             <button 
-                                                className="blue" 
+                                                className="theme" 
                                                 type="button" 
                                                 onClick={createImages}
                                                 disabled={images.length === 5}
