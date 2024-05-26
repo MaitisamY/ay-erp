@@ -91,7 +91,15 @@ function Users() {
                                     isExportable={true}
                                 />
                                     {filteredUsers.length === 0 ? (
-                                        <div>No data found</div>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th colSpan={8} className="text-center">
+                                                        No data found
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
                                     ) : (
                                         <table>
                                             <thead>

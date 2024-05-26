@@ -345,7 +345,7 @@ body {
     content: "";
     position: absolute;
     top: 95%;
-    left: 48%;
+    left: 49.5%;
     margin-left: -5px;
     border-width: 7px;
     border-style: solid;
@@ -375,7 +375,7 @@ body {
     content: "";
     position: absolute;
     top: 95%;
-    left: 48%;
+    left: 49.5%;
     margin-left: -5px;
     border-width: 7px;
     border-style: solid;
@@ -529,6 +529,19 @@ body {
     width: 100%;
     height: auto;
     padding: 40px 100px;
+    margin: 0;
+}
+
+.container-two {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    height: auto;
+    padding: 100px 0px;
     margin: 0;
 }
 
@@ -1716,5 +1729,72 @@ input[type=number]::-webkit-outer-spin-button {
 /* Firefox */
 input[type=number] {
     -moz-appearance: textfield;
+}
+
+.dashboard-item-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+    padding: 10px;
+    margin: 0;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.dashboard-specifier {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 20%;
+    height: auto;
+    padding: 20px;
+    margin: 0;
+    border-radius: 10px;
+    font-size: small;
+    font-weight: 400;
+    color: #e9e9e9;
+    border: none;
+    outline: none;
+    font-family: "Inter", sans-serif;
+    background: linear-gradient(45deg, #3498db, #09cece);
+    box-shadow: 0px 4px 8px 0 #3498db;
+}
+
+.dashboard-specifier > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: auto;
+    font-size: larger;
+}
+
+.dashboard-specifier > div h3 {
+    margin: 0;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.dashboard-specifier > div h4 {
+    margin: 0;
+    font-size: larger;
+    font-weight: 700;
 }
 

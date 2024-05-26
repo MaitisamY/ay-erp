@@ -36,7 +36,8 @@ function PrePagination({
                         <span 
                             className={theme === 'dark' ? 'tooltip-dark' : 'tooltip-light'}
                         >
-                            Import Data (CSV)
+                            Import Data: Must be a <span className="text-orange">(CSV)</span> file. <br />
+                            Must have columns: <span className="text-orange">Name, Email, Password and Role</span>
                         </span>
                     </button>
                 )
